@@ -4,6 +4,7 @@ class ChartManager {
         this.ctx = this.canvas.getContext('2d');
         this.chart = null;
         this.data = [];
+        this.predictionDatasets = {}; // Stores prediction datasets by model ID
         
         // Color palette for components (warm neutral harmony)
         this.componentColors = {
@@ -11,6 +12,13 @@ class ChartManager {
             By: 'rgba(217, 119, 6, 1)',       // Amber-600
             Bz: 'rgba(180, 83, 9, 1)',        // Orange-700
             magnitude: 'rgba(120, 113, 108, 1)' // Stone-600
+        };
+        
+        // Color palette for predictions (dashed lines)
+        this.predictionColors = {
+            model1: 'rgba(220, 38, 38, 1)',   // Red-600
+            model2: 'rgba(101, 163, 13, 1)',  // Lime-600
+            model3: 'rgba(147, 51, 234, 1)'   // Violet-600
         };
         
         this.initChart();
@@ -91,11 +99,61 @@ class ChartManager {
             }
         });
         
+        // Add prediction datasets
+        Object.values(this.predictionDatasets).forEach(predDataset => {
+            datasets.push(predDataset);
+        });
+        
         this.chart.data.datasets = datasets;
         this.chart.update();
         
         // Update annotations after data update
         this.updateAnnotations();
+    }
+
+    /**
+     * Adds a prediction dataset to the chart
+     * @param {string} modelId - Unique identifier for the model
+     * @param {Array} predictions - Array of prediction objects {timestamp, value, confidence}
+     * @param {string} component - Component being predicted (Bx, By, Bz, magnitude)
+     */
+    addPredictions(modelId, predictions, component) {
+        // Get a unique color for this model prediction
+        const color = this.predictionColors[modelId] ||
+                     `hsl(${Object.keys(this.predictionDatasets).length * 60}, 70%, 50%)`;
+        
+        const dataset = {
+            label: `${component} (${modelId})`,
+            data: predictions.map(p => ({ x: p.timestamp, y: p.value })),
+            borderColor: color,
+            borderWidth: 1.5,
+            borderDash: [5, 5],
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false
+        };
+        
+        this.predictionDatasets[modelId] = dataset;
+        this.updateData(this.data); // Refresh chart with new dataset
+    }
+    
+    /**
+     * Removes prediction dataset from the chart
+     * @param {string} modelId - Unique identifier for the model
+     */
+    removePredictions(modelId) {
+        if (this.predictionDatasets[modelId]) {
+            delete this.predictionDatasets[modelId];
+            this.updateData(this.data); // Refresh chart without the dataset
+        }
+    }
+    
+    /**
+     * Clears all prediction datasets from the chart
+     */
+    clearAllPredictions() {
+        this.predictionDatasets = {};
+        this.updateData(this.data); // Refresh chart without any predictions
     }
     
     updateAnnotations() {

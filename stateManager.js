@@ -4,6 +4,7 @@ class StateManager {
         this.currentStateIndex = -1;
         this.maxHistory = 20; // Limit history to prevent memory issues
         this.currentAnnotation = null; // Tracks active annotation
+        this.currentModelId = null; // Track active model
     }
 
     saveState(data) {
@@ -134,6 +135,14 @@ class StateManager {
             
             listContainer.appendChild(item);
         });
+    }
+    // Model state management
+    setCurrentModel(modelId) {
+        this.currentModelId = modelId;
+    }
+    
+    getCurrentModel() {
+        return this.currentModelId;
     }
 }
 

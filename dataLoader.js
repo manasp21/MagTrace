@@ -28,6 +28,10 @@ class DataLoader {
             return null;
         }
     }
+    
+    getCurrentDataset() {
+        return this.data;
+    }
 
     parseCSV(csvText) {
         const lines = csvText.trim().split('\n');

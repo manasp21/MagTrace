@@ -9,6 +9,8 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
     <style>
         .warm-bg { background-color: #fafaf9; }
         .warm-text { color: #292524; }
@@ -64,6 +66,119 @@
             </div>
         </div>
 
+        <!-- Model Management -->
+        <div class="model-management mb-6">
+            <h3 class="font-semibold mb-2">Model Management</h3>
+            <button id="create-model-btn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">Create New Model</button>
+            <div id="model-form" class="hidden">
+                <input type="text" id="model-name" placeholder="Model name" class="w-full border rounded p-1 mb-2">
+                <textarea id="model-desc" placeholder="Description" class="w-full border rounded p-1 mb-2"></textarea>
+                <select id="dataset-select" class="w-full border rounded p-1 mb-2">
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <button id="save-model" class="w-full bg-teal-600 text-white py-1 rounded">Save Model</button>
+            </div>
+            <div id="model-list">
+                <!-- Model versions will be listed here -->
+            </div>
+        </div>
+
+        <!-- Machine Learning Section -->
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Machine Learning</h2>
+            
+            <!-- Feature Selection -->
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Features</h3>
+                <div class="flex flex-wrap">
+                    <label class="mr-2"><input type="checkbox" name="feature" value="mean" checked> Mean</label>
+                    <label class="mr-2"><input type="checkbox" name="feature" value="variance"> Variance</label>
+                    <label class="mr-2"><input type="checkbox" name="feature" value="max"> Max</label>
+                    <label class="mr-2"><input type="checkbox" name="feature" value="min"> Min</label>
+                    <label><input type="checkbox" name="feature" value="fft"> FFT</label>
+                </div>
+            </div>
+            
+            <!-- Model Configuration -->
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Model</h3>
+                <div class="flex mb-1">
+                    <select id="modelType" class="flex-1 border rounded p-1 mr-2">
+                        <option value="knn">k-NN</option>
+                        <option value="tf">Neural Network</option>
+                    </select>
+                    <button id="complexityBtn" class="bg-teal-600 text-white px-2 rounded">Complexity</button>
+                </div>
+                <div id="hyperparameters" class="hidden">
+                    <!-- Will be populated based on model type and complexity -->
+                </div>
+            </div>
+            
+            <!-- Data Augmentation -->
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Augmentation</h3>
+                <div>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="augmentNoise" class="mr-2"> Add Noise
+                        <input type="range" id="noiseLevel" min="0" max="1" step="0.1" value="0.1" class="ml-2 w-16" disabled>
+                        <span id="noiseLevelValue" class="ml-2">0.1</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="augmentShift" class="mr-2"> Time Shift
+                        <input type="number" id="shiftAmount" min="-10" max="10" value="1" class="ml-2 w-16" disabled>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Training -->
+            <div>
+                <button id="trainBtn" class="w-full bg-teal-600 text-white py-1 rounded">Train Model</button>
+                <div id="trainingProgress" class="mt-2 hidden">
+                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                        <div id="progressBar" class="bg-teal-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div id="trainingMetrics" class="text-sm mt-1"></div>
+                </div>
+            </div>
+        </div>
+
+<!-- Model Evaluation -->
+        <div class="mb-6" id="evaluationSection">
+            <h2 class="font-semibold mb-2">Model Evaluation</h2>
+            <button id="applyModelBtn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">Apply Model</button>
+            
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Metrics</h3>
+                <div id="metricsDisplay">
+                    <div>Accuracy: <span id="accuracyValue">-</span></div>
+                    <div>Precision: <span id="precisionValue">-</span></div>
+                    <div>Recall: <span id="recallValue">-</span></div>
+                    <div>F1 Score: <span id="f1Value">-</span></div>
+                </div>
+            </div>
+            
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Confusion Matrix</h3>
+                <div id="confusionMatrixContainer"></div>
+            </div>
+            
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Batch Processing</h3>
+                <div class="flex items-center mb-1">
+                    <input type="checkbox" id="batchToggle" class="mr-2">
+                    <label>Process multiple files</label>
+                </div>
+                <button id="batchProcessBtn" class="w-full bg-teal-600 text-white py-1 rounded" disabled>Process All</button>
+            </div>
+            
+            <div class="mb-2">
+                <h3 class="font-medium mb-1">Labels</h3>
+                <div class="flex items-center">
+                    <input type="checkbox" id="showModelLabels" class="mr-2">
+                    <label>Show Model Labels</label>
+                </div>
+            </div>
+        </div>
         <div class="mt-auto flex space-x-2">
             <button id="undoBtn" class="flex-1 bg-stone-300 py-1 rounded">Undo</button>
             <button id="redoBtn" class="flex-1 bg-stone-300 py-1 rounded">Redo</button>
@@ -110,6 +225,14 @@
     <script src="labelManager.js"></script>
     <script src="annotationManager.js"></script>
     <script src="annotationRenderer.js"></script>
+    <script src="modelManager.js"></script>
+    <script src="modelUi.js"></script>
+    <script src="featureExtractor.js"></script>
+    <script src="mlTrainer.js"></script>
+    <script src="tfModel.js"></script>
+<script src="modelApplier.js"></script>
+    <script src="evaluator.js"></script>
+    <script src="confusionMatrix.js"></script>
     <script>
         // Initialize application
         document.addEventListener('DOMContentLoaded', () => {
@@ -119,6 +242,8 @@
             window.stateManager = new StateManager();
             window.labelManager = new LabelManager();
             window.annotationManager = new AnnotationManager();
+            window.modelManager = new ModelManager();
+            window.modelUi = new ModelUI(window.modelManager);
             
             // Initialize annotation renderer after chart is created
             setTimeout(() => {
@@ -126,6 +251,9 @@
                     document.querySelector('#mainChart').parentNode,
                     window.chartManager.getXScale()
                 );
+                
+                // Initialize model UI
+                window.modelUi.init();
             }, 100);
             
             // Setup event listeners
