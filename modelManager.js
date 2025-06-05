@@ -8,18 +8,21 @@ class ModelManager {
         this.selectedFeatures = ['mean', 'variance', 'max', 'min'];
     }
 
-    createModel(name, description, datasetId) {
-        const newModel = {
-            id: Date.now().toString(),
-            name,
-            description,
-            datasetId,
-            versions: [],
-            createdAt: new Date().toISOString()
-        };
-        this.models.push(newModel);
-        this.currentModel = newModel;
-        return newModel;
+    async createModel(name, description, datasetId) {
+        try {
+            const newModel = await apiService.createProject({
+                name,
+                description,
+                type: 'model',
+                dataset: datasetId
+            });
+            this.models.push(newModel);
+            this.currentModel = newModel;
+            return newModel;
+        } catch (error) {
+            console.error('Error creating model:', error);
+            throw error;
+        }
     }
 
     addVersion(modelId, versionData) {
@@ -60,46 +63,35 @@ class ModelManager {
     }
     
     async trainModel(modelType, hyperparams, augmentationOptions) {
-        // Get current dataset
-        const dataset = window.dataLoader.getCurrentDataset();
-        if (!dataset) throw new Error('No dataset loaded');
+        if (!this.currentModel) {
+            throw new Error('No model selected for training');
+        }
         
-        // Get annotations
-        const annotations = window.annotationManager.getAnnotations();
-        if (!annotations.length) throw new Error('No annotations available for training');
-        
-        // Prepare segments and labels
-        const segments = [];
-        const labels = [];
-        
-        annotations.forEach(anno => {
-            const segment = dataset.magnetic_x.slice(anno.startIndex, anno.endIndex);
-            segments.push(segment);
-            labels.push(anno.labelId);
-        });
-        
-        // Prepare data
-        const data = this.mlTrainer.prepareData(
-            segments,
-            labels,
-            this.selectedFeatures,
-            augmentationOptions
-        );
-        
-        // Train model
-        const model = await this.mlTrainer.trainModel(modelType, data, hyperparams);
-        
-        // Save model
-        const modelId = `model_${Date.now()}`;
-        this.trainedModels[modelId] = {
-            id: modelId,
-            type: modelType,
-            model: model,
-            features: this.selectedFeatures,
-            createdAt: new Date().toISOString()
-        };
-        
-        return modelId;
+        try {
+            // Prepare training data
+            const trainingData = {
+                modelType,
+                hyperparams,
+                augmentationOptions,
+                selectedFeatures: this.selectedFeatures
+            };
+            
+            // Call API to train model
+            const trainingResult = await apiService.trainModel({
+                modelId: this.currentModel.id,
+                ...trainingData
+            });
+            
+            // Update model status and metrics
+            this.currentModel.status = 'trained';
+            this.currentModel.metrics = trainingResult.metrics;
+            
+            return trainingResult.modelId;
+        } catch (error) {
+            console.error('Training failed:', error);
+            this.currentModel.status = 'error';
+            throw error;
+        }
     }
     
     saveModelToLocal(modelId) {

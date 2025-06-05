@@ -22,6 +22,7 @@
     <div class="w-64 bg-stone-100 p-4 border-r border-stone-300 flex flex-col">
         <h1 class="text-xl font-bold warm-accent mb-6">MagTrace</h1>
         
+        
         <div class="mb-6">
             <h2 class="font-semibold mb-2">Data Input</h2>
             <input type="file" id="fileInput" class="mb-2 w-full" accept=".csv">
@@ -233,6 +234,7 @@
 <script src="modelApplier.js"></script>
     <script src="evaluator.js"></script>
     <script src="confusionMatrix.js"></script>
+    <script src="apiService.js"></script>
     <script>
         // Initialize application
         document.addEventListener('DOMContentLoaded', () => {
@@ -272,7 +274,6 @@
             // Initialize confidence display
             updateConfidenceValue();
             
-            // ... other event listeners
         });
         
         // Annotation functions

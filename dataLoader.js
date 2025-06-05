@@ -4,28 +4,57 @@ class DataLoader {
     }
 
     async loadFile(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const csvText = event.target.result;
-                this.data = this.parseCSV(csvText);
-                resolve(this.data);
-            };
-            reader.onerror = reject;
-            reader.readAsText(file);
-        });
+        try {
+console.log("[DEBUG] File selected:", file.name);
+            // First upload the file to the API
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            const response = await fetch(`${API_BASE_URL}/datasets/upload/`, {
+                method: 'POST',
+                headers: {
+                    ...getAuthHeader(),
+                    // Don't set Content-Type - browser will set multipart boundary
+                },
+                body: formData
+            });
+            
+            console.log("[DEBUG] API response status:", response.status);
+            if (!response.ok) {
+                throw new Error('Failed to upload dataset');
+            }
+            
+            const dataset = await response.json();
+            console.log("[DEBUG] API response data:", dataset);
+            this.data = dataset;
+            return this.data;
+        } catch (error) {
+            console.error("[ERROR] File upload failed:", error);
+            console.error(error.stack);
+            throw error;
+        }
     }
 
     async loadExample() {
         try {
-            const response = await fetch('example/data_1.csv');
-            if (!response.ok) throw new Error('Failed to load example data');
-            const csvText = await response.text();
-            this.data = this.parseCSV(csvText);
+            console.log("[DEBUG] Loading example dataset");
+            const response = await fetch(`${API_BASE_URL}/datasets/example/`, {
+                headers: getAuthHeader()
+            });
+            
+            console.log("[DEBUG] Example API response status:", response.status);
+            if (!response.ok) {
+                throw new Error('Failed to load example dataset');
+            }
+            
+            const dataset = await response.json();
+            console.log("[DEBUG] Example API response data:", dataset);
+            this.data = dataset;
             return this.data;
         } catch (error) {
-            console.error('Error loading example data:', error);
-            return null;
+            console.error("[ERROR] Example dataset load failed:", error);
+            console.error(error.stack);
+            throw error;
         }
     }
     
@@ -33,51 +62,7 @@ class DataLoader {
         return this.data;
     }
 
-    parseCSV(csvText) {
-        const lines = csvText.trim().split('\n');
-        const headers = lines[0].split(',').map(h => h.trim());
-        
-        const dataset = [];
-        for (let i = 1; i < lines.length; i++) {
-            const values = lines[i].split(',');
-            if (values.length !== headers.length) continue;
-            
-            const entry = {};
-            headers.forEach((header, index) => {
-                const value = parseFloat(values[index]) || values[index].trim();
-                
-                // Handle different column naming conventions
-                if (header.includes('Bx') || header.includes('X')) {
-                    entry.Bx = value;
-                } else if (header.includes('By') || header.includes('Y')) {
-                    entry.By = value;
-                } else if (header.includes('Bz') || header.includes('Z')) {
-                    entry.Bz = value;
-                } else if (header.includes('|B|') || header.includes('Magnitude')) {
-                    entry.magnitude = value;
-                } else if (header.includes('Time') || header.includes('Timestamp')) {
-                    entry.timestamp = value;
-                } else if (header.includes('Lat')) {
-                    entry.latitude = value;
-                } else if (header.includes('Lon')) {
-                    entry.longitude = value;
-                } else if (header.includes('Alt')) {
-                    entry.altitude = value;
-                } else if (header.includes('Sensor')) {
-                    entry.sensorId = value;
-                }
-            });
-            
-            // Calculate magnitude if not provided
-            if (!entry.magnitude && entry.Bx !== undefined && entry.By !== undefined && entry.Bz !== undefined) {
-                entry.magnitude = Math.sqrt(entry.Bx**2 + entry.By**2 + entry.Bz**2);
-            }
-            
-            dataset.push(entry);
-        }
-        
-        return dataset;
-    }
+    // parseCSV method removed - parsing is now done by the backend
 }
 
 // Event handler functions referenced in index.html
@@ -93,12 +78,14 @@ function handleFileSelect(event) {
         .catch(console.error);
 }
 
-function loadExampleData() {
-    window.dataLoader.loadExample()
-        .then(data => {
-            if (data) {
-                window.chartManager.updateData(data);
-                window.stateManager.saveState(data);
-            }
-        });
+async function loadExampleData() {
+    console.log("[DEBUG] Loading example data");
+    try {
+        const response = await fetch('/api/datasets/example/');
+        const data = await response.json();
+        window.chartManager.updateData(data.data);
+        window.stateManager.saveState(data.data);
+    } catch (error) {
+        console.error("Error loading example data:", error);
+    }
 }
