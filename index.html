@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagTrace - Magnetic Field Visualization</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <style>
+        .warm-bg { background-color: #fafaf9; }
+        .warm-text { color: #292524; }
+        .warm-accent { color: #0f766e; border-color: #0d9488; }
+    </style>
+</head>
+<body class="warm-bg warm-text font-sans flex h-screen">
+    <!-- Left Sidebar -->
+    <div class="w-64 bg-stone-100 p-4 border-r border-stone-300 flex flex-col">
+        <h1 class="text-xl font-bold warm-accent mb-6">MagTrace</h1>
+        
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Data Input</h2>
+            <input type="file" id="fileInput" class="mb-2 w-full" accept=".csv">
+            <button id="loadExample" class="w-full bg-teal-600 text-white py-1 rounded">Load Example Data</button>
+        </div>
+
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Preprocessing</h2>
+            <div class="flex items-center mb-2">
+                <label class="mr-2">Moving Average:</label>
+                <input type="number" id="movingAvgWindow" min="1" value="5" class="w-16 border rounded p-1">
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="normalizeData" class="mr-2">
+                <label>Normalize Data</label>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Time Selection</h2>
+            <div class="flex space-x-2">
+                <input type="number" id="startTime" placeholder="Start" class="w-20 border rounded p-1">
+                <input type="number" id="endTime" placeholder="End" class="w-20 border rounded p-1">
+            </div>
+        </div>
+
+        <!-- Annotation Tools -->
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Annotation Tools</h2>
+            <div class="mb-2">
+                <button id="newLabelBtn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">New Label Type</button>
+                <button id="assignLabelBtn" class="w-full bg-teal-600 text-white py-1 rounded">Assign Label</button>
+            </div>
+            <div id="labelSelector" class="mb-2 hidden">
+                <label class="block mb-1">Label:</label>
+                <select id="labelSelect" class="w-full border rounded p-1"></select>
+            </div>
+            <div class="flex items-center">
+                <label class="mr-2">Confidence:</label>
+                <input type="range" id="confidenceSlider" min="0" max="1" step="0.1" value="1" class="w-full">
+                <span id="confidenceValue" class="ml-2">1.0</span>
+            </div>
+        </div>
+
+        <div class="mt-auto flex space-x-2">
+            <button id="undoBtn" class="flex-1 bg-stone-300 py-1 rounded">Undo</button>
+            <button id="redoBtn" class="flex-1 bg-stone-300 py-1 rounded">Redo</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <div class="p-4 border-b border-stone-300">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold">Magnetic Field Components</h2>
+                <div>
+                    <button id="zoomIn" class="bg-stone-200 px-3 py-1 rounded-l">+</button>
+                    <button id="zoomOut" class="bg-stone-200 px-3 py-1 rounded-r">-</button>
+                    <button id="resetZoom" class="bg-stone-200 px-3 py-1 ml-2 rounded">Reset</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 p-4 relative">
+            <canvas id="mainChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Annotation Sidebar -->
+    <div class="w-64 bg-stone-100 p-4 border-l border-stone-300 flex flex-col">
+        <h2 class="text-lg font-semibold mb-4">Annotations</h2>
+        <div class="mb-4">
+            <input type="text" id="annotationFilter" placeholder="Filter annotations..." class="w-full border rounded p-1 mb-2">
+            <div class="flex space-x-2">
+                <button id="sortByTimeBtn" class="flex-1 bg-stone-300 py-1 rounded">Time</button>
+                <button id="sortByLabelBtn" class="flex-1 bg-stone-300 py-1 rounded">Label</button>
+            </div>
+        </div>
+        <div id="annotationList" class="overflow-y-auto flex-1">
+            <!-- Annotations will be listed here dynamically -->
+        </div>
+    </div>
+
+    <!-- Script modules -->
+    <script src="dataLoader.js"></script>
+    <script src="preprocessor.js"></script>
+    <script src="chartManager.js"></script>
+    <script src="stateManager.js"></script>
+    <script src="labelManager.js"></script>
+    <script src="annotationManager.js"></script>
+    <script src="annotationRenderer.js"></script>
+    <script>
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dataLoader = new DataLoader();
+            window.preprocessor = new Preprocessor();
+            window.chartManager = new ChartManager('mainChart');
+            window.stateManager = new StateManager();
+            window.labelManager = new LabelManager();
+            window.annotationManager = new AnnotationManager();
+            
+            // Initialize annotation renderer after chart is created
+            setTimeout(() => {
+                window.annotationRenderer = new AnnotationRenderer(
+                    document.querySelector('#mainChart').parentNode,
+                    window.chartManager.getXScale()
+                );
+            }, 100);
+            
+            // Setup event listeners
+            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+            document.getElementById('loadExample').addEventListener('click', loadExampleData);
+            
+            // Annotation UI event listeners
+            document.getElementById('newLabelBtn').addEventListener('click', createNewLabel);
+            document.getElementById('assignLabelBtn').addEventListener('click', toggleLabelSelector);
+            document.getElementById('labelSelect').addEventListener('change', handleLabelSelection);
+            document.getElementById('confidenceSlider').addEventListener('input', updateConfidenceValue);
+            document.getElementById('sortByTimeBtn').addEventListener('click', () => sortAnnotations('time'));
+            document.getElementById('sortByLabelBtn').addEventListener('click', () => sortAnnotations('label'));
+            document.getElementById('annotationFilter').addEventListener('input', filterAnnotations);
+            
+            // Initialize confidence display
+            updateConfidenceValue();
+            
+            // ... other event listeners
+        });
+        
+        // Annotation functions
+        function createNewLabel() {
+            const labelName = prompt('Enter label name:');
+            if (labelName) {
+                const newLabel = window.labelManager.createLabel(labelName);
+                updateLabelSelector();
+            }
+        }
+        
+        function toggleLabelSelector() {
+            const selector = document.getElementById('labelSelector');
+            selector.classList.toggle('hidden');
+            if (!selector.classList.contains('hidden')) {
+                updateLabelSelector();
+            }
+        }
+        
+        function updateLabelSelector() {
+            const select = document.getElementById('labelSelect');
+            select.innerHTML = '';
+            
+            window.labelManager.getAllLabels().forEach(label => {
+                const option = document.createElement('option');
+                option.value = label.id;
+                option.textContent = label.name;
+                option.style.color = label.color;
+                select.appendChild(option);
+            });
+        }
+        
+        function handleLabelSelection() {
+            const labelId = document.getElementById('labelSelect').value;
+            const confidence = parseFloat(document.getElementById('confidenceSlider').value);
+            // Annotation logic will be implemented in stateManager
+            window.stateManager.startAnnotation(labelId, confidence);
+        }
+        
+        function updateConfidenceValue() {
+            const slider = document.getElementById('confidenceSlider');
+            const valueDisplay = document.getElementById('confidenceValue');
+            valueDisplay.textContent = slider.value;
+        }
+        
+        function sortAnnotations(criteria) {
+            // Implementation will be added to annotationManager
+        }
+        
+        function filterAnnotations() {
+            // Implementation will be added to annotationManager
+        }
+    </script>
+</body>
+</html>
