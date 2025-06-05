@@ -1,6 +1,14 @@
 export class ChartManager {
     constructor(canvasId) {
+        console.log("[CHART] Initializing ChartManager with canvas:", canvasId);
+        
+        // Verify canvas element exists
         this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) {
+            console.error("[CHART] Canvas element not found!");
+            throw new Error(`Canvas element with id '${canvasId}' not found`);
+        }
+        
         this.ctx = this.canvas.getContext('2d');
         this.chart = null;
         this.data = [];
@@ -21,97 +29,132 @@ export class ChartManager {
             model3: 'rgba(147, 51, 234, 1)'   // Violet-600
         };
         
-        this.initChart();
+        try {
+            this.initChart();
+            console.log("[CHART] Chart initialized successfully");
+        } catch (error) {
+            console.error("[CHART] Chart initialization failed:", error);
+            throw error;
+        }
+        
         this.setupResizeHandler();
         this.setupMouseEvents();
     }
 
     initChart() {
-        this.chart = new Chart(this.ctx, {
-            type: 'line',
-            data: {
-                datasets: []
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
-                        zoom: {
-                            wheel: {
-                                enabled: true,
-                            },
-                            pinch: {
-                                enabled: true
-                            },
-                            mode: 'x',
-                        }
-                    },
-                    legend: {
-                        position: 'top',
-                    }
+        console.log("[CHART] Initializing new chart instance");
+        try {
+            this.chart = new Chart(this.ctx, {
+                type: 'line',
+                data: {
+                    datasets: []
                 },
-                scales: {
-                    x: {
-                        type: 'linear',
-                        title: {
-                            display: true,
-                            text: 'Time (s)'
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'x',
+                            },
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'x',
+                            }
+                        },
+                        legend: {
+                            position: 'top',
                         }
                     },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Magnetic Field (μT)'
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            title: {
+                                display: true,
+                                text: 'Time (s)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Magnetic Field (μT)'
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+            console.log("[CHART] Chart instance created");
+        } catch (error) {
+            console.error("[CHART] Chart initialization error:", error);
+            throw error;
+        }
     }
 
     updateData(data) {
-        console.log("[ChartManager] updateData called with:", data);
-        if (!data || data.length === 0) {
-            console.warn("[ChartManager] No data provided - cannot update chart");
-            return;
-        }
-
-        // Update dataset creation to use new component names
-        const components = Object.keys(this.componentColors);
-        const datasets = [];
-        
-        components.forEach(comp => {
-            if (data[0][comp] !== undefined) {
-                const componentData = data.map(d => ({
-                    x: d.timestamp,
-                    y: d[comp]
-                }));
-
-                datasets.push({
-                    label: comp,
-                    data: componentData,
-                    borderColor: this.componentColors[comp],
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                    tension: 0.1
-                });
+        console.log("[CHART] updateData called with", data.length, "records");
+        try {
+            if (!data || data.length === 0) {
+                console.warn("[CHART] Empty data received - skipping update");
+                return;
             }
-        });
+            
+            // Destroy existing chart if exists
+            if (this.chart) {
+                console.log("[CHART] Destroying previous chart instance");
+                this.chart.destroy();
+            }
+            
+            console.log("[CHART] Reinitializing chart...");
+            this.initChart();
+            
+            console.log("[CHART] Creating datasets for components:", Object.keys(this.componentColors));
+            const components = Object.keys(this.componentColors);
+            const datasets = [];
+            
+            components.forEach(comp => {
+                if (data[0][comp] !== undefined) {
+                    console.log(`[CHART] Adding dataset for ${comp}`);
+                    const componentData = data.map(d => ({
+                        x: d.timestamp,
+                        y: d[comp]
+                    }));
 
-        // Add prediction datasets
-        Object.values(this.predictionDatasets).forEach(ds => {
-            datasets.push(ds);
-        });
+                    datasets.push({
+                        label: comp,
+                        data: componentData,
+                        borderColor: this.componentColors[comp],
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        borderWidth: 1,
+                        pointRadius: 0,
+                        tension: 0.1
+                    });
+                } else {
+                    console.warn(`[CHART] Component ${comp} not found in data`);
+                }
+            });
 
-        this.chart.data.datasets = datasets;
-        this.chart.update();
-        this.data = data;
+            // Add prediction datasets
+            console.log("[CHART] Adding prediction datasets");
+            Object.values(this.predictionDatasets).forEach(ds => {
+                datasets.push(ds);
+            });
+
+            console.log("[CHART] Setting chart datasets", datasets);
+            this.chart.data.datasets = datasets;
+            console.log("[CHART] Updating chart...");
+            this.chart.update();
+            console.log("[CHART] Chart update complete");
+            this.data = data;
+        } catch (error) {
+            console.error("[CHART] Update failed:", error);
+            throw error;
+        }
     }
     
     /**

@@ -3,5 +3,5 @@ djangorestframework
 django-cors-headers
 numpy
 pandas
-celery
-redis
+celery==5.3.6
+redis==4.6.0

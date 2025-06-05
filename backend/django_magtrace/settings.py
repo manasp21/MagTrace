@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'magtrace_api.middleware.logging_middleware.RequestResponseLoggingMiddleware',
+    'magtrace_api.middleware.cors_middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'django_magtrace.urls'
@@ -103,6 +104,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Add example directory to static files
+STATICFILES_DIRS = [
+    BASE_DIR.parent / 'example',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

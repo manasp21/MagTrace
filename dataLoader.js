@@ -2,6 +2,7 @@ import { API_BASE_URL, getAuthHeader } from './apiService.js';
 
 export class DataLoader {
     constructor() {
+        console.log("[DATA] DataLoader initialized");
         this.data = null;
     }
 
@@ -41,13 +42,130 @@ export class DataLoader {
         }
     }
 
-    // loadExample method removed - example data will be loaded directly
+    async loadExample() {
+        console.log("[DATA] Loading example data");
+        try {
+            const response = await fetch('example/data_1.csv');
+            console.log("[DATA] Response status:", response.status);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch example data: ${response.status}`);
+            }
+            const csvText = await response.text();
+            
+            console.log("[DATA] Parsing CSV...");
+            const data = this.parseExampleCSV(csvText);
+            console.log(`[DATA] Parsed ${data.length} records`);
+            
+            // Validate data structure
+            if (data.length > 0) {
+                const first = data[0];
+                if (first.timestamp === undefined || first.b_x === undefined || 
+                    first.b_y === undefined || first.b_z === undefined) {
+                    console.warn("[DATA] Parsed data missing expected fields in first item:", first);
+                } else {
+                    console.log("[DATA] First data item:", first);
+                }
+            } else {
+                console.warn("[DATA] No data parsed from example file");
+            }
+            
+            this.data = data;
+            return this.data;
+        } catch (error) {
+            console.error("[DATA] Example load failed:", error);
+            throw error;
+        }
+    }
     
+    parseExampleCSV(csvText) {
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+        
+        const dataset = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',');
+            if (values.length < headers.length) continue;
+            
+            const entry = {};
+            headers.forEach((header, index) => {
+                const value = values[index].trim();
+                if (header === 'timestamp_pc') {
+                    // Convert MM:SS.ms to seconds
+                    const [minutes, seconds] = value.split(':');
+                    entry.timestamp = parseFloat(minutes) * 60 + parseFloat(seconds);
+                } else if (header.startsWith('b_')) {
+                    entry[header] = parseFloat(value);
+                }
+            });
+            
+            // Calculate magnitude
+            if (entry.b_x !== undefined && entry.b_y !== undefined && entry.b_z !== undefined) {
+                entry.magnitude = Math.sqrt(entry.b_x**2 + entry.b_y**2 + entry.b_z**2);
+            }
+            
+            dataset.push(entry);
+        }
+        
+        return dataset;
+    }
+    
+    async loadAndVisualizeExample() {
+        if (!window.chartManager) {
+            console.error("ChartManager not initialized!");
+            return;
+        }
+
+        try {
+            console.log("[DATA] Loading example data");
+            const data = await this.loadExample();
+            
+            console.log("[DATA] Updating chart with example data");
+            window.chartManager.updateData(data);
+            window.stateManager.saveState(data);
+            console.log("[DATA] Data update complete");
+        } catch (error) {
+            console.error("[DATA] Example visualization failed:", error);
+            alert(`Error: ${error.message}`);
+        }
+    }
+
     getCurrentDataset() {
         return this.data;
     }
-
-    // parseCSV method removed - parsing is now done by the backend
+    
+    async runInference() {
+        const modelId = window.modelManager.getActiveModel();
+        const data = this.getCurrentDataset();
+        
+        if (!modelId || !data) {
+            console.error("[ERROR] Model ID or data missing for inference");
+            throw new Error("Model ID or data missing for inference");
+        }
+        
+        console.log("[DEBUG] Running inference with model:", modelId);
+        
+        try {
+            const response = await fetch('/api/models/predict', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    model_id: modelId,
+                    input_data: data
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Inference failed');
+            }
+            
+            const result = await response.json();
+            return result.predictions;
+        } catch (error) {
+            console.error("[ERROR] Inference failed:", error);
+            throw error;
+        }
+    }
 }
 
 export async function handleFileSelect(event) {
@@ -62,8 +180,8 @@ export async function handleFileSelect(event) {
     formData.append('file', file);
 
     try {
-        console.log("[DEBUG] Sending file to backend...");
-        const response = await fetch('/api/datasets/', {
+        console.log("[DEBUG] Sending file to new /api/data endpoint...");
+        const response = await fetch('/api/data', {
             method: 'POST',
             body: formData
         });
@@ -75,87 +193,29 @@ export async function handleFileSelect(event) {
             throw new Error(errorData.error || 'File processing failed');
         }
         
-        const data = await response.json();
-        console.log("[DEBUG] Received data. First 3 items:", data.slice(0, 3));
+        const result = await response.json();
+        console.log("[DEBUG] Received data and proposals");
         
-        if (!data || data.length === 0) {
+        if (!result.data || result.data.length === 0) {
             throw new Error("No data returned from server");
         }
         
-        console.log("[DEBUG] Updating chart...");
-        window.chartManager.updateData(data);
-        console.log("[DEBUG] Chart update complete");
+        console.log("[DEBUG] Updating chart with new data...");
+        window.chartManager.updateData(result.data);
         
-        window.stateManager.saveState(data);
+        console.log("[DEBUG] Adding proposals to annotation manager");
+        window.annotationManager.addProposals(result.proposals);
+        
+        console.log("[DEBUG] Saving state...");
+        window.stateManager.saveState(result.data);
     } catch (error) {
         console.error("[ERROR] File loading failed:", error);
         alert(`Error: ${error.message}`);
     }
 }
 
-function parseExampleCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
-    
-    const dataset = [];
-    for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',');
-        if (values.length < headers.length) continue;
-        
-        const entry = {};
-        headers.forEach((header, index) => {
-            const value = values[index].trim();
-            if (header === 'timestamp_pc') {
-                // Convert MM:SS.ms to seconds
-                const [minutes, seconds] = value.split(':');
-                entry.timestamp = parseFloat(minutes) * 60 + parseFloat(seconds);
-            } else if (header.startsWith('b_')) {
-                entry[header] = parseFloat(value);
-            }
-        });
-        
-        // Calculate magnitude
-        if (entry.b_x !== undefined && entry.b_y !== undefined && entry.b_z !== undefined) {
-            entry.magnitude = Math.sqrt(entry.b_x**2 + entry.b_y**2 + entry.b_z**2);
-        }
-        
-        dataset.push(entry);
-    }
-    
-    return dataset;
-}
-
-async function loadAndVisualizeExample() {
-    try {
-        console.log("[DEBUG] Loading example data");
-        const response = await fetch('example/data_1.csv');
-        const csvText = await response.text();
-        
-        const data = parseExampleCSV(csvText);
-        console.log(`[DEBUG] Parsed ${data.length} records`);
-        
-        if (window.chartManager) {
-            console.log("Calling chartManager.updateData with", data.length, "records");
-            window.chartManager.updateData(data);
-            window.stateManager.saveState(data);
-            console.log("Data update complete");
-        } else {
-            console.error("ChartManager is not initialized");
-            // Try to initialize chartManager as fallback
-            try {
-                console.warn("Attempting to initialize ChartManager");
-                window.chartManager = new ChartManager('mainChart');
-                window.chartManager.updateData(data);
-                window.stateManager.saveState(data);
-            } catch (error) {
-                console.error("Fallback initialization failed:", error);
-            }
-        }
-    } catch (error) {
-        console.error("[ERROR] Example visualization failed:", error);
-        alert(`Error: ${error.message}`);
-    }
-}
-
 // Add event listener
-document.getElementById('visualizeExample')?.addEventListener('click', loadAndVisualizeExample);
+document.getElementById('visualizeExample')?.addEventListener('click', () => {
+    const loader = new DataLoader();
+    loader.loadAndVisualizeExample();
+});

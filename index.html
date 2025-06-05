@@ -219,6 +219,9 @@
         <div class="flex-1 p-4 relative" style="height: 70vh;">
             <canvas id="mainChart" width="100%" height="100%"></canvas>
         </div>
+        
+        <!-- Debug console -->
+        <div id="debugConsole" class="fixed bottom-0 left-0 p-4 bg-black text-white w-full h-40 overflow-auto"></div>
     </div>
 
     <!-- Annotation Sidebar -->
@@ -254,10 +257,15 @@
     <script type="module" src="confusionMatrix.js"></script>
     <script type="module" src="apiService.js"></script>
     <script type="module">
-        // Import TensorFlow once at entry point
-        import * as tf from 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/+esm';
-        
-        // Set as global for compatibility (temporary)
+        // Simple debug logger
+        function debugLog(message) {
+            const consoleElem = document.getElementById('debugConsole');
+            consoleElem.innerHTML += `[DEBUG] ${message}\n`;
+            consoleElem.scrollTop = consoleElem.scrollHeight;
+        }
+
+        // Use direct CDN import for TensorFlow
+        import * as tf from 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.es2017.mjs';
         window.tf = tf;
 
         // Import other modules
@@ -271,8 +279,17 @@
         import { ModelUI } from './modelUi.js';
         import { AnnotationRenderer } from './annotationRenderer.js';
 
-        // Initialize application
+        // Initialize application after TF is loaded
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize chart manager first
+            try {
+                window.chartManager = new ChartManager('mainChart');
+                debugLog("ChartManager initialized successfully");
+            } catch (error) {
+                debugLog(`ChartManager initialization failed: ${error}`);
+            }
+            
+            // Then initialize other components
             window.dataLoader = new DataLoader();
             window.preprocessor = new Preprocessor();
             window.stateManager = new StateManager();
@@ -284,19 +301,25 @@
             // Initialize model UI
             window.modelUi.init();
             
-            // Initialize chart manager
-            window.chartManager = new ChartManager('mainChart');
-            console.log("ChartManager initialized:", window.chartManager);
-            
             // Initialize annotation renderer after chart is created
-            window.annotationRenderer = new AnnotationRenderer(
-                document.querySelector('#mainChart').parentNode,
-                window.chartManager.getXScale()
-            );
-            console.log("AnnotationRenderer initialized");
+            try {
+                window.annotationRenderer = new AnnotationRenderer(
+                    document.querySelector('#mainChart').parentNode,
+                    window.chartManager.getXScale()
+                );
+                debugLog("AnnotationRenderer initialized");
+            } catch (error) {
+                debugLog(`AnnotationRenderer initialization failed: ${error}`);
+            }
             
             // Setup event listeners
             document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+            
+            // Add event listener for visualizeExample button
+            document.getElementById('visualizeExample')?.addEventListener('click', () => {
+                const loader = new DataLoader();
+                loader.loadAndVisualizeExample();
+            });
             
             // Annotation UI event listeners
             document.getElementById('newLabelBtn').addEventListener('click', createNewLabel);

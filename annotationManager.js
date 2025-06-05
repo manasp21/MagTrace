@@ -1,7 +1,7 @@
 // annotationManager.js - Handles annotation creation and editing
 const ANNOTATION_STORAGE_KEY = 'magtrace-annotations';
 
-class AnnotationManager {
+export class AnnotationManager {
     constructor() {
         this.annotations = this._loadAnnotations();
     }

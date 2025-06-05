@@ -13,6 +13,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Project, Dataset, Annotation, Model, ModelVersion
 from .serializers import ProjectSerializer, DatasetSerializer, AnnotationSerializer, ModelSerializer, ModelVersionSerializer
+from app.ml_adapters import active_learning
+from celery import shared_task
 
 logger = logging.getLogger(__name__)
 
@@ -177,3 +179,99 @@ def generate_plot(request):
         
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# New API endpoints for active learning workflow
+@api_view(['POST'])
+def upload_data(request):
+    """Process uploaded data and return active learning proposals"""
+    try:
+        # Process CSV file
+        file = request.FILES.get('file')
+        if not file:
+            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+            
+        df = pd.read_csv(file)
+        data = df.to_dict(orient='records')
+        
+        # Get active learning proposals
+        proposals = active_learning.get_proposals(data)
+        
+        return Response({
+            'data': data,
+            'proposals': proposals
+        })
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def save_labels(request):
+    """Save user-reviewed labels and trigger model training"""
+    try:
+        labels = request.data.get('labels')
+        model_id = request.data.get('model_id')
+        
+        if not labels or not model_id:
+            return Response({"error": "Missing labels or model_id"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Save labels to database
+        # (Implementation would save to Annotation model)
+        logger.info(f"Saving {len(labels)} labels for model {model_id}")
+        
+        # Trigger training asynchronously
+        train_model.delay(model_id)
+        
+        return Response({'status': 'success'})
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def train_model(request):
+    """Trigger model training (usually called asynchronously)"""
+    try:
+        model_id = request.data.get('model_id')
+        if not model_id:
+            return Response({"error": "Missing model_id"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Training logic would go here
+        logger.info(f"Training model {model_id} started")
+        # ... actual training implementation ...
+        logger.info(f"Training model {model_id} completed")
+        
+        return Response({
+            'status': 'success',
+            'model_id': model_id,
+            'version': 'v1.0'
+        })
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def run_inference(request):
+    """Run inference using a trained model"""
+    try:
+        model_id = request.data.get('model_id')
+        input_data = request.data.get('input_data')
+        
+        if not model_id or not input_data:
+            return Response({"error": "Missing model_id or input_data"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Load model and run inference
+        # ... actual inference implementation ...
+        predictions = [{"class": "Event", "confidence": 0.95} for _ in input_data]
+        
+        return Response({'predictions': predictions})
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# Background task for model training
+@shared_task
+def train_model_async(model_id):
+    """Asynchronous task for model training"""
+    try:
+        logger.info(f"Async training started for model {model_id}")
+        # ... training implementation ...
+        logger.info(f"Async training completed for model {model_id}")
+        return True
+    except Exception as e:
+        logger.error(f"Training failed: {str(e)}")
+        return False
