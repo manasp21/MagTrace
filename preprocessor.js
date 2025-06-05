@@ -1,4 +1,4 @@
-class Preprocessor {
+export class Preprocessor {
     constructor() {
         this.history = [];
         this.currentStateIndex = -1;

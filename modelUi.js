@@ -1,4 +1,4 @@
-class ModelUI {
+export class ModelUI {
     constructor(modelManager) {
         this.modelManager = modelManager;
         this.trainingInProgress = false;
@@ -125,121 +125,6 @@ class ModelUI {
             hyperparams.batchSize = parseInt(document.getElementById('batchSize').value);
             hyperparams.learningRate = parseFloat(document.getElementById('learningRate').value);
             hyperparams.numClasses = window.labelManager.getAllLabels().length;
-            async applyModel() {
-                // Get selected model
-                const modelId = this.modelManager.getActiveModelId();
-                if (!modelId) {
-                    alert('Please create and select a model first');
-                    return;
-                }
-                
-                // Get current data
-                const data = window.stateManager.getCurrentData();
-                if (!data || data.length === 0) {
-                    alert('Please load data first');
-                    return;
-                }
-                
-                // Show loading state
-                const applyBtn = document.getElementById('applyModelBtn');
-                applyBtn.disabled = true;
-                applyBtn.textContent = 'Applying...';
-                
-                try {
-                    // Apply model
-                    const modelApplier = new ModelApplier();
-                    const predictions = await modelApplier.applySlidingWindow(
-                        data,
-                        this.modelManager.getModel(modelId),
-                        100,  // windowSize
-                        10    // step
-                    );
-                    
-                    // Add predictions to chart
-                    window.chartManager.addPredictions(modelId, predictions, 'magnitude');
-                    
-                    // Convert predictions to annotations
-                    this.createModelAnnotations(predictions, modelId);
-                    
-                    // Evaluate model performance
-                    this.evaluateModel(predictions);
-                    
-                    // Update UI
-                    document.getElementById('showModelLabels').checked = true;
-                    this.toggleModelLabels(true);
-                    
-                } catch (error) {
-                    console.error('Model application failed:', error);
-                    alert(`Error applying model: ${error.message}`);
-                } finally {
-                    applyBtn.disabled = false;
-                    applyBtn.textContent = 'Apply Model';
-                }
-            }
-            
-            createModelAnnotations(predictions, modelId) {
-                const annotationManager = window.annotationManager;
-                
-                predictions.forEach(pred => {
-                    annotationManager.createModelAnnotation(
-                        pred.startTime,
-                        pred.endTime,
-                        pred.label,
-                        modelId,
-                        pred.confidence
-                    );
-                });
-                
-                // Refresh annotations display
-                if (window.annotationRenderer) {
-                    window.annotationRenderer.refresh();
-                }
-            }
-            
-            evaluateModel(predictions) {
-                // Get ground truth annotations
-                const trueLabels = window.annotationManager.getAllAnnotations()
-                    .filter(a => a.source === 'user')
-                    .map(a => ({
-                        startTime: a.startTime,
-                        endTime: a.endTime,
-                        label: a.labelId
-                    }));
-                    
-                // Convert to comparable format
-                const evaluator = new Evaluator();
-                const { accuracy, precision, recall, f1Score, confusionMatrix } = evaluator.evaluate(
-                    trueLabels,
-                    predictions
-                );
-                
-                // Update metrics display
-                document.getElementById('accuracyValue').textContent = accuracy.toFixed(2);
-                document.getElementById('precisionValue').textContent = precision.toFixed(2);
-                document.getElementById('recallValue').textContent = recall.toFixed(2);
-                document.getElementById('f1Value').textContent = f1Score.toFixed(2);
-                
-                // Render confusion matrix
-                const classes = window.labelManager.getAllLabels().map(l => l.name);
-                const cm = new ConfusionMatrix();
-                cm.render(document.getElementById('confusionMatrixContainer'), confusionMatrix, classes);
-            }
-            
-            toggleModelLabels(show) {
-                // Implementation to show/hide model labels on chart
-                // This would interact with chartManager and annotationRenderer
-            }
-            
-            processBatch() {
-                // Batch processing implementation
-            }
-            
-            applySpecificModel(modelId) {
-                // Set this model as active
-                this.modelManager.setActiveModel(modelId);
-                // Then apply it
-                this.applyModel();
-            }
         }
         
         // Get augmentation options
@@ -276,6 +161,122 @@ class ModelUI {
         } finally {
             this.trainingInProgress = false;
         }
+    }
+
+    async applyModel() {
+        // Get selected model
+        const modelId = this.modelManager.getActiveModelId();
+        if (!modelId) {
+            alert('Please create and select a model first');
+            return;
+        }
+        
+        // Get current data
+        const data = window.stateManager.getCurrentData();
+        if (!data || data.length === 0) {
+            alert('Please load data first');
+            return;
+        }
+        
+        // Show loading state
+        const applyBtn = document.getElementById('applyModelBtn');
+        applyBtn.disabled = true;
+        applyBtn.textContent = 'Applying...';
+        
+        try {
+            // Apply model
+            const modelApplier = new ModelApplier();
+            const predictions = await modelApplier.applySlidingWindow(
+                data,
+                this.modelManager.getModel(modelId),
+                100,  // windowSize
+                10    // step
+            );
+            
+            // Add predictions to chart
+            window.chartManager.addPredictions(modelId, predictions, 'magnitude');
+            
+            // Convert predictions to annotations
+            this.createModelAnnotations(predictions, modelId);
+            
+            // Evaluate model performance
+            this.evaluateModel(predictions);
+            
+            // Update UI
+            document.getElementById('showModelLabels').checked = true;
+            this.toggleModelLabels(true);
+            
+        } catch (error) {
+            console.error('Model application failed:', error);
+            alert(`Error applying model: ${error.message}`);
+        } finally {
+            applyBtn.disabled = false;
+            applyBtn.textContent = 'Apply Model';
+        }
+    }
+    
+    createModelAnnotations(predictions, modelId) {
+        const annotationManager = window.annotationManager;
+        
+        predictions.forEach(pred => {
+            annotationManager.createModelAnnotation(
+                pred.startTime,
+                pred.endTime,
+                pred.label,
+                modelId,
+                pred.confidence
+            );
+        });
+        
+        // Refresh annotations display
+        if (window.annotationRenderer) {
+            window.annotationRenderer.refresh();
+        }
+    }
+    
+    evaluateModel(predictions) {
+        // Get ground truth annotations
+        const trueLabels = window.annotationManager.getAllAnnotations()
+            .filter(a => a.source === 'user')
+            .map(a => ({
+                startTime: a.startTime,
+                endTime: a.endTime,
+                label: a.labelId
+            }));
+            
+        // Convert to comparable format
+        const evaluator = new Evaluator();
+        const { accuracy, precision, recall, f1Score, confusionMatrix } = evaluator.evaluate(
+            trueLabels,
+            predictions
+        );
+        
+        // Update metrics display
+        document.getElementById('accuracyValue').textContent = accuracy.toFixed(2);
+        document.getElementById('precisionValue').textContent = precision.toFixed(2);
+        document.getElementById('recallValue').textContent = recall.toFixed(2);
+        document.getElementById('f1Value').textContent = f1Score.toFixed(2);
+        
+        // Render confusion matrix
+        const classes = window.labelManager.getAllLabels().map(l => l.name);
+        const cm = new ConfusionMatrix();
+        cm.render(document.getElementById('confusionMatrixContainer'), confusionMatrix, classes);
+    }
+    
+    toggleModelLabels(show) {
+        // Implementation to show/hide model labels on chart
+        // This would interact with chartManager and annotationRenderer
+    }
+    
+    processBatch() {
+        // Batch processing implementation
+    }
+    
+    applySpecificModel(modelId) {
+        // Set this model as active
+        this.modelManager.setActiveModel(modelId);
+        // Then apply it
+        this.applyModel();
     }
 
     setupEventListeners() {
@@ -363,5 +364,3 @@ class ModelUI {
         });
     }
 }
-
-export default ModelUI;

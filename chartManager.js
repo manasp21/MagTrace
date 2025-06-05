@@ -1,4 +1,4 @@
-class ChartManager {
+export class ChartManager {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
@@ -8,9 +8,9 @@ class ChartManager {
         
         // Color palette for components (warm neutral harmony)
         this.componentColors = {
-            Bx: 'rgba(15, 118, 110, 1)',      // Teal-700
-            By: 'rgba(217, 119, 6, 1)',       // Amber-600
-            Bz: 'rgba(180, 83, 9, 1)',        // Orange-700
+            b_x: 'rgba(15, 118, 110, 1)',      // Teal-700
+            b_y: 'rgba(217, 119, 6, 1)',       // Amber-600
+            b_z: 'rgba(180, 83, 9, 1)',        // Orange-700
             magnitude: 'rgba(120, 113, 108, 1)' // Stone-600
         };
         
@@ -75,47 +75,50 @@ class ChartManager {
     }
 
     updateData(data) {
-        if (!data || data.length === 0) return;
-        this.data = data;
-        
-        // Extract component data
-        const components = ['Bx', 'By', 'Bz', 'magnitude'];
+        console.log("[ChartManager] updateData called with:", data);
+        if (!data || data.length === 0) {
+            console.warn("[ChartManager] No data provided - cannot update chart");
+            return;
+        }
+
+        // Update dataset creation to use new component names
+        const components = Object.keys(this.componentColors);
         const datasets = [];
         
         components.forEach(comp => {
-            // Check if this component exists in the data
             if (data[0][comp] !== undefined) {
-                const dataset = {
+                const componentData = data.map(d => ({
+                    x: d.timestamp,
+                    y: d[comp]
+                }));
+
+                datasets.push({
                     label: comp,
-                    data: data.map((d, i) => ({ x: d.timestamp, y: d[comp] })),
+                    data: componentData,
                     borderColor: this.componentColors[comp],
-                    backgroundColor: this.componentColors[comp] + '20',
-                    borderWidth: 2,
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    borderWidth: 1,
                     pointRadius: 0,
-                    tension: 0.3,
-                    fill: false
-                };
-                datasets.push(dataset);
+                    tension: 0.1
+                });
             }
         });
-        
+
         // Add prediction datasets
-        Object.values(this.predictionDatasets).forEach(predDataset => {
-            datasets.push(predDataset);
+        Object.values(this.predictionDatasets).forEach(ds => {
+            datasets.push(ds);
         });
-        
+
         this.chart.data.datasets = datasets;
         this.chart.update();
-        
-        // Update annotations after data update
-        this.updateAnnotations();
+        this.data = data;
     }
-
+    
     /**
      * Adds a prediction dataset to the chart
      * @param {string} modelId - Unique identifier for the model
      * @param {Array} predictions - Array of prediction objects {timestamp, value, confidence}
-     * @param {string} component - Component being predicted (Bx, By, Bz, magnitude)
+     * @param {string} component - Component being predicted (b_x, b_y, b_z, magnitude)
      */
     addPredictions(modelId, predictions, component) {
         // Get a unique color for this model prediction
@@ -243,8 +246,3 @@ class ChartManager {
         this.updateAnnotations();
     }
 }
-
-// Setup event listeners for zoom buttons (called from index.html)
-document.getElementById('zoomIn')?.addEventListener('click', () => window.chartManager.zoomIn());
-document.getElementById('zoomOut')?.addEventListener('click', () => window.chartManager.zoomOut());
-document.getElementById('resetZoom')?.addEventListener('click', () => window.chartManager.resetZoom());

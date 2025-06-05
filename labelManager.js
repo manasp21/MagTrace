@@ -1,7 +1,7 @@
 // labelManager.js - Manages label definitions and colors
 const LABEL_STORAGE_KEY = 'magtrace-labels';
 
-class LabelManager {
+export class LabelManager {
     constructor() {
         this.labels = this._loadLabels();
         this.nextColorIndex = 0;
@@ -61,5 +61,3 @@ class LabelManager {
         return [...this.labels];
     }
 }
-
-export default new LabelManager();

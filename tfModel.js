@@ -2,8 +2,7 @@
  * TensorFlow.js model implementation for MagTrace
  */
 
-const tf = require('@tensorflow/tfjs');
-const fs = require('fs');
+import * as tf from '@tensorflow/tfjs';
 
 class TFModel {
   constructor(inputShape, numClasses) {
@@ -73,15 +72,7 @@ class TFModel {
     const prediction = this.model.predict(input);
     return prediction.arraySync()[0];
   }
-
-  async saveModel(filePath) {
-    await this.model.save(`file://${filePath}`);
-  }
-
-  async loadModel(filePath) {
-    this.model = await tf.loadLayersModel(`file://${filePath}/model.json`);
-    this.compiled = true;
-  }
+  
+  // Note: Removed file system operations since they are Node.js-specific
+  // and not compatible with browser environments
 }
-
-module.exports = TFModel;

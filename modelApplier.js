@@ -25,5 +25,3 @@ class ModelApplier {
     // Main processing logic
   }
 }
-
-module.exports = ModelApplier;

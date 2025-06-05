@@ -12,4 +12,5 @@ router.register(r'model-versions', views.ModelVersionViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('datasets/example/', views.load_example_data, name='load_example_data'),
+    path('health/', views.health_check, name='health-check'),
 ]

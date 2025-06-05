@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView
+from magtrace_api.views import welcome
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/api/', permanent=False)),
+    path('', welcome, name='welcome'),
     path('api/', include('magtrace_api.urls')),
 ]

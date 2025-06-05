@@ -3,7 +3,7 @@
  * Supports: mean, variance, max, min, FFT features
  */
 
-class FeatureExtractor {
+export class FeatureExtractor {
   constructor() {
     this.features = {
       mean: this.calculateMean,
@@ -66,5 +66,3 @@ class FeatureExtractor {
     return shifted;
   }
 }
-
-module.exports = FeatureExtractor;

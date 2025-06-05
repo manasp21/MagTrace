@@ -1,5 +1,10 @@
 // API service for MagTrace frontend
-const API_BASE_URL = 'http://localhost:8000/api';
+export const API_BASE_URL = 'http://localhost:8000/api';
+
+export function getAuthHeader() {
+  // TODO: Implement proper authentication
+  return {};
+}
 
 export const apiService = {
   // Projects CRUD
@@ -131,13 +136,6 @@ export const apiService = {
     }
 };
 // Helper functions
-function getHeaders() {
-  return {
-    'Content-Type': 'application/json'
-  };
-}
-
-
 async function handleResponse(response) {
   if (!response.ok) {
     const error = await response.text();

@@ -1,5 +1,5 @@
 // annotationRenderer.js - Renders annotations on chart
-import LabelManager from './labelManager.js';
+import { LabelManager } from './labelManager.js';
 import AnnotationManager from './annotationManager.js';
 
 class AnnotationRenderer {

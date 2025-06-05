@@ -1,7 +1,7 @@
 /**
  * Calculates model performance metrics
  */
-class Evaluator {
+export class Evaluator {
   /**
    * Calculate accuracy
    * @param {Array} trueLabels 
@@ -93,5 +93,3 @@ class Evaluator {
     return matrix;
   }
 }
-
-module.exports = Evaluator;

@@ -3,11 +3,11 @@
  * Supports k-NN and TensorFlow.js models
  */
 
-const FeatureExtractor = require('./featureExtractor');
-const tf = require('@tensorflow/tfjs');
-const fs = require('fs');
+import * as tf from '@tensorflow/tfjs';
+import { FeatureExtractor } from './featureExtractor.js';
+import { TFModel } from './tfModel.js';
 
-class MLTrainer {
+export class MLTrainer {
   constructor() {
     this.featureExtractor = new FeatureExtractor();
     this.model = null;
@@ -15,6 +15,7 @@ class MLTrainer {
     this.trainingLabels = null;
     this.trainingProgressCallback = () => {};
     this.modelType = null;
+    this.tfModel = null;
   }
 
   setProgressCallback(callback) {
@@ -23,7 +24,7 @@ class MLTrainer {
 
   prepareData(segments, labels, selectedFeatures, augmentationOptions = {}) {
     // Extract features
-    const features = segments.map(segment => 
+    const features = segments.map(segment =>
       this.featureExtractor.extractFeatures(segment, selectedFeatures)
     );
     
@@ -33,7 +34,7 @@ class MLTrainer {
     // Apply augmentation
     if (augmentationOptions.enabled) {
       const augmented = this.augmentData(segments, labels, augmentationOptions);
-      const augFeatures = augmented.segments.map(segment => 
+      const augFeatures = augmented.segments.map(segment =>
         this.featureExtractor.extractFeatures(segment, selectedFeatures)
       );
       const augVectors = augFeatures.map(feat => Object.values(feat));
@@ -95,86 +96,28 @@ class MLTrainer {
       };
       this.trainingProgressCallback(100);
       return this.model;
-    } 
+    }
     else if (modelType === 'tf') {
-      // TensorFlow.js implementation
-      this.model = this.createTFModel(hyperparams);
-      
-      // Prepare tensors
-      const xs = tf.tensor2d(this.trainingData);
-      const ys = tf.oneHot(tf.tensor1d(this.trainingLabels, 'int32'), hyperparams.numClasses);
-      
-      // Train model
-      await this.model.fit(xs, ys, {
-        epochs: hyperparams.epochs || 10,
-        batchSize: hyperparams.batchSize || 32,
-        callbacks: {
-          onEpochEnd: (epoch, logs) => {
-            const progress = Math.min(100, Math.round((epoch + 1) / hyperparams.epochs * 100));
-            this.trainingProgressCallback(progress, logs);
-          }
+      // Create and train TensorFlow model
+      this.tfModel = new TFModel();
+      this.tfModel.createModel(
+        this.trainingData[0].length,
+        hyperparams.numClasses,
+        hyperparams
+      );
+      this.tfModel.compile(hyperparams.learningRate || 0.001);
+
+      await this.tfModel.train(
+        this.trainingData,
+        this.trainingLabels,
+        hyperparams.epochs || 10,
+        hyperparams.batchSize || 32,
+        (progress, logs) => {
+          this.trainingProgressCallback(progress, logs);
         }
-      });
-      
-      return this.model;
-    }
-  }
+      );
 
-  createTFModel(hyperparams) {
-    const model = tf.sequential();
-    
-    model.add(tf.layers.dense({
-      units: hyperparams.hiddenUnits || 16,
-      activation: 'relu',
-      inputShape: [this.trainingData[0].length]
-    }));
-    
-    if (hyperparams.hiddenLayers > 1) {
-      for (let i = 1; i < hyperparams.hiddenLayers; i++) {
-        model.add(tf.layers.dense({
-          units: hyperparams.hiddenUnits || 16,
-          activation: 'relu'
-        }));
-      }
-    }
-    
-    model.add(tf.layers.dense({
-      units: hyperparams.numClasses,
-      activation: 'softmax'
-    }));
-    
-    model.compile({
-      optimizer: tf.train.adam(hyperparams.learningRate || 0.001),
-      loss: 'categoricalCrossentropy',
-      metrics: ['accuracy']
-    });
-    
-    return model;
-  }
-
-  saveModel(filePath) {
-    if (!this.model) throw new Error('No model trained');
-    
-    if (this.modelType === 'knn') {
-      const modelData = JSON.stringify(this.model);
-      fs.writeFileSync(filePath, modelData);
-    } 
-    else if (this.modelType === 'tf') {
-      this.model.save(`file://${filePath}`);
-    }
-  }
-
-  loadModel(filePath, modelType) {
-    this.modelType = modelType;
-    
-    if (modelType === 'knn') {
-      const modelData = fs.readFileSync(filePath, 'utf8');
-      this.model = JSON.parse(modelData);
-    } 
-    else if (modelType === 'tf') {
-      this.model = tf.loadLayersModel(`file://${filePath}/model.json`);
+      return this.tfModel;
     }
   }
 }
-
-module.exports = MLTrainer;

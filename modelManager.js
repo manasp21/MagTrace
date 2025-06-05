@@ -1,4 +1,8 @@
-class ModelManager {
+import { FeatureExtractor } from './featureExtractor.js';
+import { MLTrainer } from './mlTrainer.js';
+import { apiService } from './apiService.js';
+
+export class ModelManager {
     constructor() {
         this.models = [];
         this.currentModel = null;
@@ -94,47 +98,8 @@ class ModelManager {
         }
     }
     
-    saveModelToLocal(modelId) {
-        const model = this.trainedModels[modelId];
-        if (!model) throw new Error('Model not found');
-        
-        if (model.type === 'knn') {
-            localStorage.setItem(`ml_model_${modelId}`, JSON.stringify(model));
-        } else if (model.type === 'tf') {
-            // TensorFlow models are saved to IndexedDB by default
-            // We'll just store metadata
-            localStorage.setItem(`ml_model_${modelId}`, JSON.stringify({
-                id: modelId,
-                type: model.type,
-                features: model.features,
-                createdAt: model.createdAt,
-                path: `indexeddb://${modelId}`
-            }));
-        }
-    }
-    
-    async loadModelFromLocal(modelId) {
-        const modelData = localStorage.getItem(`ml_model_${modelId}`);
-        if (!modelData) return null;
-        
-        const model = JSON.parse(modelData);
-        if (model.type === 'knn') {
-            this.trainedModels[modelId] = model;
-        } else if (model.type === 'tf') {
-            // Load TensorFlow model from IndexedDB
-            try {
-                const loadedModel = await tf.loadLayersModel(model.path);
-                this.trainedModels[modelId] = {
-                    ...model,
-                    model: loadedModel
-                };
-            } catch (e) {
-                console.error('Failed to load TF model:', e);
-                return null;
-            }
-        }
-        return modelId;
-    }
+    // Removed Node.js-specific model saving/loading methods
+    // Models are now managed through IndexedDB and localStorage
     
     predict(segment) {
         const features = this.featureExtractor.extractFeatures(segment, this.selectedFeatures);
@@ -152,5 +117,3 @@ class ModelManager {
         }
     }
 }
-
-export default new ModelManager();

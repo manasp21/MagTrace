@@ -9,8 +9,6 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-    <!-- TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
     <style>
         .warm-bg { background-color: #fafaf9; }
         .warm-text { color: #292524; }
@@ -25,8 +23,12 @@
         
         <div class="mb-6">
             <h2 class="font-semibold mb-2">Data Input</h2>
-            <input type="file" id="fileInput" class="mb-2 w-full" accept=".csv">
-            <button id="loadExample" class="w-full bg-teal-600 text-white py-1 rounded">Load Example Data</button>
+            <input type="file" id="fileInput" class="w-full" accept=".csv">
+            <div class="mt-2">
+                <button id="visualizeExample" class="w-full bg-teal-700 text-white py-2 rounded-lg">
+                    Visualize Example Data
+                </button>
+            </div>
         </div>
 
         <div class="mb-6">
@@ -65,6 +67,19 @@
                 <input type="range" id="confidenceSlider" min="0" max="1" step="0.1" value="1" class="w-full">
                 <span id="confidenceValue" class="ml-2">1.0</span>
             </div>
+        </div>
+
+        <!-- Visualization -->
+        <div class="mb-6">
+            <h2 class="font-semibold mb-2">Visualization</h2>
+            <button id="renderMatplotlib" class="w-full bg-teal-600 text-white py-1 rounded hidden">
+                Render with Matplotlib
+            </button>
+        </div>
+
+        <!-- Matplotlib Image Container -->
+        <div id="matplotlibContainer" class="hidden p-4">
+            <img id="matplotlibPlot" class="w-full">
         </div>
 
         <!-- Model Management -->
@@ -191,15 +206,18 @@
         <div class="p-4 border-b border-stone-300">
             <div class="flex justify-between items-center">
                 <h2 class="text-lg font-semibold">Magnetic Field Components</h2>
-                <div>
-                    <button id="zoomIn" class="bg-stone-200 px-3 py-1 rounded-l">+</button>
-                    <button id="zoomOut" class="bg-stone-200 px-3 py-1 rounded-r">-</button>
-                    <button id="resetZoom" class="bg-stone-200 px-3 py-1 ml-2 rounded">Reset</button>
+                <div class="flex items-center">
+                    <div id="backend-status" class="mr-4 px-2 py-1 rounded text-sm">Checking...</div>
+                    <div>
+                        <button id="zoomIn" class="bg-stone-200 px-3 py-1 rounded-l">+</button>
+                        <button id="zoomOut" class="bg-stone-200 px-3 py-1 rounded-r">-</button>
+                        <button id="resetZoom" class="bg-stone-200 px-3 py-1 ml-2 rounded">Reset</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="flex-1 p-4 relative">
-            <canvas id="mainChart"></canvas>
+        <div class="flex-1 p-4 relative" style="height: 70vh;">
+            <canvas id="mainChart" width="100%" height="100%"></canvas>
         </div>
     </div>
 
@@ -219,48 +237,66 @@
     </div>
 
     <!-- Script modules -->
-    <script src="dataLoader.js"></script>
-    <script src="preprocessor.js"></script>
-    <script src="chartManager.js"></script>
-    <script src="stateManager.js"></script>
-    <script src="labelManager.js"></script>
-    <script src="annotationManager.js"></script>
-    <script src="annotationRenderer.js"></script>
-    <script src="modelManager.js"></script>
-    <script src="modelUi.js"></script>
-    <script src="featureExtractor.js"></script>
-    <script src="mlTrainer.js"></script>
-    <script src="tfModel.js"></script>
-<script src="modelApplier.js"></script>
-    <script src="evaluator.js"></script>
-    <script src="confusionMatrix.js"></script>
-    <script src="apiService.js"></script>
-    <script>
+    <script type="module" src="dataLoader.js"></script>
+    <script type="module" src="preprocessor.js"></script>
+    <script type="module" src="chartManager.js"></script>
+    <script type="module" src="stateManager.js"></script>
+    <script type="module" src="labelManager.js"></script>
+    <script type="module" src="annotationManager.js"></script>
+    <script type="module" src="annotationRenderer.js"></script>
+    <script type="module" src="modelManager.js"></script>
+    <script type="module" src="modelUi.js"></script>
+    <script type="module" src="featureExtractor.js"></script>
+    <script type="module" src="mlTrainer.js"></script>
+    <script type="module" src="tfModel.js"></script>
+    <script type="module" src="modelApplier.js"></script>
+    <script type="module" src="evaluator.js"></script>
+    <script type="module" src="confusionMatrix.js"></script>
+    <script type="module" src="apiService.js"></script>
+    <script type="module">
+        // Import TensorFlow once at entry point
+        import * as tf from 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/+esm';
+        
+        // Set as global for compatibility (temporary)
+        window.tf = tf;
+
+        // Import other modules
+        import { DataLoader } from './dataLoader.js';
+        import { Preprocessor } from './preprocessor.js';
+        import { ChartManager } from './chartManager.js';
+        import { StateManager } from './stateManager.js';
+        import { LabelManager } from './labelManager.js';
+        import { AnnotationManager } from './annotationManager.js';
+        import { ModelManager } from './modelManager.js';
+        import { ModelUI } from './modelUi.js';
+        import { AnnotationRenderer } from './annotationRenderer.js';
+
         // Initialize application
         document.addEventListener('DOMContentLoaded', () => {
             window.dataLoader = new DataLoader();
             window.preprocessor = new Preprocessor();
-            window.chartManager = new ChartManager('mainChart');
             window.stateManager = new StateManager();
             window.labelManager = new LabelManager();
             window.annotationManager = new AnnotationManager();
             window.modelManager = new ModelManager();
             window.modelUi = new ModelUI(window.modelManager);
             
+            // Initialize model UI
+            window.modelUi.init();
+            
+            // Initialize chart manager
+            window.chartManager = new ChartManager('mainChart');
+            console.log("ChartManager initialized:", window.chartManager);
+            
             // Initialize annotation renderer after chart is created
-            setTimeout(() => {
-                window.annotationRenderer = new AnnotationRenderer(
-                    document.querySelector('#mainChart').parentNode,
-                    window.chartManager.getXScale()
-                );
-                
-                // Initialize model UI
-                window.modelUi.init();
-            }, 100);
+            window.annotationRenderer = new AnnotationRenderer(
+                document.querySelector('#mainChart').parentNode,
+                window.chartManager.getXScale()
+            );
+            console.log("AnnotationRenderer initialized");
             
             // Setup event listeners
             document.getElementById('fileInput').addEventListener('change', handleFileSelect);
-            document.getElementById('loadExample').addEventListener('click', loadExampleData);
             
             // Annotation UI event listeners
             document.getElementById('newLabelBtn').addEventListener('click', createNewLabel);
@@ -274,7 +310,35 @@
             // Initialize confidence display
             updateConfidenceValue();
             
+            // Add backend health check
+            checkBackendHealth();
         });
+        
+        // Backend health check function
+        async function checkBackendHealth() {
+            try {
+                const response = await fetch('/api/health');
+                const health = await response.json();
+                console.log("Backend health:", health);
+                
+                // Update status indicator
+                const statusIndicator = document.getElementById('backend-status');
+                if (health.status === 'ok') {
+                    statusIndicator.textContent = 'Backend: OK';
+                    statusIndicator.className = 'text-green-600';
+                } else {
+                    statusIndicator.textContent = 'Backend: ERROR';
+                    statusIndicator.className = 'text-red-600';
+                    alert(`Backend issues:\nDatabase: ${health.database}\nCelery: ${health.celery}\nTensorFlow: ${health.tensorflow}\nTorch: ${health.torch}`);
+                }
+            } catch (error) {
+                console.error("Health check failed:", error);
+                const statusIndicator = document.getElementById('backend-status');
+                statusIndicator.textContent = 'Backend: UNREACHABLE';
+                statusIndicator.className = 'text-red-600';
+                alert("Backend is unreachable. Please check if the server is running.");
+            }
+        }
         
         // Annotation functions
         function createNewLabel() {
@@ -326,6 +390,34 @@
         function filterAnnotations() {
             // Implementation will be added to annotationManager
         }
+        
+        async function renderWithMatplotlib() {
+            const data = window.dataLoader?.getCurrentDataset() || [];
+            if (!data.length) {
+                alert('No data to plot');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/generate_plot/', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ data })
+                });
+                
+                const result = await response.json();
+                if (result.image) {
+                    document.getElementById('matplotlibPlot').src = `data:image/png;base64,${result.image}`;
+                    document.getElementById('matplotlibContainer').classList.remove('hidden');
+                    document.getElementById('mainChart').parentNode.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Matplotlib rendering failed:', error);
+            }
+        }
+
+        // Add event listener
+        document.getElementById('renderMatplotlib')?.addEventListener('click', renderWithMatplotlib);
     </script>
 </body>
 </html>

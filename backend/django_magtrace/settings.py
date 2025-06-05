@@ -129,12 +129,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'magtrace_api': {
+        '': {  # Root logger
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,

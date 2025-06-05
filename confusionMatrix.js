@@ -1,7 +1,7 @@
 /**
  * Visualizes confusion matrix using Chart.js
  */
-class ConfusionMatrix {
+export class ConfusionMatrix {
   /**
    * Render confusion matrix
    * @param {HTMLElement} container - DOM element to render in
@@ -78,5 +78,3 @@ class ConfusionMatrix {
     return result;
   }
 }
-
-module.exports = ConfusionMatrix;

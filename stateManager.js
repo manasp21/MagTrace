@@ -1,4 +1,4 @@
-class StateManager {
+export class StateManager {
     constructor() {
         this.history = [];
         this.currentStateIndex = -1;
@@ -145,7 +145,3 @@ class StateManager {
         return this.currentModelId;
     }
 }
-
-// Setup event listeners for undo/redo buttons (called from index.html)
-document.getElementById('undoBtn')?.addEventListener('click', () => window.stateManager.undo());
-document.getElementById('redoBtn')?.addEventListener('click', () => window.stateManager.redo());
