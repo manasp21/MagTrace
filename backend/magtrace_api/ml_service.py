@@ -1,20 +1,33 @@
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import joblib
 import os
 from datetime import datetime
 from .models import Dataset, MagnetometerReading, Label, MLModel
 
+# Try to import TensorFlow, fall back to sklearn if not available
+TF_AVAILABLE = False
+try:
+    import tensorflow as tf
+    TF_AVAILABLE = True
+    print("TensorFlow available - using neural network models")
+except ImportError:
+    print("TensorFlow not available - using scikit-learn models")
+
 
 class MLService:
+    """
+    ML service that automatically chooses between TensorFlow and scikit-learn
+    """
     def __init__(self):
         self.scaler = StandardScaler()
         self.label_encoder = LabelEncoder()
         self.model = None
+        self.backend = 'tensorflow' if TF_AVAILABLE else 'sklearn'
         
     def prepare_features(self, data):
         """
@@ -110,57 +123,74 @@ class MLService:
                 
         return data_labels
     
-    def build_anomaly_detection_model(self, input_shape):
+    def build_anomaly_detection_model(self, input_shape=None, **kwargs):
         """
-        Build an autoencoder for anomaly detection
+        Build anomaly detection model (autoencoder or isolation forest)
         """
-        model = tf.keras.Sequential([
-            # Encoder
-            tf.keras.layers.Dense(64, activation='relu', input_shape=(input_shape,)),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.Dense(16, activation='relu'),
+        if self.backend == 'tensorflow' and TF_AVAILABLE:
+            model = tf.keras.Sequential([
+                # Encoder
+                tf.keras.layers.Dense(64, activation='relu', input_shape=(input_shape,)),
+                tf.keras.layers.Dropout(0.2),
+                tf.keras.layers.Dense(32, activation='relu'),
+                tf.keras.layers.Dropout(0.2),
+                tf.keras.layers.Dense(16, activation='relu'),
+                
+                # Bottleneck
+                tf.keras.layers.Dense(8, activation='relu'),
+                
+                # Decoder
+                tf.keras.layers.Dense(16, activation='relu'),
+                tf.keras.layers.Dropout(0.2),
+                tf.keras.layers.Dense(32, activation='relu'),
+                tf.keras.layers.Dropout(0.2),
+                tf.keras.layers.Dense(64, activation='relu'),
+                tf.keras.layers.Dense(input_shape, activation='linear')
+            ])
             
-            # Bottleneck
-            tf.keras.layers.Dense(8, activation='relu'),
-            
-            # Decoder
-            tf.keras.layers.Dense(16, activation='relu'),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.Dense(64, activation='relu'),
-            tf.keras.layers.Dense(input_shape, activation='linear')
-        ])
-        
-        model.compile(
-            optimizer='adam',
-            loss='mse',
-            metrics=['mae']
-        )
+            model.compile(
+                optimizer='adam',
+                loss='mse',
+                metrics=['mae']
+            )
+        else:
+            # Fallback to Isolation Forest
+            contamination = kwargs.get('contamination', 0.1)
+            model = IsolationForest(
+                contamination=contamination,
+                random_state=42,
+                n_estimators=100
+            )
         
         return model
     
-    def build_classification_model(self, input_shape, num_classes):
+    def build_classification_model(self, input_shape=None, num_classes=2, **kwargs):
         """
-        Build a classification model for labeled data
+        Build classification model (neural network or random forest)
         """
-        model = tf.keras.Sequential([
-            tf.keras.layers.Dense(128, activation='relu', input_shape=(input_shape,)),
-            tf.keras.layers.Dropout(0.3),
-            tf.keras.layers.Dense(64, activation='relu'),
-            tf.keras.layers.Dropout(0.3),
-            tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.Dense(num_classes, activation='softmax')
-        ])
-        
-        model.compile(
-            optimizer='adam',
-            loss='sparse_categorical_crossentropy',
-            metrics=['accuracy']
-        )
+        if self.backend == 'tensorflow' and TF_AVAILABLE:
+            model = tf.keras.Sequential([
+                tf.keras.layers.Dense(128, activation='relu', input_shape=(input_shape,)),
+                tf.keras.layers.Dropout(0.3),
+                tf.keras.layers.Dense(64, activation='relu'),
+                tf.keras.layers.Dropout(0.3),
+                tf.keras.layers.Dense(32, activation='relu'),
+                tf.keras.layers.Dropout(0.2),
+                tf.keras.layers.Dense(num_classes, activation='softmax')
+            ])
+            
+            model.compile(
+                optimizer='adam',
+                loss='sparse_categorical_crossentropy',
+                metrics=['accuracy']
+            )
+        else:
+            # Fallback to Random Forest
+            model = RandomForestClassifier(
+                n_estimators=kwargs.get('n_estimators', 100),
+                random_state=42,
+                max_depth=10
+            )
         
         return model
     
@@ -173,7 +203,9 @@ class MLService:
                 'epochs': 100,
                 'batch_size': 32,
                 'validation_split': 0.2,
-                'learning_rate': 0.001
+                'learning_rate': 0.001,
+                'contamination': 0.1,
+                'n_estimators': 100
             }
         
         # Load data
@@ -206,29 +238,49 @@ class MLService:
             else:
                 training_features = features_scaled[normal_indices]
             
-            # Build and train autoencoder
-            model = self.build_anomaly_detection_model(features_scaled.shape[1])
-            
-            history = model.fit(
-                training_features,
-                training_features,
-                epochs=parameters['epochs'],
-                batch_size=parameters['batch_size'],
-                validation_split=parameters['validation_split'],
-                verbose=0
+            # Build and train model
+            model = self.build_anomaly_detection_model(
+                input_shape=features_scaled.shape[1],
+                contamination=parameters.get('contamination', 0.1)
             )
             
-            # Calculate threshold for anomaly detection
-            predictions = model.predict(training_features)
-            mse = np.mean(np.square(training_features - predictions), axis=1)
-            threshold = np.percentile(mse, 95)  # 95th percentile as threshold
-            
-            metrics = {
-                'threshold': float(threshold),
-                'final_loss': float(history.history['loss'][-1]),
-                'final_val_loss': float(history.history['val_loss'][-1])
-            }
-            
+            if self.backend == 'tensorflow' and TF_AVAILABLE:
+                history = model.fit(
+                    training_features,
+                    training_features,
+                    epochs=parameters.get('epochs', 100),
+                    batch_size=parameters.get('batch_size', 32),
+                    validation_split=parameters.get('validation_split', 0.2),
+                    verbose=0
+                )
+                
+                # Calculate threshold for anomaly detection
+                predictions = model.predict(training_features)
+                mse = np.mean(np.square(training_features - predictions), axis=1)
+                threshold = np.percentile(mse, 95)  # 95th percentile as threshold
+                
+                metrics = {
+                    'threshold': float(threshold),
+                    'final_loss': float(history.history['loss'][-1]),
+                    'final_val_loss': float(history.history['val_loss'][-1]),
+                    'backend': 'tensorflow'
+                }
+            else:
+                # sklearn Isolation Forest
+                model.fit(training_features)
+                
+                # Calculate metrics on training data
+                predictions = model.predict(training_features)
+                anomaly_score = model.decision_function(training_features)
+                
+                metrics = {
+                    'contamination': parameters.get('contamination', 0.1),
+                    'n_estimators': parameters.get('n_estimators', 100),
+                    'anomaly_score_mean': float(np.mean(anomaly_score)),
+                    'anomaly_score_std': float(np.std(anomaly_score)),
+                    'backend': 'sklearn'
+                }
+                
         elif model_type == 'classification':
             # For classification, we need labeled data
             labels = self.prepare_labels(dataset_id, readings)
@@ -244,46 +296,72 @@ class MLService:
             # Split data
             X_train, X_test, y_train, y_test = train_test_split(
                 features_scaled, labels_encoded,
-                test_size=parameters['validation_split'],
+                test_size=parameters.get('validation_split', 0.2),
                 random_state=42,
                 stratify=labels_encoded
             )
             
             # Build and train classifier
             model = self.build_classification_model(
-                features_scaled.shape[1],
-                len(unique_labels)
+                input_shape=features_scaled.shape[1],
+                num_classes=len(unique_labels),
+                n_estimators=parameters.get('n_estimators', 100)
             )
             
-            history = model.fit(
-                X_train, y_train,
-                epochs=parameters['epochs'],
-                batch_size=parameters['batch_size'],
-                validation_data=(X_test, y_test),
-                verbose=0
-            )
-            
-            # Calculate metrics
-            y_pred = np.argmax(model.predict(X_test), axis=1)
-            
-            metrics = {
-                'accuracy': float(accuracy_score(y_test, y_pred)),
-                'precision': float(precision_score(y_test, y_pred, average='weighted')),
-                'recall': float(recall_score(y_test, y_pred, average='weighted')),
-                'f1_score': float(f1_score(y_test, y_pred, average='weighted')),
-                'final_loss': float(history.history['loss'][-1]),
-                'final_val_loss': float(history.history['val_loss'][-1])
-            }
+            if self.backend == 'tensorflow' and TF_AVAILABLE:
+                history = model.fit(
+                    X_train, y_train,
+                    epochs=parameters.get('epochs', 100),
+                    batch_size=parameters.get('batch_size', 32),
+                    validation_data=(X_test, y_test),
+                    verbose=0
+                )
+                
+                # Calculate metrics
+                y_pred = np.argmax(model.predict(X_test), axis=1)
+                
+                metrics = {
+                    'accuracy': float(accuracy_score(y_test, y_pred)),
+                    'precision': float(precision_score(y_test, y_pred, average='weighted')),
+                    'recall': float(recall_score(y_test, y_pred, average='weighted')),
+                    'f1_score': float(f1_score(y_test, y_pred, average='weighted')),
+                    'final_loss': float(history.history['loss'][-1]),
+                    'final_val_loss': float(history.history['val_loss'][-1]),
+                    'backend': 'tensorflow'
+                }
+            else:
+                # sklearn Random Forest
+                model.fit(X_train, y_train)
+                
+                # Calculate metrics
+                y_pred = model.predict(X_test)
+                
+                metrics = {
+                    'accuracy': float(accuracy_score(y_test, y_pred)),
+                    'precision': float(precision_score(y_test, y_pred, average='weighted')),
+                    'recall': float(recall_score(y_test, y_pred, average='weighted')),
+                    'f1_score': float(f1_score(y_test, y_pred, average='weighted')),
+                    'n_estimators': parameters.get('n_estimators', 100),
+                    'backend': 'sklearn'
+                }
         
         # Save model and preprocessing objects
         model_dir = f'media/models/{dataset.name}_{model_type}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
         os.makedirs(model_dir, exist_ok=True)
         
-        model.save(os.path.join(model_dir, 'model.h5'))
+        if self.backend == 'tensorflow' and TF_AVAILABLE:
+            model.save(os.path.join(model_dir, 'model.h5'))
+        else:
+            joblib.dump(model, os.path.join(model_dir, 'model.pkl'))
+            
         joblib.dump(self.scaler, os.path.join(model_dir, 'scaler.pkl'))
         
         if model_type == 'classification':
             joblib.dump(self.label_encoder, os.path.join(model_dir, 'label_encoder.pkl'))
+        
+        # Save backend info
+        with open(os.path.join(model_dir, 'backend.txt'), 'w') as f:
+            f.write(self.backend)
         
         return model, metrics, model_dir
     
@@ -291,7 +369,24 @@ class MLService:
         """
         Load a trained model and its preprocessing objects
         """
-        self.model = tf.keras.models.load_model(os.path.join(model_path, 'model.h5'))
+        # Check which backend was used
+        backend_file = os.path.join(model_path, 'backend.txt')
+        if os.path.exists(backend_file):
+            with open(backend_file, 'r') as f:
+                saved_backend = f.read().strip()
+        else:
+            # Guess based on file extension
+            if os.path.exists(os.path.join(model_path, 'model.h5')):
+                saved_backend = 'tensorflow'
+            else:
+                saved_backend = 'sklearn'
+        
+        # Load model
+        if saved_backend == 'tensorflow' and TF_AVAILABLE:
+            self.model = tf.keras.models.load_model(os.path.join(model_path, 'model.h5'))
+        else:
+            self.model = joblib.load(os.path.join(model_path, 'model.pkl'))
+            
         self.scaler = joblib.load(os.path.join(model_path, 'scaler.pkl'))
         
         label_encoder_path = os.path.join(model_path, 'label_encoder.pkl')
@@ -310,27 +405,49 @@ class MLService:
         features_scaled = self.scaler.transform(features)
         
         if model_type == 'anomaly_detection':
-            # Predict using autoencoder
-            predictions = self.model.predict(features_scaled)
-            mse = np.mean(np.square(features_scaled - predictions), axis=1)
-            
-            if threshold is None:
-                threshold = np.percentile(mse, 95)
-            
-            # Classify as anomaly if reconstruction error > threshold
-            anomaly_predictions = ['anomaly' if error > threshold else 'normal' for error in mse]
-            confidence_scores = mse / np.max(mse)  # Normalize to 0-1
+            if self.backend == 'tensorflow' and TF_AVAILABLE:
+                # Predict using autoencoder
+                predictions = self.model.predict(features_scaled)
+                mse = np.mean(np.square(features_scaled - predictions), axis=1)
+                
+                if threshold is None:
+                    threshold = np.percentile(mse, 95)
+                
+                # Classify as anomaly if reconstruction error > threshold
+                anomaly_predictions = ['anomaly' if error > threshold else 'normal' for error in mse]
+                confidence_scores = mse / np.max(mse)  # Normalize to 0-1
+            else:
+                # Predict using Isolation Forest
+                predictions = self.model.predict(features_scaled)
+                anomaly_scores = self.model.decision_function(features_scaled)
+                
+                # Convert sklearn predictions (-1 for anomaly, 1 for normal) to labels
+                anomaly_predictions = ['anomaly' if pred == -1 else 'normal' for pred in predictions]
+                
+                # Normalize scores to 0-1 range for confidence
+                min_score = np.min(anomaly_scores)
+                max_score = np.max(anomaly_scores)
+                if max_score > min_score:
+                    confidence_scores = (anomaly_scores - min_score) / (max_score - min_score)
+                else:
+                    confidence_scores = np.ones_like(anomaly_scores) * 0.5
             
             return anomaly_predictions, confidence_scores.tolist()
         
         elif model_type == 'classification':
-            # Predict using classifier
-            predictions = self.model.predict(features_scaled)
-            predicted_classes = np.argmax(predictions, axis=1)
+            if self.backend == 'tensorflow' and TF_AVAILABLE:
+                # Predict using neural network
+                predictions = self.model.predict(features_scaled)
+                predicted_classes = np.argmax(predictions, axis=1)
+                confidence_scores = np.max(predictions, axis=1)
+            else:
+                # Predict using Random Forest
+                predicted_classes = self.model.predict(features_scaled)
+                prediction_probabilities = self.model.predict_proba(features_scaled)
+                confidence_scores = np.max(prediction_probabilities, axis=1)
             
             # Decode labels
             predicted_labels = self.label_encoder.inverse_transform(predicted_classes)
-            confidence_scores = np.max(predictions, axis=1)
             
             return predicted_labels.tolist(), confidence_scores.tolist()
     
@@ -393,4 +510,5 @@ class MLService:
         return suggestions[:num_suggestions]
 
 
+# Create global instance
 ml_service = MLService()

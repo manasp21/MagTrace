@@ -33,7 +33,7 @@ MagTrace is a comprehensive platform for magnetic field data analysis, interacti
 - **Frontend**: HTML5, JavaScript (ES6+), D3.js for visualization
 - **Backend**: Django 4.2 with Django REST Framework
 - **Database**: SQLite (development) / PostgreSQL (production)
-- **ML Framework**: TensorFlow 2.15, scikit-learn
+- **ML Framework**: TensorFlow 2.15+, scikit-learn
 - **Task Queue**: Celery with Redis
 - **Data Processing**: Pandas, NumPy
 
@@ -47,6 +47,10 @@ MagTrace is a comprehensive platform for magnetic field data analysis, interacti
 
 ### Installation
 
+**For detailed installation instructions including troubleshooting, see [INSTALL.md](INSTALL.md)**
+
+#### Quick Installation
+
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
@@ -55,7 +59,11 @@ MagTrace is a comprehensive platform for magnetic field data analysis, interacti
 
 2. **Install Python dependencies**
    ```bash
+   # Try full installation first
    pip install -r backend/requirements.txt
+   
+   # If TensorFlow fails, use lightweight version
+   pip install -r backend/requirements-lite.txt
    ```
 
 3. **Set up the database**
@@ -63,11 +71,6 @@ MagTrace is a comprehensive platform for magnetic field data analysis, interacti
    cd backend
    python manage.py migrate
    python manage.py createsuperuser  # Optional: create admin user
-   ```
-
-4. **Start Redis server** (for background tasks)
-   ```bash
-   redis-server
    ```
 
 ### Running the Application

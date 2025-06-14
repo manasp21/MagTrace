@@ -13,19 +13,63 @@ from pathlib import Path
 
 def check_dependencies():
     """Check if required dependencies are installed"""
+    missing = []
+    
     try:
         import django
+        print("✓ Django found")
+    except ImportError:
+        missing.append("Django")
+    
+    try:
         import rest_framework
+        print("✓ Django REST Framework found")
+    except ImportError:
+        missing.append("djangorestframework")
+    
+    try:
         import corsheaders
+        print("✓ Django CORS Headers found")
+    except ImportError:
+        missing.append("django-cors-headers")
+    
+    try:
         import pandas
+        print("✓ Pandas found")
+    except ImportError:
+        missing.append("pandas")
+    
+    try:
         import numpy
+        print("✓ NumPy found")
+    except ImportError:
+        missing.append("numpy")
+    
+    try:
         import sklearn
-        print("✓ All Python dependencies found")
-        return True
-    except ImportError as e:
-        print(f"✗ Missing dependency: {e}")
-        print("Please install requirements: pip install -r backend/requirements.txt")
+        print("✓ scikit-learn found")
+    except ImportError:
+        missing.append("scikit-learn")
+    
+    # Check optional dependencies
+    try:
+        import tensorflow
+        print("✓ TensorFlow found - will use neural network models")
+    except ImportError:
+        print("ℹ TensorFlow not found - will use scikit-learn models")
+    
+    if missing:
+        print(f"\n✗ Missing dependencies: {', '.join(missing)}")
+        print("\nTo install missing dependencies, run one of:")
+        print("  pip install -r backend/requirements.txt")
+        print("  OR")
+        print("  pip install -r backend/requirements-lite.txt  (without TensorFlow)")
+        print("  OR")
+        print("  pip install Django djangorestframework django-cors-headers pandas numpy scikit-learn")
         return False
+    
+    print("✓ All required dependencies found")
+    return True
 
 def setup_database():
     """Set up the database and run migrations"""

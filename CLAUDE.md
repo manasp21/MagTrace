@@ -10,7 +10,7 @@ MagTrace is a magnetic field data analysis and machine learning platform designe
 
 - **Frontend**: HTML, JavaScript, CSS with D3.js for visualization
 - **Backend**: Django 4.2 with SQLite database
-- **ML Framework**: TensorFlow 2.15
+- **ML Framework**: TensorFlow 2.15+
 - **Data Format**: CSV files with magnetic field sensor data
 - **Packaging**: PyInstaller + Inno Setup
 

@@ -10,8 +10,12 @@ from .serializers import (
     DatasetSerializer, MagnetometerReadingSerializer, LabelSerializer,
     MLModelSerializer, InferenceResultSerializer, ActiveLearningSuggestionSerializer
 )
-from ..ml_service import ml_service
-from ..celery_app import train_model_task, generate_suggestions_task, run_inference_task
+from .ml_service import ml_service
+
+# For now, disable celery tasks and use direct execution
+train_model_task = None
+generate_suggestions_task = None
+run_inference_task = None
 
 
 class DatasetViewSet(viewsets.ModelViewSet):
@@ -177,19 +181,31 @@ class MLModelViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            # Start training task
-            task = train_model_task.delay(
+            # Direct training (no Celery for now)
+            model, metrics, model_path = ml_service.train_model(
                 dataset_id=dataset_id,
-                model_name=model_name,
                 model_type=model_type,
-                version=version,
                 parameters=parameters
             )
             
+            # Create model record in database
+            dataset = Dataset.objects.get(id=dataset_id)
+            ml_model = MLModel.objects.create(
+                name=model_name,
+                model_type=model_type,
+                version=version,
+                training_dataset=dataset,
+                parameters=parameters,
+                metrics=metrics,
+                model_file=model_path,
+                is_active=False
+            )
+            
             return Response({
-                'task_id': task.id,
-                'status': 'training_started',
-                'message': f'Training {model_name} started'
+                'model_id': ml_model.id,
+                'status': 'training_completed',
+                'message': f'Training {model_name} completed ({metrics.get("backend", "unknown")} backend)',
+                'metrics': metrics
             })
             
         except Exception as e:
@@ -210,16 +226,36 @@ class MLModelViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            # Start suggestion generation task
-            task = generate_suggestions_task.delay(
+            # Direct suggestion generation (no Celery for now)
+            if model.model_file:
+                ml_service.load_model(model.model_file)
+            
+            # Generate suggestions
+            suggestions = ml_service.generate_active_learning_suggestions(
                 dataset_id=dataset_id,
-                model_id=model.id
+                model_type=model.model_type
             )
             
+            # Save suggestions to database
+            dataset = Dataset.objects.get(id=dataset_id)
+            suggestion_objects = []
+            
+            for suggestion in suggestions:
+                suggestion_obj = ActiveLearningSuggestion(
+                    dataset=dataset,
+                    start_index=suggestion['index'],
+                    end_index=suggestion['index'],
+                    suggested_label=suggestion['suggestion'],
+                    confidence=suggestion['confidence']
+                )
+                suggestion_objects.append(suggestion_obj)
+            
+            ActiveLearningSuggestion.objects.bulk_create(suggestion_objects)
+            
             return Response({
-                'task_id': task.id,
-                'status': 'generating_suggestions',
-                'message': 'Active learning suggestions generation started'
+                'status': 'suggestions_generated',
+                'message': f'Generated {len(suggestion_objects)} suggestions',
+                'suggestions_count': len(suggestion_objects)
             })
             
         except Exception as e:
@@ -245,16 +281,34 @@ class InferenceResultViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            # Start inference task
-            task = run_inference_task.delay(
-                dataset_id=dataset_id,
-                model_id=model_id
+            # Direct inference (no Celery for now)
+            model = MLModel.objects.get(id=model_id)
+            if model.model_file:
+                ml_service.load_model(model.model_file)
+            
+            # Load dataset
+            dataset = Dataset.objects.get(id=dataset_id)
+            readings = list(dataset.readings.all().order_by('timestamp_pc'))
+            
+            # Run inference
+            predictions, confidence_scores = ml_service.predict(
+                readings,
+                model_type=model.model_type
+            )
+            
+            # Save results
+            inference_result = InferenceResult.objects.create(
+                dataset=dataset,
+                model=model,
+                predictions=predictions,
+                confidence_scores=confidence_scores
             )
             
             return Response({
-                'task_id': task.id,
-                'status': 'inference_started',
-                'message': 'Inference started'
+                'inference_result_id': inference_result.id,
+                'status': 'inference_completed',
+                'message': f'Inference completed with {model.name}',
+                'predictions_count': len(predictions)
             })
             
         except Exception as e:

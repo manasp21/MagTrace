@@ -47,7 +47,7 @@ sequenceDiagram
 | Frontend | HTML, js, css | 18.3 |
 | Visualization | d3.js | Latest |
 | Backend | Django | 4.2 |
-| ML Framework | TensorFlow | 2.15 |
+| ML Framework | TensorFlow | 2.15+ |
 | Database | SQLite | 3.45 |
 | Packaging | PyInstaller + Inno Setup | Latest |
 
