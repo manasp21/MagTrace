@@ -3,444 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MagTrace - Magnetic Field Visualization</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-    <style>
-        .warm-bg { background-color: #fafaf9; }
-        .warm-text { color: #292524; }
-        .warm-accent { color: #0f766e; border-color: #0d9488; }
-    </style>
+    <title>MagTrace - Magnetic Field Analysis Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
-<body class="warm-bg warm-text font-sans flex h-screen">
-    <!-- Left Sidebar -->
-    <div class="w-64 bg-stone-100 p-4 border-r border-stone-300 flex flex-col">
-        <h1 class="text-xl font-bold warm-accent mb-6">MagTrace</h1>
-        
-        
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Data Input</h2>
-            <input type="file" id="fileInput" class="w-full" accept=".csv">
-            <div class="mt-2">
-                <button id="visualizeExample" class="w-full bg-teal-700 text-white py-2 rounded-lg">
-                    Visualize Example Data
-                </button>
-            </div>
-        </div>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1>MagTrace</h1>
+            <p>Magnetic Field Analysis & Machine Learning Platform</p>
+        </header>
 
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Preprocessing</h2>
-            <div class="flex items-center mb-2">
-                <label class="mr-2">Moving Average:</label>
-                <input type="number" id="movingAvgWindow" min="1" value="5" class="w-16 border rounded p-1">
-            </div>
-            <div class="flex items-center">
-                <input type="checkbox" id="normalizeData" class="mr-2">
-                <label>Normalize Data</label>
-            </div>
-        </div>
-
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Time Selection</h2>
-            <div class="flex space-x-2">
-                <input type="number" id="startTime" placeholder="Start" class="w-20 border rounded p-1">
-                <input type="number" id="endTime" placeholder="End" class="w-20 border rounded p-1">
-            </div>
-        </div>
-
-        <!-- Annotation Tools -->
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Annotation Tools</h2>
-            <div class="mb-2">
-                <button id="newLabelBtn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">New Label Type</button>
-                <button id="assignLabelBtn" class="w-full bg-teal-600 text-white py-1 rounded">Assign Label</button>
-            </div>
-            <div id="labelSelector" class="mb-2 hidden">
-                <label class="block mb-1">Label:</label>
-                <select id="labelSelect" class="w-full border rounded p-1"></select>
-            </div>
-            <div class="flex items-center">
-                <label class="mr-2">Confidence:</label>
-                <input type="range" id="confidenceSlider" min="0" max="1" step="0.1" value="1" class="w-full">
-                <span id="confidenceValue" class="ml-2">1.0</span>
-            </div>
-        </div>
-
-        <!-- Visualization -->
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Visualization</h2>
-            <button id="renderMatplotlib" class="w-full bg-teal-600 text-white py-1 rounded hidden">
-                Render with Matplotlib
-            </button>
-        </div>
-
-        <!-- Matplotlib Image Container -->
-        <div id="matplotlibContainer" class="hidden p-4">
-            <img id="matplotlibPlot" class="w-full">
-        </div>
-
-        <!-- Model Management -->
-        <div class="model-management mb-6">
-            <h3 class="font-semibold mb-2">Model Management</h3>
-            <button id="create-model-btn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">Create New Model</button>
-            <div id="model-form" class="hidden">
-                <input type="text" id="model-name" placeholder="Model name" class="w-full border rounded p-1 mb-2">
-                <textarea id="model-desc" placeholder="Description" class="w-full border rounded p-1 mb-2"></textarea>
-                <select id="dataset-select" class="w-full border rounded p-1 mb-2">
-                    <!-- Options will be populated dynamically -->
-                </select>
-                <button id="save-model" class="w-full bg-teal-600 text-white py-1 rounded">Save Model</button>
-            </div>
-            <div id="model-list">
-                <!-- Model versions will be listed here -->
-            </div>
-        </div>
-
-        <!-- Machine Learning Section -->
-        <div class="mb-6">
-            <h2 class="font-semibold mb-2">Machine Learning</h2>
-            
-            <!-- Feature Selection -->
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Features</h3>
-                <div class="flex flex-wrap">
-                    <label class="mr-2"><input type="checkbox" name="feature" value="mean" checked> Mean</label>
-                    <label class="mr-2"><input type="checkbox" name="feature" value="variance"> Variance</label>
-                    <label class="mr-2"><input type="checkbox" name="feature" value="max"> Max</label>
-                    <label class="mr-2"><input type="checkbox" name="feature" value="min"> Min</label>
-                    <label><input type="checkbox" name="feature" value="fft"> FFT</label>
-                </div>
-            </div>
-            
-            <!-- Model Configuration -->
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Model</h3>
-                <div class="flex mb-1">
-                    <select id="modelType" class="flex-1 border rounded p-1 mr-2">
-                        <option value="knn">k-NN</option>
-                        <option value="tf">Neural Network</option>
-                    </select>
-                    <button id="complexityBtn" class="bg-teal-600 text-white px-2 rounded">Complexity</button>
-                </div>
-                <div id="hyperparameters" class="hidden">
-                    <!-- Will be populated based on model type and complexity -->
-                </div>
-            </div>
-            
-            <!-- Data Augmentation -->
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Augmentation</h3>
-                <div>
-                    <label class="flex items-center">
-                        <input type="checkbox" id="augmentNoise" class="mr-2"> Add Noise
-                        <input type="range" id="noiseLevel" min="0" max="1" step="0.1" value="0.1" class="ml-2 w-16" disabled>
-                        <span id="noiseLevelValue" class="ml-2">0.1</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" id="augmentShift" class="mr-2"> Time Shift
-                        <input type="number" id="shiftAmount" min="-10" max="10" value="1" class="ml-2 w-16" disabled>
-                    </label>
-                </div>
-            </div>
-            
-            <!-- Training -->
-            <div>
-                <button id="trainBtn" class="w-full bg-teal-600 text-white py-1 rounded">Train Model</button>
-                <div id="trainingProgress" class="mt-2 hidden">
-                    <div class="w-full bg-stone-200 rounded-full h-2.5">
-                        <div id="progressBar" class="bg-teal-600 h-2.5 rounded-full" style="width: 0%"></div>
+        <div class="main-container">
+            <div class="sidebar">
+                <div class="section">
+                    <h3>Data Management</h3>
+                    <div class="upload-section">
+                        <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                        <button id="uploadBtn" class="btn btn-primary">Upload CSV Data</button>
+                        <div id="uploadProgress" class="progress-bar" style="display: none;">
+                            <div class="progress-fill"></div>
+                        </div>
                     </div>
-                    <div id="trainingMetrics" class="text-sm mt-1"></div>
+                    <div id="datasetList" class="dataset-list">
+                        <h4>Datasets</h4>
+                        <ul id="datasets"></ul>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-<!-- Model Evaluation -->
-        <div class="mb-6" id="evaluationSection">
-            <h2 class="font-semibold mb-2">Model Evaluation</h2>
-            <button id="applyModelBtn" class="w-full bg-teal-600 text-white py-1 rounded mb-2">Apply Model</button>
-            
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Metrics</h3>
-                <div id="metricsDisplay">
-                    <div>Accuracy: <span id="accuracyValue">-</span></div>
-                    <div>Precision: <span id="precisionValue">-</span></div>
-                    <div>Recall: <span id="recallValue">-</span></div>
-                    <div>F1 Score: <span id="f1Value">-</span></div>
+                <div class="section">
+                    <h3>Labeling Tools</h3>
+                    <div class="tool-buttons">
+                        <button id="brushTool" class="btn tool-btn active">Brush</button>
+                        <button id="lassoTool" class="btn tool-btn">Lasso</button>
+                        <button id="polygonTool" class="btn tool-btn">Polygon</button>
+                    </div>
+                    <div class="label-types">
+                        <h4>Label Type</h4>
+                        <select id="labelType">
+                            <option value="anomaly">Anomaly</option>
+                            <option value="normal">Normal</option>
+                            <option value="noise">Noise</option>
+                            <option value="interference">Interference</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Confusion Matrix</h3>
-                <div id="confusionMatrixContainer"></div>
-            </div>
-            
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Batch Processing</h3>
-                <div class="flex items-center mb-1">
-                    <input type="checkbox" id="batchToggle" class="mr-2">
-                    <label>Process multiple files</label>
-                </div>
-                <button id="batchProcessBtn" class="w-full bg-teal-600 text-white py-1 rounded" disabled>Process All</button>
-            </div>
-            
-            <div class="mb-2">
-                <h3 class="font-medium mb-1">Labels</h3>
-                <div class="flex items-center">
-                    <input type="checkbox" id="showModelLabels" class="mr-2">
-                    <label>Show Model Labels</label>
-                </div>
-            </div>
-        </div>
-        <div class="mt-auto flex space-x-2">
-            <button id="undoBtn" class="flex-1 bg-stone-300 py-1 rounded">Undo</button>
-            <button id="redoBtn" class="flex-1 bg-stone-300 py-1 rounded">Redo</button>
-        </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
-        <div class="p-4 border-b border-stone-300">
-            <div class="flex justify-between items-center">
-                <h2 class="text-lg font-semibold">Magnetic Field Components</h2>
-                <div class="flex items-center">
-                    <div id="backend-status" class="mr-4 px-2 py-1 rounded text-sm">Checking...</div>
-                    <div>
-                        <button id="zoomIn" class="bg-stone-200 px-3 py-1 rounded-l">+</button>
-                        <button id="zoomOut" class="bg-stone-200 px-3 py-1 rounded-r">-</button>
-                        <button id="resetZoom" class="bg-stone-200 px-3 py-1 ml-2 rounded">Reset</button>
+                <div class="section">
+                    <h3>Model Management</h3>
+                    <button id="trainModelBtn" class="btn btn-secondary">Train Model</button>
+                    <button id="runInferenceBtn" class="btn btn-secondary">Run Inference</button>
+                    <div id="modelList" class="model-list">
+                        <h4>Available Models</h4>
+                        <ul id="models"></ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Active Learning</h3>
+                    <div id="suggestionsList" class="suggestions-list">
+                        <h4>Suggestions</h4>
+                        <ul id="suggestions"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="visualization-container">
+                    <div class="chart-header">
+                        <h3 id="chartTitle">Magnetic Field Data Visualization</h3>
+                        <div class="chart-controls">
+                            <button id="resetZoom" class="btn btn-small">Reset Zoom</button>
+                            <button id="exportData" class="btn btn-small">Export</button>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-tabs">
+                        <button class="tab-btn active" data-chart="timeseries">Time Series</button>
+                        <button class="tab-btn" data-chart="geographic">Geographic</button>
+                        <button class="tab-btn" data-chart="3d">3D Field</button>
+                        <button class="tab-btn" data-chart="statistics">Statistics</button>
+                    </div>
+
+                    <div id="visualization" class="visualization-area">
+                        <div id="timeseriesChart" class="chart-container active"></div>
+                        <div id="geographicChart" class="chart-container"></div>
+                        <div id="3dChart" class="chart-container"></div>
+                        <div id="statisticsChart" class="chart-container"></div>
+                    </div>
+                </div>
+
+                <div class="data-info">
+                    <div class="info-section">
+                        <h4>Dataset Information</h4>
+                        <div id="datasetInfo">
+                            <p>No dataset selected</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h4>Selection Information</h4>
+                        <div id="selectionInfo">
+                            <p>No selection made</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex-1 p-4 relative" style="height: 70vh;">
-            <canvas id="mainChart" width="100%" height="100%"></canvas>
-        </div>
-        
-        <!-- Debug console -->
-        <div id="debugConsole" class="fixed bottom-0 left-0 p-4 bg-black text-white w-full h-40 overflow-auto"></div>
     </div>
 
-    <!-- Annotation Sidebar -->
-    <div class="w-64 bg-stone-100 p-4 border-l border-stone-300 flex flex-col">
-        <h2 class="text-lg font-semibold mb-4">Annotations</h2>
-        <div class="mb-4">
-            <input type="text" id="annotationFilter" placeholder="Filter annotations..." class="w-full border rounded p-1 mb-2">
-            <div class="flex space-x-2">
-                <button id="sortByTimeBtn" class="flex-1 bg-stone-300 py-1 rounded">Time</button>
-                <button id="sortByLabelBtn" class="flex-1 bg-stone-300 py-1 rounded">Label</button>
-            </div>
-        </div>
-        <div id="annotationList" class="overflow-y-auto flex-1">
-            <!-- Annotations will be listed here dynamically -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
         </div>
     </div>
 
-    <!-- Script modules -->
-    <script type="module" src="dataLoader.js"></script>
-    <script type="module" src="preprocessor.js"></script>
-    <script type="module" src="chartManager.js"></script>
-    <script type="module" src="stateManager.js"></script>
-    <script type="module" src="labelManager.js"></script>
-    <script type="module" src="annotationManager.js"></script>
-    <script type="module" src="annotationRenderer.js"></script>
-    <script type="module" src="modelManager.js"></script>
-    <script type="module" src="modelUi.js"></script>
-    <script type="module" src="featureExtractor.js"></script>
-    <script type="module" src="mlTrainer.js"></script>
-    <script type="module" src="tfModel.js"></script>
-    <script type="module" src="modelApplier.js"></script>
-    <script type="module" src="evaluator.js"></script>
-    <script type="module" src="confusionMatrix.js"></script>
-    <script type="module" src="apiService.js"></script>
-    <script type="module">
-        // Simple debug logger
-        function debugLog(message) {
-            const consoleElem = document.getElementById('debugConsole');
-            consoleElem.innerHTML += `[DEBUG] ${message}\n`;
-            consoleElem.scrollTop = consoleElem.scrollHeight;
-        }
-
-        // Use direct CDN import for TensorFlow
-        import * as tf from 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.es2017.mjs';
-        window.tf = tf;
-
-        // Import other modules
-        import { DataLoader } from './dataLoader.js';
-        import { Preprocessor } from './preprocessor.js';
-        import { ChartManager } from './chartManager.js';
-        import { StateManager } from './stateManager.js';
-        import { LabelManager } from './labelManager.js';
-        import { AnnotationManager } from './annotationManager.js';
-        import { ModelManager } from './modelManager.js';
-        import { ModelUI } from './modelUi.js';
-        import { AnnotationRenderer } from './annotationRenderer.js';
-
-        // Initialize application after TF is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize chart manager first
-            try {
-                window.chartManager = new ChartManager('mainChart');
-                debugLog("ChartManager initialized successfully");
-            } catch (error) {
-                debugLog(`ChartManager initialization failed: ${error}`);
-            }
-            
-            // Then initialize other components
-            window.dataLoader = new DataLoader();
-            window.preprocessor = new Preprocessor();
-            window.stateManager = new StateManager();
-            window.labelManager = new LabelManager();
-            window.annotationManager = new AnnotationManager();
-            window.modelManager = new ModelManager();
-            window.modelUi = new ModelUI(window.modelManager);
-            
-            // Initialize model UI
-            window.modelUi.init();
-            
-            // Initialize annotation renderer after chart is created
-            try {
-                window.annotationRenderer = new AnnotationRenderer(
-                    document.querySelector('#mainChart').parentNode,
-                    window.chartManager.getXScale()
-                );
-                debugLog("AnnotationRenderer initialized");
-            } catch (error) {
-                debugLog(`AnnotationRenderer initialization failed: ${error}`);
-            }
-            
-            // Setup event listeners
-            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
-            
-            // Add event listener for visualizeExample button
-            document.getElementById('visualizeExample')?.addEventListener('click', () => {
-                const loader = new DataLoader();
-                loader.loadAndVisualizeExample();
-            });
-            
-            // Annotation UI event listeners
-            document.getElementById('newLabelBtn').addEventListener('click', createNewLabel);
-            document.getElementById('assignLabelBtn').addEventListener('click', toggleLabelSelector);
-            document.getElementById('labelSelect').addEventListener('change', handleLabelSelection);
-            document.getElementById('confidenceSlider').addEventListener('input', updateConfidenceValue);
-            document.getElementById('sortByTimeBtn').addEventListener('click', () => sortAnnotations('time'));
-            document.getElementById('sortByLabelBtn').addEventListener('click', () => sortAnnotations('label'));
-            document.getElementById('annotationFilter').addEventListener('input', filterAnnotations);
-            
-            // Initialize confidence display
-            updateConfidenceValue();
-            
-            // Add backend health check
-            checkBackendHealth();
-        });
-        
-        // Backend health check function
-        async function checkBackendHealth() {
-            try {
-                const response = await fetch('/api/health');
-                const health = await response.json();
-                console.log("Backend health:", health);
-                
-                // Update status indicator
-                const statusIndicator = document.getElementById('backend-status');
-                if (health.status === 'ok') {
-                    statusIndicator.textContent = 'Backend: OK';
-                    statusIndicator.className = 'text-green-600';
-                } else {
-                    statusIndicator.textContent = 'Backend: ERROR';
-                    statusIndicator.className = 'text-red-600';
-                    alert(`Backend issues:\nDatabase: ${health.database}\nCelery: ${health.celery}\nTensorFlow: ${health.tensorflow}\nTorch: ${health.torch}`);
-                }
-            } catch (error) {
-                console.error("Health check failed:", error);
-                const statusIndicator = document.getElementById('backend-status');
-                statusIndicator.textContent = 'Backend: UNREACHABLE';
-                statusIndicator.className = 'text-red-600';
-                alert("Backend is unreachable. Please check if the server is running.");
-            }
-        }
-        
-        // Annotation functions
-        function createNewLabel() {
-            const labelName = prompt('Enter label name:');
-            if (labelName) {
-                const newLabel = window.labelManager.createLabel(labelName);
-                updateLabelSelector();
-            }
-        }
-        
-        function toggleLabelSelector() {
-            const selector = document.getElementById('labelSelector');
-            selector.classList.toggle('hidden');
-            if (!selector.classList.contains('hidden')) {
-                updateLabelSelector();
-            }
-        }
-        
-        function updateLabelSelector() {
-            const select = document.getElementById('labelSelect');
-            select.innerHTML = '';
-            
-            window.labelManager.getAllLabels().forEach(label => {
-                const option = document.createElement('option');
-                option.value = label.id;
-                option.textContent = label.name;
-                option.style.color = label.color;
-                select.appendChild(option);
-            });
-        }
-        
-        function handleLabelSelection() {
-            const labelId = document.getElementById('labelSelect').value;
-            const confidence = parseFloat(document.getElementById('confidenceSlider').value);
-            // Annotation logic will be implemented in stateManager
-            window.stateManager.startAnnotation(labelId, confidence);
-        }
-        
-        function updateConfidenceValue() {
-            const slider = document.getElementById('confidenceSlider');
-            const valueDisplay = document.getElementById('confidenceValue');
-            valueDisplay.textContent = slider.value;
-        }
-        
-        function sortAnnotations(criteria) {
-            // Implementation will be added to annotationManager
-        }
-        
-        function filterAnnotations() {
-            // Implementation will be added to annotationManager
-        }
-        
-        async function renderWithMatplotlib() {
-            const data = window.dataLoader?.getCurrentDataset() || [];
-            if (!data.length) {
-                alert('No data to plot');
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/generate_plot/', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ data })
-                });
-                
-                const result = await response.json();
-                if (result.image) {
-                    document.getElementById('matplotlibPlot').src = `data:image/png;base64,${result.image}`;
-                    document.getElementById('matplotlibContainer').classList.remove('hidden');
-                    document.getElementById('mainChart').parentNode.classList.add('hidden');
-                }
-            } catch (error) {
-                console.error('Matplotlib rendering failed:', error);
-            }
-        }
-
-        // Add event listener
-        document.getElementById('renderMatplotlib')?.addEventListener('click', renderWithMatplotlib);
-    </script>
+    <script src="js/api.js"></script>
+    <script src="js/dataLoader.js"></script>
+    <script src="js/visualizations.js"></script>
+    <script src="js/labelingTools.js"></script>
+    <script src="js/modelManager.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

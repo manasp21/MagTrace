@@ -1,277 +1,295 @@
-from django.http import JsonResponse
-import logging
-import os
-import pandas as pd
-import base64
-from io import BytesIO
-import matplotlib
-matplotlib.use('Agg')  # Headless backend
-import matplotlib.pyplot as plt
-from django.conf import settings
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Project, Dataset, Annotation, Model, ModelVersion
-from .serializers import ProjectSerializer, DatasetSerializer, AnnotationSerializer, ModelSerializer, ModelVersionSerializer
-from app.ml_adapters import active_learning
-from celery import shared_task
+from rest_framework.parsers import MultiPartParser, FormParser
+from django.core.files.storage import default_storage
+import pandas as pd
+import json
+from .models import Dataset, MagnetometerReading, Label, MLModel, InferenceResult, ActiveLearningSuggestion
+from .serializers import (
+    DatasetSerializer, MagnetometerReadingSerializer, LabelSerializer,
+    MLModelSerializer, InferenceResultSerializer, ActiveLearningSuggestionSerializer
+)
+from ..ml_service import ml_service
+from ..celery_app import train_model_task, generate_suggestions_task, run_inference_task
 
-logger = logging.getLogger(__name__)
-
-def welcome(request):
-    logger.debug(f"Request: {request.method} {request.path}")
-    return JsonResponse({
-        "application": "MagTrace API",
-        "status": "running",
-        "api_endpoints": {
-            "datasets": "/api/datasets/",
-            "models": "/api/models/",
-            "example_data": "/api/datasets/example/"
-        }
-    })
-def health_check(request):
-    return JsonResponse({"status": "ok"})
-
-class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug(f"Request: {request.method} {request.path}")
-        response = super().dispatch(request, *args, **kwargs)
-        logger.debug(f"Response: {response.status_code}")
-        return response
 
 class DatasetViewSet(viewsets.ModelViewSet):
     queryset = Dataset.objects.all()
     serializer_class = DatasetSerializer
+    parser_classes = (MultiPartParser, FormParser)
     
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug(f"Request: {request.method} {request.path}")
-        response = super().dispatch(request, *args, **kwargs)
-        logger.debug(f"Response: {response.status_code}")
-        return response
-
-    def create(self, request, *args, **kwargs):
-        logger.info("Received dataset creation request")
-        logger.debug(f"Request details: method={request.method}, path={request.path}, params={request.data}")
+    @action(detail=False, methods=['post'])
+    def upload(self, request):
         file = request.FILES.get('file')
+        name = request.data.get('name', file.name if file else 'Unnamed Dataset')
         
         if not file:
-            logger.error("No file found in request")
-            return Response(
-                {"error": "No file provided"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-            
-        logger.info(f"Processing file: {file.name} ({file.size} bytes)")
+            return Response({'error': 'No file provided'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not file.name.endswith('.csv'):
+            return Response({'error': 'Only CSV files are supported'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        dataset = Dataset.objects.create(name=name, file=file)
         
         try:
-            # Read and process the uploaded file
-            df = pd.read_csv(file)
-            processed_data = df.to_dict(orient='records')
-            components = [col for col in df.columns if col != 'timestamp']
+            self.process_csv_file(dataset)
+            dataset.processed = True
+            dataset.save()
             
-            # Create dataset record
-            logger.debug("Calling super().create() for dataset processing")
-            response = super().create(request, *args, **kwargs)
-            
-            if response.status_code == status.HTTP_201_CREATED:
-                logger.info(f"Dataset created successfully: {response.data}")
-                
-                # Return the processed data with metadata
-                return Response({
-                    "status": "success",
-                    "data": processed_data,
-                    "metadata": {
-                        "component_count": len(components),
-                        "row_count": len(processed_data)
-                    }
-                })
-            else:
-                return response
+            serializer = self.get_serializer(dataset)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
-            logger.exception("Dataset creation failed")
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            dataset.delete()
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def process_csv_file(self, dataset):
+        file_path = dataset.file.path
+        df = pd.read_csv(file_path)
+        
+        required_columns = ['timestamp_pc', 'b_x', 'b_y', 'b_z', 'lat', 'lon', 'altitude', 'thetax', 'thetay', 'thetaz', 'sensor_id']
+        
+        if not all(col in df.columns for col in required_columns):
+            raise ValueError(f"CSV must contain columns: {required_columns}")
+        
+        readings = []
+        for _, row in df.iterrows():
+            reading = MagnetometerReading(
+                dataset=dataset,
+                timestamp_pc=str(row['timestamp_pc']),
+                b_x=float(row['b_x']),
+                b_y=float(row['b_y']),
+                b_z=float(row['b_z']),
+                lat=float(row['lat']),
+                lon=float(row['lon']),
+                altitude=float(row['altitude']),
+                thetax=float(row['thetax']),
+                thetay=float(row['thetay']),
+                thetaz=float(row['thetaz']),
+                sensor_id=str(row['sensor_id'])
             )
-class AnnotationViewSet(viewsets.ModelViewSet):
-    queryset = Annotation.objects.all()
-    serializer_class = AnnotationSerializer
+            readings.append(reading)
+        
+        MagnetometerReading.objects.bulk_create(readings)
+        dataset.total_records = len(readings)
+        dataset.save()
     
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug(f"Request: {request.method} {request.path}")
-        response = super().dispatch(request, *args, **kwargs)
-        logger.debug(f"Response: {response.status_code}")
-        return response
-
-class ModelViewSet(viewsets.ModelViewSet):
-    queryset = Model.objects.all()
-    serializer_class = ModelSerializer
+    @action(detail=True, methods=['get'])
+    def data(self, request, pk=None):
+        dataset = self.get_object()
+        readings = dataset.readings.all()
+        serializer = MagnetometerReadingSerializer(readings, many=True)
+        return Response(serializer.data)
     
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug(f"Request: {request.method} {request.path}")
-        response = super().dispatch(request, *args, **kwargs)
-        logger.debug(f"Response: {response.status_code}")
-        return response
-
-class ModelVersionViewSet(viewsets.ModelViewSet):
-    queryset = ModelVersion.objects.all()
-    serializer_class = ModelVersionSerializer
+    @action(detail=True, methods=['get'])
+    def statistics(self, request, pk=None):
+        dataset = self.get_object()
+        readings = dataset.readings.all()
+        
+        if not readings.exists():
+            return Response({'error': 'No data found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        stats = {
+            'total_records': readings.count(),
+            'sensors': list(readings.values_list('sensor_id', flat=True).distinct()),
+            'time_range': {
+                'start': readings.first().timestamp_pc,
+                'end': readings.last().timestamp_pc
+            },
+            'magnetic_field_stats': {
+                'b_x': self.get_field_stats(readings, 'b_x'),
+                'b_y': self.get_field_stats(readings, 'b_y'),
+                'b_z': self.get_field_stats(readings, 'b_z'),
+            },
+            'location_range': {
+                'lat_min': min(readings.values_list('lat', flat=True)),
+                'lat_max': max(readings.values_list('lat', flat=True)),
+                'lon_min': min(readings.values_list('lon', flat=True)),
+                'lon_max': max(readings.values_list('lon', flat=True)),
+            }
+        }
+        
+        return Response(stats)
     
-    def dispatch(self, request, *args, **kwargs):
-        logger.debug(f"Request: {request.method} {request.path}")
-        response = super().dispatch(request, *args, **kwargs)
-        logger.debug(f"Response: {response.status_code}")
-        return response
+    def get_field_stats(self, readings, field):
+        values = readings.values_list(field, flat=True)
+        return {
+            'min': min(values),
+            'max': max(values),
+            'mean': sum(values) / len(values),
+        }
 
-@api_view(['GET'])
-def load_example_data(request):
-    logger.debug(f"Request: {request.method} {request.path}")
-    try:
-        # Correct path resolution - use absolute path to example dataset
-        example_path = os.path.join(settings.BASE_DIR, '..', 'example', 'data_1.csv')
-        
-        # Read and process data
-        df = pd.read_csv(example_path)
-        processed_data = df.to_dict(orient='records')
-        
-        response = Response({"data": processed_data})
-        logger.debug(f"Response: {response.status_code}")
-        return response
-    except Exception as e:
-        logger.exception("Error loading example data")
-        response = Response({"error": str(e)}, status=500)
-        logger.debug(f"Response: {response.status_code}")
-        return response
 
-@api_view(['POST'])
-def generate_plot(request):
-    try:
-        # Get data and parameters from request
-        data = request.data.get('data')
-        components = request.data.get('components', ['Bx', 'By', 'Bz', 'magnitude'])
-        title = request.data.get('title', 'Magnetic Field Data')
-        
-        # Create plot
-        plt.figure(figsize=(12, 6))
-        for comp in components:
-            if data[0].get(comp) is not None:
-                timestamps = [d['timestamp'] for d in data]
-                values = [d[comp] for d in data]
-                plt.plot(timestamps, values, label=comp)
-        
-        plt.title(title)
-        plt.xlabel('Time (s)')
-        plt.ylabel('Magnetic Field (μT)')
-        plt.legend()
-        plt.grid(True)
-        
-        # Save to buffer
-        buf = BytesIO()
-        plt.savefig(buf, format='png', dpi=100)
-        plt.close()
-        
-        # Return base64 image
-        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
-        return Response({"image": image_base64})
-        
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+class MagnetometerReadingViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MagnetometerReading.objects.all()
+    serializer_class = MagnetometerReadingSerializer
 
-# New API endpoints for active learning workflow
-@api_view(['POST'])
-def upload_data(request):
-    """Process uploaded data and return active learning proposals"""
-    try:
-        # Process CSV file
-        file = request.FILES.get('file')
-        if not file:
-            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+class LabelViewSet(viewsets.ModelViewSet):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+    
+    @action(detail=False, methods=['post'])
+    def bulk_create(self, request):
+        labels_data = request.data.get('labels', [])
+        
+        if not labels_data:
+            return Response({'error': 'No labels provided'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        labels = []
+        for label_data in labels_data:
+            serializer = self.get_serializer(data=label_data)
+            if serializer.is_valid():
+                labels.append(serializer.save())
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = self.get_serializer(labels, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class MLModelViewSet(viewsets.ModelViewSet):
+    queryset = MLModel.objects.all()
+    serializer_class = MLModelSerializer
+    
+    @action(detail=True, methods=['post'])
+    def set_active(self, request, pk=None):
+        model = self.get_object()
+        MLModel.objects.filter(model_type=model.model_type).update(is_active=False)
+        model.is_active = True
+        model.save()
+        
+        serializer = self.get_serializer(model)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'])
+    def train(self, request):
+        dataset_id = request.data.get('dataset_id')
+        model_name = request.data.get('name')
+        model_type = request.data.get('model_type', 'anomaly_detection')
+        version = request.data.get('version', '1.0')
+        parameters = request.data.get('parameters', {})
+        
+        if not dataset_id or not model_name:
+            return Response(
+                {'error': 'dataset_id and name are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Start training task
+            task = train_model_task.delay(
+                dataset_id=dataset_id,
+                model_name=model_name,
+                model_type=model_type,
+                version=version,
+                parameters=parameters
+            )
             
-        df = pd.read_csv(file)
-        data = df.to_dict(orient='records')
+            return Response({
+                'task_id': task.id,
+                'status': 'training_started',
+                'message': f'Training {model_name} started'
+            })
+            
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    @action(detail=True, methods=['post'])
+    def generate_suggestions(self, request, pk=None):
+        model = self.get_object()
+        dataset_id = request.data.get('dataset_id')
         
-        # Get active learning proposals
-        proposals = active_learning.get_proposals(data)
+        if not dataset_id:
+            return Response(
+                {'error': 'dataset_id is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
-        return Response({
-            'data': data,
-            'proposals': proposals
-        })
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        try:
+            # Start suggestion generation task
+            task = generate_suggestions_task.delay(
+                dataset_id=dataset_id,
+                model_id=model.id
+            )
+            
+            return Response({
+                'task_id': task.id,
+                'status': 'generating_suggestions',
+                'message': 'Active learning suggestions generation started'
+            })
+            
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-@api_view(['POST'])
-def save_labels(request):
-    """Save user-reviewed labels and trigger model training"""
-    try:
-        labels = request.data.get('labels')
+
+class InferenceResultViewSet(viewsets.ModelViewSet):
+    queryset = InferenceResult.objects.all()
+    serializer_class = InferenceResultSerializer
+    
+    @action(detail=False, methods=['post'])
+    def run_inference(self, request):
+        dataset_id = request.data.get('dataset_id')
         model_id = request.data.get('model_id')
         
-        if not labels or not model_id:
-            return Response({"error": "Missing labels or model_id"}, status=status.HTTP_400_BAD_REQUEST)
+        if not dataset_id or not model_id:
+            return Response(
+                {'error': 'dataset_id and model_id are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
-        # Save labels to database
-        # (Implementation would save to Annotation model)
-        logger.info(f"Saving {len(labels)} labels for model {model_id}")
-        
-        # Trigger training asynchronously
-        train_model.delay(model_id)
-        
-        return Response({'status': 'success'})
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        try:
+            # Start inference task
+            task = run_inference_task.delay(
+                dataset_id=dataset_id,
+                model_id=model_id
+            )
+            
+            return Response({
+                'task_id': task.id,
+                'status': 'inference_started',
+                'message': 'Inference started'
+            })
+            
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-@api_view(['POST'])
-def train_model(request):
-    """Trigger model training (usually called asynchronously)"""
-    try:
-        model_id = request.data.get('model_id')
-        if not model_id:
-            return Response({"error": "Missing model_id"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Training logic would go here
-        logger.info(f"Training model {model_id} started")
-        # ... actual training implementation ...
-        logger.info(f"Training model {model_id} completed")
-        
-        return Response({
-            'status': 'success',
-            'model_id': model_id,
-            'version': 'v1.0'
-        })
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@api_view(['POST'])
-def run_inference(request):
-    """Run inference using a trained model"""
-    try:
-        model_id = request.data.get('model_id')
-        input_data = request.data.get('input_data')
+class ActiveLearningSuggestionViewSet(viewsets.ModelViewSet):
+    queryset = ActiveLearningSuggestion.objects.all()
+    serializer_class = ActiveLearningSuggestionSerializer
+    
+    @action(detail=True, methods=['post'])
+    def accept(self, request, pk=None):
+        suggestion = self.get_object()
         
-        if not model_id or not input_data:
-            return Response({"error": "Missing model_id or input_data"}, status=status.HTTP_400_BAD_REQUEST)
+        Label.objects.create(
+            dataset=suggestion.dataset,
+            start_index=suggestion.start_index,
+            end_index=suggestion.end_index,
+            label_type=suggestion.suggested_label,
+            confidence=suggestion.confidence,
+            created_by='active_learning'
+        )
         
-        # Load model and run inference
-        # ... actual inference implementation ...
-        predictions = [{"class": "Event", "confidence": 0.95} for _ in input_data]
+        suggestion.reviewed = True
+        suggestion.save()
         
-        return Response({'predictions': predictions})
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# Background task for model training
-@shared_task
-def train_model_async(model_id):
-    """Asynchronous task for model training"""
-    try:
-        logger.info(f"Async training started for model {model_id}")
-        # ... training implementation ...
-        logger.info(f"Async training completed for model {model_id}")
-        return True
-    except Exception as e:
-        logger.error(f"Training failed: {str(e)}")
-        return False
+        return Response({'status': 'accepted'})
+    
+    @action(detail=True, methods=['post'])
+    def reject(self, request, pk=None):
+        suggestion = self.get_object()
+        suggestion.reviewed = True
+        suggestion.save()
+        
+        return Response({'status': 'rejected'})
