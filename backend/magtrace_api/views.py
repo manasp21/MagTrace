@@ -3,12 +3,18 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.core.files.storage import default_storage
+from django.utils import timezone
 import pandas as pd
 import json
-from .models import Dataset, MagnetometerReading, Label, MLModel, InferenceResult, ActiveLearningSuggestion
+from .models import (
+    Dataset, MagnetometerReading, Label, MLModel, InferenceResult, ActiveLearningSuggestion,
+    Project, LabelCategory, Annotation, UserDefinedModel, TrainingSession, Prediction
+)
 from .serializers import (
     DatasetSerializer, MagnetometerReadingSerializer, LabelSerializer,
-    MLModelSerializer, InferenceResultSerializer, ActiveLearningSuggestionSerializer
+    MLModelSerializer, InferenceResultSerializer, ActiveLearningSuggestionSerializer,
+    ProjectSerializer, LabelCategorySerializer, AnnotationSerializer,
+    UserDefinedModelSerializer, TrainingSessionSerializer, PredictionSerializer
 )
 from .ml_service import ml_service
 
@@ -347,3 +353,206 @@ class ActiveLearningSuggestionViewSet(viewsets.ModelViewSet):
         suggestion.save()
         
         return Response({'status': 'rejected'})
+
+
+# Enhanced Model ViewSets
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    
+    @action(detail=True, methods=['get'])
+    def export(self, request, pk=None):
+        from .project_service import ProjectService
+        project = self.get_object()
+        
+        try:
+            zip_path = ProjectService.export_project(project.id)
+            return Response({
+                'download_url': zip_path,
+                'message': 'Project exported successfully'
+            })
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    @action(detail=False, methods=['post'])
+    def import_project(self, request):
+        from .project_service import ProjectService
+        
+        zip_file = request.FILES.get('project_file')
+        if not zip_file:
+            return Response(
+                {'error': 'project_file is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            project = ProjectService.import_project(zip_file)
+            serializer = self.get_serializer(project)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class LabelCategoryViewSet(viewsets.ModelViewSet):
+    queryset = LabelCategory.objects.all().order_by('order', 'name')
+    serializer_class = LabelCategorySerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        project_id = self.request.query_params.get('project_id')
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return queryset
+
+
+class AnnotationViewSet(viewsets.ModelViewSet):
+    queryset = Annotation.objects.all().order_by('start_index')
+    serializer_class = AnnotationSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        dataset_id = self.request.query_params.get('dataset_id')
+        if dataset_id:
+            queryset = queryset.filter(dataset_id=dataset_id)
+        return queryset
+
+
+class UserDefinedModelViewSet(viewsets.ModelViewSet):
+    queryset = UserDefinedModel.objects.all().order_by('-created_at')
+    serializer_class = UserDefinedModelSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        project_id = self.request.query_params.get('project_id')
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return queryset
+    
+    @action(detail=False, methods=['get'])
+    def script_template(self, request):
+        from .user_script_service import UserScriptService
+        
+        model_type = request.query_params.get('model_type', 'classification')
+        template = UserScriptService.get_script_template(model_type)
+        
+        return Response({
+            'template': template,
+            'model_type': model_type
+        })
+    
+    @action(detail=False, methods=['post'])
+    def validate_script(self, request):
+        from .user_script_service import UserScriptService
+        
+        script = request.data.get('script', '')
+        try:
+            is_valid, errors = UserScriptService.validate_script(script)
+            return Response({
+                'is_valid': is_valid,
+                'errors': errors
+            })
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class TrainingSessionViewSet(viewsets.ModelViewSet):
+    queryset = TrainingSession.objects.all().order_by('-created_at')
+    serializer_class = TrainingSessionSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        model_id = self.request.query_params.get('model_id')
+        if model_id:
+            queryset = queryset.filter(model_id=model_id)
+        return queryset
+    
+    @action(detail=False, methods=['post'])
+    def start_training(self, request):
+        from .training_service import TrainingService
+        
+        model_id = request.data.get('model_id')
+        dataset_id = request.data.get('dataset_id')
+        
+        if not model_id or not dataset_id:
+            return Response(
+                {'error': 'model_id and dataset_id are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            training_session = TrainingService.start_training(model_id, dataset_id)
+            serializer = self.get_serializer(training_session)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    @action(detail=True, methods=['post'])
+    def stop_training(self, request, pk=None):
+        from .training_service import TrainingService
+        
+        training_session = self.get_object()
+        try:
+            TrainingService.stop_training(training_session.id)
+            training_session.refresh_from_db()
+            serializer = self.get_serializer(training_session)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class PredictionViewSet(viewsets.ModelViewSet):
+    queryset = Prediction.objects.all().order_by('-created_at')
+    serializer_class = PredictionSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        dataset_id = self.request.query_params.get('dataset_id')
+        model_id = self.request.query_params.get('model_id')
+        
+        if dataset_id:
+            queryset = queryset.filter(dataset_id=dataset_id)
+        if model_id:
+            queryset = queryset.filter(model_id=model_id)
+        
+        return queryset
+    
+    @action(detail=True, methods=['post'])
+    def review(self, request, pk=None):
+        prediction = self.get_object()
+        
+        review_status = request.data.get('status')  # 'accepted', 'rejected', 'modified'
+        reviewed_by = request.data.get('reviewed_by', 'user')
+        modifications = request.data.get('modifications', {})
+        
+        if review_status not in ['accepted', 'rejected', 'modified']:
+            return Response(
+                {'error': 'Invalid review status'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        prediction.review_status = review_status
+        prediction.reviewed_by = reviewed_by
+        prediction.reviewed_at = timezone.now()
+        
+        if review_status == 'modified':
+            prediction.modifications = modifications
+        
+        prediction.save()
+        
+        serializer = self.get_serializer(prediction)
+        return Response(serializer.data)

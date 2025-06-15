@@ -4,7 +4,18 @@
       "WebFetch(domain:pypi.org)",
       "Bash(rm:*)",
       "Bash(python manage.py:*)",
-      "Bash(python3 manage.py check:*)"
+      "Bash(python3 manage.py check:*)",
+      "Bash(ls:*)",
+      "Bash(source:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(sudo apt:*)",
+      "Bash(sudo apt install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(apt list:*)",
+      "Bash(./venv/bin/python manage.py makemigrations:*)",
+      "Bash(./venv/bin/pip install:*)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }

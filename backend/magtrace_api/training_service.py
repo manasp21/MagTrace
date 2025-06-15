@@ -207,11 +207,8 @@ class TrainingOrchestrator:
         """
         Get model script content
         """
-        if model.script_content:
-            return model.script_content
-        elif model.python_script:
-            with open(model.python_script.path, 'r') as f:
-                return f.read()
+        if model.python_script:
+            return model.python_script
         else:
             # Generate template script
             return user_script_service.create_model_template(model.model_type)
@@ -226,7 +223,7 @@ class TrainingOrchestrator:
             np.zeros(data_shape),  # Dummy data for shape inference
             None,
             session.model.hyperparameters,
-            session.config,
+            {},  # config dict - could be added to TrainingSession if needed
             'create_model'
         )
         
@@ -244,7 +241,7 @@ class TrainingOrchestrator:
             data,
             labels,
             session.model.hyperparameters,
-            session.config,
+            {},  # config dict - could be added to TrainingSession if needed
             'preprocess_data'
         )
         
@@ -366,20 +363,16 @@ class TrainingOrchestrator:
             
             # Save to model instance
             with open(temp_file.name, 'rb') as f:
-                session.model.trained_model_file.save(
+                session.model_file.save(
                     f"{session.model.name}_trained.h5",
                     ContentFile(f.read())
                 )
         
-        # Update model metadata
-        session.model.is_trained = True
-        session.model.training_status = 'completed'
-        
-        # Save training history
+        # Training history is stored in session.training_metrics
         if hasattr(history, 'history'):
-            session.model.training_history = history.history
+            session.training_metrics = history.history
         else:
-            session.model.training_history = history
+            session.training_metrics = history if history else {}
         
         # Extract final metrics
         if hasattr(history, 'history') and history.history:

@@ -138,18 +138,19 @@ class ProjectService:
                     if dataset.file:
                         zf.write(dataset.file.path, f"datasets/{dataset.file.name}")
                 
-                # Add user scripts
-                for model in project.models.all():
+                # Add user scripts as text files
+                for model in project.user_models.all():
                     if model.python_script:
-                        zf.write(model.python_script.path, f"scripts/{model.python_script.name}")
-                    if model.trained_model_file:
-                        zf.write(model.trained_model_file.path, f"models/{model.trained_model_file.name}")
+                        script_content = model.python_script.encode('utf-8')
+                        zf.writestr(f"scripts/{model.name}_script.py", script_content)
+                    
+                    # Add trained model files from training sessions
+                    for session in model.training_sessions.filter(status='completed'):
+                        if session.model_file:
+                            zf.write(session.model_file.path, f"models/{session.model_file.name}")
             
-            # Save to project
-            with open(zip_path, 'rb') as f:
-                project.project_file.save(zip_filename, ContentFile(f.read()))
-        
-        return project.project_file.url
+            # Return the zip file path for download
+            return zip_path
     
     def _export_project_data(self, project):
         """Export all project data to dictionary"""
