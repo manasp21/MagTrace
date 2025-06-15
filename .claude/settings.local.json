@@ -15,7 +15,8 @@
       "Bash(apt list:*)",
       "Bash(./venv/bin/python manage.py makemigrations:*)",
       "Bash(./venv/bin/pip install:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }
