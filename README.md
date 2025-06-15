@@ -1,244 +1,252 @@
-# MagTrace - Magnetic Field Analysis Platform
+# 🧲 MagTrace Pro - Complete ML Workflow Platform
 
-MagTrace is a comprehensive platform for magnetic field data analysis, interactive labeling, and machine learning-based anomaly detection. The system combines data visualization, ML-assisted annotation, and real-time classification capabilities for magnetometer data analysis.
+MagTrace Pro is a self-contained, locally run application designed to provide a complete end-to-end workflow for creating custom Machine Learning models for magnetic field data analysis.
 
-## Features
+## ✨ Features
 
-### 🔍 Data Analysis
-- CSV data ingestion and validation
-- Real-time magnetic field visualization using D3.js
-- Time-series, geographic, and statistical analysis views
-- Interactive data exploration and selection tools
+### 🎯 Original Vision
+- **Self-contained local application** with no cloud dependencies
+- **Complete ML workflow**: Data upload → Visualization → Manual labeling → Model training → Prediction → Review
+- **User-defined TensorFlow models** through GUI with custom Python script integration
+- **Sophisticated hierarchical annotation system** supporting overlapping labels
+- **Local training orchestration** with real-time progress monitoring
+- **Project save/load functionality** with complete state preservation
+- **Prediction review and modification workflow** for human-in-the-loop ML
 
-### 🏷️ Interactive Labeling
-- Visual selection tools (brush, lasso, polygon)
-- Multiple label types (anomaly, normal, noise, interference)
-- Label management with version control
-- Collaborative annotation capabilities
+### 🎨 User Interface
+- **Modern web-based interface** with responsive design
+- **Interactive D3.js visualizations** with zoom, pan, and brush selection
+- **Multi-view charting**: Time series, components, 3D visualization, magnitude plots
+- **Real-time training progress** with live metrics and logs
+- **Comprehensive error handling** with user-friendly notifications
+- **ACE Editor integration** for Python script editing with syntax highlighting
 
-### 🤖 Machine Learning
-- TensorFlow-based anomaly detection models
-- Supervised classification for labeled data
-- Active learning for efficient annotation
-- Model training, validation, and management
+### 🔧 Technical Capabilities
+- **Project-based organization** with complete export/import functionality
+- **Enhanced database schema** with hierarchical label categories
+- **Advanced prediction workflow** with accept/reject/modify capabilities
+- **Template system** for common magnetic field analysis models
+- **Script validation** and template generation
+- **Training session management** with real-time progress tracking
 
-### ⚡ Real-time Processing
-- Batch processing of large datasets
-- Real-time inference on new data
-- Background task processing with Celery
-- Model-assisted labeling suggestions
+## 🏗️ Technology Stack
 
-## Technology Stack
+- **Backend**: Django 4.2 + Django REST Framework
+- **Database**: SQLite (local file-based)
+- **Frontend**: HTML5 + JavaScript + D3.js for visualization
+- **ML Framework**: TensorFlow 2.15+ with scikit-learn fallback
+- **Code Editor**: ACE Editor for Python script editing
+- **Data Format**: CSV files with magnetic field measurements
 
-- **Frontend**: HTML5, JavaScript (ES6+), D3.js for visualization
-- **Backend**: Django 4.2 with Django REST Framework
-- **Database**: SQLite (development) / PostgreSQL (production)
-- **ML Framework**: TensorFlow 2.15+, scikit-learn
-- **Task Queue**: Celery with Redis
-- **Data Processing**: Pandas, NumPy
+## 📊 Data Format
 
-## Quick Start
+CSV files must contain the following columns:
+```
+timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id
+```
+
+Where:
+- `timestamp_pc`: Timestamp of measurement
+- `b_x`, `b_y`, `b_z`: Magnetic field components (in nanoTesla)
+- `lat`, `lon`: Geographic coordinates (decimal degrees)
+- `altitude`: Elevation in meters
+- `thetax`, `thetay`, `thetaz`: Orientation angles (degrees)
+- `sensor_id`: Unique sensor identifier
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Python 3.8 or higher
-- Node.js (optional, for development)
-- Redis (for background tasks)
+- Python 3.8+ 
+- Node.js (for development)
+- Git
 
 ### Installation
 
-**For detailed installation instructions including troubleshooting, see [INSTALL.md](INSTALL.md)**
-
-#### Quick Installation
-
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/your-username/MagTrace.git
    cd MagTrace
    ```
 
-2. **Install Python dependencies**
-   ```bash
-   # Try full installation first
-   pip install -r backend/requirements.txt
-   
-   # If TensorFlow fails, use lightweight version
-   pip install -r backend/requirements-lite.txt
-   ```
-
-3. **Set up the database**
+2. **Set up Python environment**
    ```bash
    cd backend
+   python3 -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   # If TensorFlow fails, use: pip install -r requirements-lite.txt
+   ```
+
+3. **Initialize database**
+   ```bash
+   python manage.py makemigrations magtrace_api
    python manage.py migrate
-   python manage.py createsuperuser  # Optional: create admin user
+   python manage.py createsuperuser  # Optional
    ```
 
-### Running the Application
-
-#### Option 1: Quick Start (Recommended)
-```bash
-python run.py
-```
-
-This will start both the backend and frontend servers:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000/api
-- Admin Panel: http://localhost:8000/admin
-
-#### Option 2: Manual Start
-
-1. **Start the Django backend**
+4. **Start the application**
    ```bash
-   cd backend
-   python manage.py runserver
+   # Quick start (recommended) - runs both backend and frontend
+   python run.py
+   
+   # Or manual start:
+   # Terminal 1: Backend
+   cd backend && python manage.py runserver
+   
+   # Terminal 2: Frontend (in project root)
+   python3 -m http.server 3000
    ```
 
-2. **Start Celery worker** (in another terminal)
-   ```bash
-   cd backend
-   celery -A django_magtrace worker --loglevel=info
-   ```
+5. **Access the application**
+   - **Main Application**: http://localhost:3000/magtrace_pro.html
+   - **Backend API**: http://localhost:8000/api
+   - **Admin Panel**: http://localhost:8000/admin
 
-3. **Serve the frontend**
-   ```bash
-   # Simple HTTP server for frontend
-   python -m http.server 3000
-   ```
+## 📱 Usage Workflow
 
-## Data Format
+### 1. Project Management
+- Create a new project or load existing project
+- Projects can be exported as ZIP files for sharing
+- Complete project state preservation including models and annotations
 
-MagTrace expects CSV files with the following columns:
-
-```csv
-timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id
-24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,0,0,0,S963350075783_20250605_112438
-```
-
-### Column Descriptions
-- `timestamp_pc`: Timestamp of measurement
-- `b_x`, `b_y`, `b_z`: Magnetic field components (nanoTesla)
-- `lat`, `lon`: Geographic coordinates (decimal degrees)
-- `altitude`: Elevation in meters
-- `thetax`, `thetay`, `thetaz`: Sensor orientation angles
-- `sensor_id`: Unique identifier for the sensor
-
-## Usage Guide
-
-### 1. Data Upload
-- Click "Upload CSV Data" to load magnetometer data
-- Data is automatically processed and validated
-- View dataset statistics and basic information
-
-### 2. Data Visualization
-- **Time Series**: View magnetic field components over time
-- **Geographic**: Plot data points on geographic coordinates
-- **3D Field**: Visualize magnetic field vectors (coming soon)
-- **Statistics**: View detailed statistical analysis
+### 2. Data Upload
+- Upload CSV files with magnetic field measurements
+- Automatic data validation and processing
+- Real-time statistics and data quality checks
 
 ### 3. Interactive Labeling
-- Select labeling tool: Brush, Lasso, or Polygon
-- Choose label type: Anomaly, Normal, Noise, or Interference
-- Select data regions and apply labels
-- Edit, delete, or duplicate existing labels
+- Visual data selection with brush tools
+- Hierarchical label category system
+- Manual annotation with confidence scores
+- Bulk annotation operations
 
-### 4. Machine Learning
-- Train anomaly detection or classification models
-- Use active learning for efficient labeling
-- Run inference on new datasets
-- Apply model predictions as labels
+### 4. Model Configuration
+- Choose from built-in model templates (Classification, Autoencoder, Transformer, etc.)
+- Custom TensorFlow model definition with Python scripts
+- Hyperparameter configuration with validation
+- Script editor with syntax highlighting and error checking
 
-### 5. Active Learning
-- Review ML-generated labeling suggestions
-- Accept or reject suggestions to improve models
-- Iteratively refine model performance
+### 5. Training & Monitoring
+- Real-time training progress with live metrics
+- Training session management (start, stop, resume)
+- Training logs and error handling
+- Model performance tracking
 
-## API Endpoints
+### 6. Prediction & Review
+- Generate predictions on new datasets
+- Interactive prediction review (accept/reject/modify)
+- Prediction confidence visualization
+- Convert predictions to annotations for retraining
 
-### Datasets
-- `GET /api/datasets/` - List all datasets
-- `POST /api/datasets/upload/` - Upload new dataset
-- `GET /api/datasets/{id}/data/` - Get dataset readings
-- `GET /api/datasets/{id}/statistics/` - Get dataset statistics
+## 📁 Project Structure
 
-### Labels
-- `GET /api/labels/` - List labels
-- `POST /api/labels/` - Create new label
-- `PUT /api/labels/{id}/` - Update label
-- `DELETE /api/labels/{id}/` - Delete label
-
-### Models
-- `GET /api/models/` - List ML models
-- `POST /api/models/train/` - Train new model
-- `POST /api/models/{id}/set_active/` - Set model as active
-
-### Inference
-- `POST /api/inference/run_inference/` - Run inference on dataset
-
-### Suggestions
-- `GET /api/suggestions/` - Get active learning suggestions
-- `POST /api/suggestions/{id}/accept/` - Accept suggestion
-- `POST /api/suggestions/{id}/reject/` - Reject suggestion
-
-## Development
-
-### Project Structure
 ```
 MagTrace/
-├── backend/                 # Django backend
-│   ├── django_magtrace/    # Django project settings
-│   ├── magtrace_api/       # Main API application
-│   ├── manage.py           # Django management script
-│   ├── ml_service.py       # Machine learning services
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # Frontend assets
-│   ├── css/               # Stylesheets
-│   ├── js/                # JavaScript modules
-│   └── index.html         # Main HTML file
-├── example/               # Sample data
-│   └── data_1.csv         # Example dataset
-├── CLAUDE.md              # AI assistant guidance
-├── plan.md                # Project architecture plan
-├── run.py                 # Application launcher
-└── README.md              # This file
+├── backend/                    # Django backend
+│   ├── django_magtrace/       # Django project settings
+│   ├── magtrace_api/          # Main API application
+│   │   ├── models.py          # Enhanced database models
+│   │   ├── views.py           # API ViewSets
+│   │   ├── serializers.py     # REST API serializers
+│   │   ├── urls.py            # URL routing
+│   │   ├── project_service.py # Project management service
+│   │   ├── training_service.py# Training orchestration
+│   │   └── user_script_service.py # Script validation
+│   ├── requirements.txt       # Python dependencies
+│   └── manage.py             # Django management
+├── js/                        # Frontend JavaScript
+│   └── magtrace-pro.js       # Main application logic
+├── magtrace_pro.html         # Main application interface
+├── example/                   # Sample data files
+├── README.md                 # This file
+├── CLAUDE.md                 # Development documentation
+└── .gitattributes           # Git line ending configuration
 ```
 
-### Key Components
+## 🔧 Development
 
-#### Backend (Django)
-- **Models**: Dataset, MagnetometerReading, Label, MLModel, InferenceResult
-- **Views**: RESTful API endpoints for all operations
-- **ML Service**: TensorFlow integration for model training and inference
-- **Celery Tasks**: Background processing for ML operations
+### Backend Development
+- Django 4.2 with REST Framework
+- SQLite database for local storage
+- Comprehensive API with ViewSets
+- Real-time training progress tracking
 
-#### Frontend (JavaScript)
-- **API Service**: Communication with backend API
-- **Data Loader**: Dataset management and loading
-- **Visualizations**: D3.js-based interactive charts
-- **Labeling Tools**: Interactive selection and annotation
-- **Model Manager**: ML model training and inference interface
+### Frontend Development
+- Modern JavaScript (ES6+)
+- D3.js for interactive visualizations
+- ACE Editor for code editing
+- Responsive CSS design
 
-## Contributing
+### Adding New Model Templates
+1. Update `user_script_service.py` with new template
+2. Add template option to frontend model configuration
+3. Test template generation and validation
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Database Migration Errors**
+```bash
+cd backend
+python manage.py makemigrations magtrace_api --name initial_enhanced_schema
+python manage.py migrate
+```
+
+**TensorFlow Installation Issues**
+```bash
+# Use the lite requirements if TensorFlow fails
+pip install -r requirements-lite.txt
+```
+
+**Frontend Not Loading**
+- Ensure you're accessing http://localhost:3000/magtrace_pro.html
+- Check that both backend (port 8000) and frontend (port 3000) are running
+
+**CORS Issues**
+- Backend includes CORS headers for local development
+- Ensure backend is running on localhost:8000
+
+## 📋 Roadmap
+
+### Completed ✅
+- Enhanced database schema with project-based organization
+- Complete API overhaul with REST framework
+- Interactive annotation system with D3.js
+- Advanced visualization with multiple chart views
+- Prediction workflow with review capabilities
+- Enhanced model template system
+- Comprehensive error handling
+
+### In Progress 🔄
+- Database migration deployment
+- End-to-end testing
+- Performance optimizations
+
+### Planned 📅
+- Export functionality for annotations and predictions
+- Advanced model templates
+- Batch processing capabilities
+- Enhanced 3D visualization
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🙏 Acknowledgments
 
-For issues and questions:
-1. Check the existing issues on GitHub
-2. Create a new issue with detailed description
-3. Include sample data and error messages if applicable
+- Built for magnetic field data analysis research
+- Designed for ease of use by domain experts
+- Optimized for local deployment and data privacy
 
-## Acknowledgments
+---
 
-- TensorFlow team for the ML framework
-- D3.js for visualization capabilities
-- Django community for the web framework
-- Scientific Python ecosystem (NumPy, Pandas, scikit-learn)
+**MagTrace Pro** - Empowering magnetic field analysis with intelligent machine learning workflows 🧲✨
