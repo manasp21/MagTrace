@@ -1,17 +1,17 @@
-# 🧲 MagTrace - Complete ML Workflow Platform
+# 🧲 MagTrace - Advanced Reinforcement Learning Platform
 
-MagTrace is a self-contained, locally run application designed to provide a complete end-to-end workflow for creating custom Machine Learning models for magnetic field data analysis.
+MagTrace is a sophisticated, self-contained ML platform designed for magnetic field data analysis with advanced reinforcement learning capabilities. It provides a complete workflow from data labeling to model deployment with continuous learning and multi-dataset training support.
 
 ## ✨ Features
 
-### 🎯 Original Vision
+### 🎯 Core Vision
 - **Self-contained local application** with no cloud dependencies
-- **Complete ML workflow**: Data upload → Visualization → Manual labeling → Model training → Prediction → Review
-- **User-defined TensorFlow models** through GUI with custom Python script integration
-- **Sophisticated hierarchical annotation system** supporting overlapping labels
-- **Local training orchestration** with real-time progress monitoring
-- **Project save/load functionality** with complete state preservation
-- **Prediction review and modification workflow** for human-in-the-loop ML
+- **Reinforcement Learning Platform**: Continuous model improvement through multi-dataset training
+- **Advanced ML Workflow**: Data upload → Interactive labeling → Multi-dataset training → Transfer learning → Prediction review
+- **Intelligent Model Management**: Versioning, metadata tracking, and smart naming
+- **Multi-Label Classification**: Support for overlapping annotations with confidence weighting
+- **Human-in-the-Loop ML**: Interactive feedback loops for continuous model improvement
+- **Transfer Learning**: Continue training from existing models with new datasets
 
 ### 🎨 User Interface
 - **Modern web-based interface** with responsive design
@@ -23,22 +23,25 @@ MagTrace is a self-contained, locally run application designed to provide a comp
 - **Comprehensive error handling** with user-friendly notifications
 - **ACE Editor integration** for Python script editing with syntax highlighting
 
-### 🔧 Technical Capabilities
-- **Project-based organization** with complete export/import functionality
-- **Enhanced database schema** with hierarchical label categories
-- **Interactive data labeling** with brush selection and visual feedback
-- **Advanced prediction workflow** with accept/reject/modify capabilities
-- **Template system** for common magnetic field analysis models
-- **Script validation** and template generation
-- **Training session management** with real-time progress tracking
+### 🔧 Advanced ML Capabilities
+- **Multi-Dataset Training**: Train models on multiple datasets simultaneously
+- **Model Versioning System**: Complete genealogy tracking with parent-child relationships
+- **Intelligent Model Naming**: Auto-generated names based on training data and label analysis
+- **Transfer Learning**: Continue training from existing models with preserved knowledge
+- **Multi-Label Classification**: Support for overlapping labels with confidence weighting
+- **Performance Tracking**: Automatic tracking of best metrics across all training sessions
+- **Reinforcement Learning**: Continuous model improvement through user feedback loops
+- **Advanced Metadata Management**: Tags, categories, training history, and custom metadata
 
 ## 🏗️ Technology Stack
 
 - **Backend**: Django 4.2 + Django REST Framework
-- **Database**: SQLite (local file-based)
-- **Frontend**: HTML5 + JavaScript + D3.js for visualization
-- **ML Framework**: TensorFlow 2.15+ with scikit-learn fallback
-- **Code Editor**: ACE Editor for Python script editing
+- **Database**: SQLite with enhanced schema for ML workflows
+- **Frontend**: HTML5 + JavaScript + D3.js for interactive visualization
+- **ML Framework**: TensorFlow 2.15+ with scikit-learn fallback and transfer learning
+- **Model Management**: Advanced versioning, metadata tracking, and performance monitoring
+- **Training Orchestration**: Multi-dataset training with real-time progress monitoring
+- **Code Editor**: ACE Editor for Python script editing with validation
 - **Data Format**: CSV files with magnetic field measurements
 
 ## 📊 Data Format
@@ -102,44 +105,148 @@ Where:
    - **📊 Backend API**: http://localhost:8000/api/
    - **⚙️ Admin Panel**: http://localhost:8000/admin/
 
-## 📱 Usage Workflow
+## 🎯 Advanced ML Features
 
-### 1. Project Management
-- Create a new project or load existing project
-- Projects can be exported as ZIP files for sharing
-- Complete project state preservation including models and annotations
+### 🔄 Reinforcement Learning Capabilities
 
-### 2. Data Upload
-- Upload CSV files with magnetic field measurements
-- Automatic data validation and processing
-- Real-time statistics and data quality checks
+MagTrace now operates as a true reinforcement learning platform with the following key features:
 
-### 3. Interactive Labeling
-- **Visual data selection** with D3.js brush tools
-- **Quick labeling system** with keyboard shortcuts (1-5)
-- **Predefined categories**: Fan Noise, Motor Interference, Normal, Anomaly, Electrical Noise
-- **Real-time feedback** with selection stats and visual overlays
-- **Hierarchical label category system** with parent-child relationships
-- **Manual annotation** with confidence scores and custom notes
-- **Bulk annotation operations** for efficient labeling workflow
+#### **Multi-Dataset Training**
+```bash
+POST /api/training-sessions/start_training/
+{
+  "model_id": 1,
+  "dataset_id": 2,
+  "additional_dataset_ids": [3, 4, 5],
+  "training_config": {
+    "epochs": 100,
+    "learning_rate": 0.001
+  }
+}
+```
 
-### 4. Model Configuration
-- Choose from built-in model templates (Classification, Autoencoder, Transformer, etc.)
-- Custom TensorFlow model definition with Python scripts
-- Hyperparameter configuration with validation
-- Script editor with syntax highlighting and error checking
+#### **Transfer Learning & Model Continuation**
+```bash
+POST /api/training-sessions/start_training/
+{
+  "model_id": 1,
+  "dataset_id": 2,
+  "continue_from_session": 15,
+  "training_config": {
+    "epochs": 50
+  }
+}
+```
 
-### 5. Training & Monitoring
-- Real-time training progress with live metrics
-- Training session management (start, stop, resume)
-- Training logs and error handling
-- Model performance tracking
+#### **Intelligent Model Management**
+```bash
+# Generate smart model names
+POST /api/user-models/generate_intelligent_name/
+{
+  "dataset_ids": [1, 2, 3],
+  "model_type": "classification"
+}
+# Returns: "anomaly_detector_multi_dataset_large"
 
-### 6. Prediction & Review
-- Generate predictions on new datasets
-- Interactive prediction review (accept/reject/modify)
-- Prediction confidence visualization
-- Convert predictions to annotations for retraining
+# Create model versions
+POST /api/user-models/1/create_version/
+{
+  "version": "2.0",
+  "version_notes": "Added multi-dataset training"
+}
+
+# Clone models
+POST /api/user-models/1/clone/
+{
+  "new_name": "Enhanced Classifier",
+  "include_training_data": true
+}
+```
+
+#### **Advanced Metadata Management**
+```bash
+PATCH /api/user-models/1/update_metadata/
+{
+  "tags": ["classification", "multi-dataset", "production"],
+  "category": "Anomaly Detection",
+  "author": "Data Scientist",
+  "custom_metadata": {
+    "performance_target": 0.95,
+    "deployment_ready": true
+  }
+}
+```
+
+### 🧠 Multi-Label Classification
+
+MagTrace supports sophisticated labeling scenarios:
+
+- **Overlapping Annotations**: Multiple labels can be applied to the same data points
+- **Confidence Weighting**: Each annotation includes confidence scores for better training
+- **Hierarchical Labels**: Parent-child relationships between label categories
+- **Smart Detection**: Automatic detection of single vs multi-label classification needs
+
+### 📊 Performance Tracking & Analytics
+
+Every model maintains comprehensive performance history:
+
+- **Best Metrics Tracking**: Automatically tracks best performance across all training sessions
+- **Training Lineage**: Complete history of datasets used in training
+- **Performance Evolution**: Track improvement over multiple training rounds
+- **Session Comparison**: Compare performance across different training configurations
+
+### 🔄 Continuous Learning Workflow
+
+1. **Initial Training**: Train model on initial dataset with interactive labeling
+2. **Performance Evaluation**: Review predictions and provide feedback
+3. **Incremental Learning**: Add new datasets and continue training
+4. **Knowledge Preservation**: Transfer learning maintains existing knowledge
+5. **Performance Optimization**: System automatically tracks and preserves best models
+6. **Human Feedback Integration**: User corrections directly improve model performance
+
+## 📱 Enhanced ML Workflow
+
+### 1. Project & Model Management
+- **Intelligent Project Organization**: Complete project lifecycle with enhanced metadata
+- **Advanced Model Versioning**: Parent-child relationships with automatic version increment
+- **Smart Model Naming**: Auto-generated names based on training data and label analysis
+- **Model Genealogy Tracking**: Complete evolution history with performance metrics
+- **Export/Import**: Full project state preservation with model lineage
+
+### 2. Multi-Dataset Training
+- **Dataset Aggregation**: Train on multiple datasets simultaneously for better generalization
+- **Progressive Learning**: Add new datasets to existing models without losing knowledge
+- **Transfer Learning**: Continue training from pre-trained models with new data
+- **Training Lineage**: Complete tracking of all datasets used in model training
+- **Performance Optimization**: Automatic identification and preservation of best-performing models
+
+### 3. Advanced Interactive Labeling
+- **Multi-Label Support**: Handle overlapping annotations with confidence weighting
+- **Smart Label Detection**: Automatic detection of single vs multi-label scenarios
+- **Visual Selection Tools**: D3.js brush selection with real-time feedback
+- **Quick Labeling System**: Keyboard shortcuts (1-5) for rapid annotation
+- **Hierarchical Categories**: Parent-child label relationships with inheritance
+- **Confidence Scoring**: Weight annotations by confidence for better training
+
+### 4. Intelligent Model Configuration
+- **Context-Aware Templates**: Model templates optimized for magnetic field analysis
+- **Automated Hyperparameter Suggestions**: Smart defaults based on data characteristics
+- **Script Validation & Templates**: Comprehensive Python script validation with templates
+- **Model Metadata Management**: Tags, categories, author tracking, and custom metadata
+
+### 5. Advanced Training & Monitoring
+- **Real-Time Progress Tracking**: Live metrics, logs, and epoch-by-epoch monitoring
+- **Multi-Dataset Training**: Combine multiple datasets in single training sessions
+- **Continued Training**: Resume from existing models with preserved weights
+- **Performance Analytics**: Track best metrics across all training sessions
+- **Training Session Management**: Start, stop, resume, and cancel with full control
+
+### 6. Reinforcement Learning Workflow
+- **Human-in-the-Loop**: User feedback directly improves model performance
+- **Prediction Review**: Accept/reject/modify predictions to create training data
+- **Continuous Improvement**: Models evolve through iterative training cycles
+- **Performance Tracking**: Monitor improvement over multiple training rounds
+- **Knowledge Preservation**: Transfer learning maintains existing knowledge while adapting
 
 ## 📁 Project Structure
 
@@ -216,27 +323,31 @@ pip install -r requirements-lite.txt
 ## 📋 Roadmap
 
 ### Completed ✅
-- Enhanced database schema with project-based organization
-- Complete API overhaul with REST framework
-- Interactive annotation system with D3.js brush selection
-- Advanced visualization with multiple chart views
-- Smart labeling system with keyboard shortcuts and quick toolbar
-- Prediction workflow with review capabilities
-- Enhanced model template system
-- Comprehensive error handling
-- Clean, streamlined codebase architecture
-- Single-server deployment with Django
+- **Advanced ML Architecture**: Complete reinforcement learning platform
+- **Multi-Dataset Training**: Train models on multiple datasets simultaneously
+- **Model Versioning System**: Full genealogy tracking with metadata management
+- **Transfer Learning**: Continue training from existing models with preserved knowledge
+- **Multi-Label Classification**: Overlapping annotations with confidence weighting
+- **Intelligent Model Naming**: Context-aware naming based on training data analysis
+- **Performance Tracking**: Automatic best-metrics tracking across training sessions
+- **Interactive Labeling**: Advanced brush selection with real-time feedback
+- **Human-in-the-Loop**: Prediction review workflow feeding back into training
+- **Enhanced API**: Comprehensive endpoints for advanced ML workflows
+- **Real-Time Monitoring**: Live training progress with detailed metrics
+- **Clean Architecture**: Streamlined codebase with single-server deployment
 
 ### In Progress 🔄
-- End-to-end testing with new labeling features
-- Performance optimizations
-- ML backend architecture validation
+- End-to-end testing of reinforcement learning workflows
+- Performance optimization for multi-dataset training
+- Advanced model comparison and analytics features
 
 ### Planned 📅
-- Export functionality for labeled datasets
-- Advanced model templates for magnetic field analysis
-- Batch processing capabilities for large datasets
-- Enhanced 3D visualization with interactive controls
+- **Advanced Analytics**: Model performance comparison and evolution tracking
+- **Batch Processing**: Large-scale dataset processing with distributed training
+- **Model Ensemble**: Combine multiple models for improved performance
+- **Advanced Export**: Labeled datasets and model artifacts export
+- **Enhanced Visualization**: 3D interactive controls and advanced chart types
+- **Auto-Labeling**: AI-assisted labeling suggestions based on model predictions
 
 ## 🤝 Contributing
 
