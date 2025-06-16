@@ -15,7 +15,7 @@ def landing_page(request):
 def main_app(request):
     """Main MagTrace application interface"""
     context = {
-        'title': 'MagTrace - ML Workflow Platform'
+        'title': 'MagTrace Pro - Magnetic Field Analysis'
     }
     return render(request, 'magtrace_pro.html', context)
 

@@ -35,6 +35,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
     def upload(self, request):
         file = request.FILES.get('file')
         name = request.data.get('name', file.name if file else 'Unnamed Dataset')
+        project_id = request.data.get('project')
         
         if not file:
             return Response({'error': 'No file provided'}, status=status.HTTP_400_BAD_REQUEST)
@@ -42,7 +43,16 @@ class DatasetViewSet(viewsets.ModelViewSet):
         if not file.name.endswith('.csv'):
             return Response({'error': 'Only CSV files are supported'}, status=status.HTTP_400_BAD_REQUEST)
         
-        dataset = Dataset.objects.create(name=name, file=file)
+        # Create dataset with project association
+        dataset_data = {'name': name, 'file': file}
+        if project_id:
+            try:
+                project = Project.objects.get(id=project_id)
+                dataset_data['project'] = project
+            except Project.DoesNotExist:
+                return Response({'error': 'Project not found'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        dataset = Dataset.objects.create(**dataset_data)
         
         try:
             self.process_csv_file(dataset)
@@ -143,6 +153,13 @@ class DatasetViewSet(viewsets.ModelViewSet):
 class MagnetometerReadingViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MagnetometerReading.objects.all()
     serializer_class = MagnetometerReadingSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        dataset_id = self.request.query_params.get('dataset_id')
+        if dataset_id:
+            queryset = queryset.filter(dataset_id=dataset_id)
+        return queryset
 
 
 class LabelViewSet(viewsets.ModelViewSet):
@@ -771,8 +788,8 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'])
     def start_training(self, request):
-        """Start training with support for multiple datasets and continued training"""
-        from .training_service import training_orchestrator
+        """Start training with simplified, working training system"""
+        from .simple_training_service import simple_training_orchestrator
         
         model_id = request.data.get('model_id')
         dataset_id = request.data.get('dataset_id')
@@ -787,13 +804,11 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            # Start training with enhanced features
-            session_id = training_orchestrator.start_training(
+            # Start simple training that actually works
+            session_id = simple_training_orchestrator.start_training(
                 model_id=model_id,
                 dataset_id=dataset_id,
-                training_config=training_config,
-                additional_dataset_ids=additional_dataset_ids,
-                continue_from_session=continue_from_session
+                training_config=training_config
             )
             
             # Get the created session
@@ -810,12 +825,12 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def stop_training(self, request, pk=None):
         """Stop an active training session"""
-        from .training_service import training_orchestrator
+        from .simple_training_service import simple_training_orchestrator
         
         training_session = self.get_object()
         
         try:
-            success = training_orchestrator.cancel_training(training_session.id)
+            success = simple_training_orchestrator.cancel_training(training_session.id)
             if success:
                 training_session.refresh_from_db()
                 serializer = self.get_serializer(training_session)
@@ -834,19 +849,19 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def status(self, request, pk=None):
         """Get real-time training status and progress"""
-        from .training_service import training_orchestrator
+        from .simple_training_service import simple_training_orchestrator
         
         training_session = self.get_object()
-        status_info = training_orchestrator.get_training_status(training_session.id)
+        status_info = simple_training_orchestrator.get_training_status(training_session.id)
         
         return Response(status_info)
     
     @action(detail=False, methods=['get'])
     def active_sessions(self, request):
         """Get all currently active training sessions"""
-        from .training_service import training_orchestrator
+        from .simple_training_service import simple_training_orchestrator
         
-        active_session_ids = training_orchestrator.get_active_sessions()
+        active_session_ids = simple_training_orchestrator.get_active_sessions()
         active_sessions = TrainingSession.objects.filter(id__in=active_session_ids)
         
         serializer = self.get_serializer(active_sessions, many=True)

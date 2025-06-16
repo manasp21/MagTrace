@@ -21,7 +21,11 @@
       "Bash(mkdir:*)",
       "Bash(cp:*)",
       "Bash(grep:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(curl:*)",
+      "Bash(./venv/bin/python -m pip install sphinx sphinx-rtd-theme)",
+      "Bash(git restore:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

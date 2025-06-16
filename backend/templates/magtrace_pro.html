@@ -643,7 +643,7 @@
         <header class="header">
             <div class="d-flex gap-2">
                 <button id="sidebarToggle" class="btn btn-primary btn-small d-none">☰</button>
-                <h1>🧲 MagTrace Pro</h1>
+                <h1>MagTrace Pro</h1>
             </div>
             
             <div class="header-controls">
@@ -672,7 +672,7 @@
                         <div class="form-group">
                             <label>Upload Data</label>
                             <input type="file" id="dataUpload" accept=".csv" style="display: none;">
-                            <button id="uploadBtn" class="btn btn-primary">📁 Upload CSV File</button>
+                            <button id="uploadBtn" class="btn btn-primary">Upload CSV File</button>
                         </div>
 
                         <div id="datasetList">
@@ -710,29 +710,19 @@
                 <div class="content-tabs">
                     <button class="content-tab active" data-panel="visualization">Visualization</button>
                     <button class="content-tab" data-panel="modelConfig">Model Config</button>
-                    <button class="content-tab" data-panel="scriptEditor">Script Editor</button>
                     <button class="content-tab" data-panel="training">Training</button>
                 </div>
 
                 <!-- Visualization Panel -->
                 <div id="visualizationPanel" class="content-panel active">
                     <div class="visualization-container">
-                        <!-- Chart View Controls -->
+                        <!-- Chart Controls -->
                         <div class="chart-view-controls">
                             <div class="chart-view-tabs">
-                                <button class="chart-view-tab active" data-view="timeseries">Time Series</button>
-                                <button class="chart-view-tab" data-view="components">Components</button>
-                                <button class="chart-view-tab" data-view="3d">3D View</button>
-                                <button class="chart-view-tab" data-view="magnitude">Magnitude</button>
+                                <button class="chart-view-tab active" data-view="timeseries">Magnetic Field</button>
                             </div>
                             <div class="chart-options">
-                                <select id="chartYAxis" class="chart-option">
-                                    <option value="auto">Auto Scale</option>
-                                    <option value="symmetric">Symmetric</option>
-                                    <option value="individual">Individual</option>
-                                </select>
-                                <button id="toggleSelectionMode" class="btn btn-primary btn-sm">🎯 Select Mode</button>
-                                <button id="exportChart" class="btn btn-secondary btn-sm">Export</button>
+                                <button id="toggleSelectionMode" class="btn btn-primary btn-sm">Select Mode</button>
                             </div>
                         </div>
                         
@@ -741,21 +731,21 @@
                             <div class="labeling-controls">
                                 <span class="toolbar-label">Quick Label:</span>
                                 <button class="quick-label-btn" data-label="fan_noise" data-color="#ff6b6b" data-hotkey="1">
-                                    🔥 Fan Noise (1)
+                                    Fan Noise (1)
                                 </button>
                                 <button class="quick-label-btn" data-label="motor_interference" data-color="#ffd43b" data-hotkey="2">
-                                    ⚡ Motor (2)
+                                    Motor (2)
                                 </button>
                                 <button class="quick-label-btn" data-label="normal" data-color="#51cf66" data-hotkey="3">
-                                    ✅ Normal (3)
+                                    Normal (3)
                                 </button>
                                 <button class="quick-label-btn" data-label="anomaly" data-color="#ff922b" data-hotkey="4">
-                                    ⚠️ Anomaly (4)
+                                    Anomaly (4)
                                 </button>
                                 <button class="quick-label-btn" data-label="electrical_noise" data-color="#845ef7" data-hotkey="5">
-                                    ⚡ Electrical (5)
+                                    Electrical (5)
                                 </button>
-                                <button id="customLabelBtn" class="btn btn-secondary btn-sm">+ Custom</button>
+                                <button id="customLabelBtn" class="btn btn-secondary btn-sm">Custom</button>
                                 <button id="clearSelectionBtn" class="btn btn-secondary btn-sm">Clear</button>
                             </div>
                             <div class="selection-info" id="selectionInfo">
@@ -795,101 +785,28 @@
                             </div>
                         </div>
 
-                        <div class="config-section">
-                            <h3>Input/Output Configuration</h3>
-                            <div class="hyperparameter-grid">
-                                <div class="form-group">
-                                    <label for="inputShape">Input Shape</label>
-                                    <input type="text" id="inputShape" class="form-control" placeholder="[100, 15]" value="[100, 15]">
-                                </div>
-                                <div class="form-group">
-                                    <label for="outputShape">Output Shape</label>
-                                    <input type="text" id="outputShape" class="form-control" placeholder="[5]" value="[5]">
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="config-section">
                             <h3>Hyperparameters</h3>
                             <div class="hyperparameter-grid">
                                 <div class="form-group">
+                                    <label for="epochs">Epochs</label>
+                                    <input type="number" id="epochs" class="form-control" value="5" min="1" max="100">
+                                </div>
+                                <div class="form-group">
                                     <label for="learningRate">Learning Rate</label>
                                     <input type="number" id="learningRate" class="form-control" value="0.001" step="0.0001" min="0.0001" max="1">
                                 </div>
-                                <div class="form-group">
-                                    <label for="batchSize">Batch Size</label>
-                                    <input type="number" id="batchSize" class="form-control" value="32" min="1" max="512">
-                                </div>
-                                <div class="form-group">
-                                    <label for="epochs">Epochs</label>
-                                    <input type="number" id="epochs" class="form-control" value="100" min="1" max="1000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="validationSplit">Validation Split</label>
-                                    <input type="number" id="validationSplit" class="form-control" value="0.2" step="0.1" min="0.1" max="0.5">
-                                </div>
                             </div>
-                            
-                            <div id="customHyperparameters">
-                                <!-- Custom hyperparameters will be added here dynamically -->
-                            </div>
-                            
-                            <button id="addHyperparameterBtn" class="btn btn-secondary btn-small mt-1">Add Custom Parameter</button>
                         </div>
 
-                        <div class="config-section">
-                            <h3>Training Configuration</h3>
-                            <div class="hyperparameter-grid">
-                                <div class="form-group">
-                                    <label for="patience">Early Stopping Patience</label>
-                                    <input type="number" id="patience" class="form-control" value="10" min="1" max="100">
-                                </div>
-                                <div class="form-group">
-                                    <label for="monitorMetric">Monitor Metric</label>
-                                    <select id="monitorMetric" class="form-control">
-                                        <option value="val_loss">Validation Loss</option>
-                                        <option value="val_accuracy">Validation Accuracy</option>
-                                        <option value="loss">Training Loss</option>
-                                        <option value="accuracy">Training Accuracy</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="d-flex gap-2 mt-2">
                             <button id="saveModelConfigBtn" class="btn btn-primary">Save Configuration</button>
-                            <button id="generateTemplateBtn" class="btn btn-secondary">Generate Script Template</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Script Editor Panel -->
-                <div id="scriptEditorPanel" class="content-panel">
-                    <div class="script-editor-container">
-                        <div class="editor-toolbar">
-                            <div class="template-selector">
-                                <label for="templateSelect">Template:</label>
-                                <select id="templateSelect" class="form-control" style="width: auto;">
-                                    <option value="classification">Classification</option>
-                                    <option value="autoencoder">Autoencoder</option>
-                                    <option value="sequence_prediction">Sequence Prediction</option>
-                                    <option value="transformer">Transformer</option>
-                                    <option value="custom_tensorflow">Custom</option>
-                                </select>
-                                <button id="loadTemplateBtn" class="btn btn-secondary btn-small">Load Template</button>
-                            </div>
-                            
-                            <div class="editor-actions">
-                                <button id="validateScriptBtn" class="btn btn-secondary btn-small">Validate</button>
-                                <button id="saveScriptBtn" class="btn btn-primary btn-small">Save Script</button>
-                                <input type="file" id="scriptFileInput" accept=".py" style="display: none;">
-                                <button id="loadScriptBtn" class="btn btn-secondary btn-small">Load File</button>
-                            </div>
-                        </div>
-                        
-                        <div id="scriptEditor"></div>
-                    </div>
-                </div>
 
                 <!-- Training Panel -->
                 <div id="trainingPanel" class="content-panel">
@@ -897,11 +814,10 @@
                         <div class="d-flex gap-2 mb-2">
                             <button id="startTrainingBtn" class="btn btn-primary">Start Training</button>
                             <button id="stopTrainingBtn" class="btn btn-danger d-none">Stop Training</button>
-                            <button id="viewHistoryBtn" class="btn btn-secondary">View History</button>
                         </div>
 
                         <div id="activeTraining" class="training-session d-none">
-                            <h4>Active Training Session</h4>
+                            <h4>Training Progress</h4>
                             <div class="progress-container">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span id="trainingStatus">Initializing...</span>
@@ -915,19 +831,8 @@
                             <div class="mt-2">
                                 <strong>Epoch:</strong> <span id="currentEpoch">0</span> / <span id="totalEpochs">0</span>
                             </div>
-                            
-                            <div id="liveMetrics" class="mt-2"></div>
-                            
-                            <div class="mt-2">
-                                <h5>Training Logs</h5>
-                                <div id="trainingLogs" class="training-logs"></div>
-                            </div>
                         </div>
 
-                        <div id="trainingHistory">
-                            <h4>Training History</h4>
-                            <div id="historyList"></div>
-                        </div>
                     </div>
                 </div>
             </main>
