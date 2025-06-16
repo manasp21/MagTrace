@@ -102,38 +102,105 @@ Where:
 4. **Access the application**
    - Open your browser to: http://localhost:8000/app/
 
-### Basic Usage
+## 📖 Complete Usage Guide
 
-1. **Create a Project**
-   - Click "New Project" in the header
-   - Enter project name and description
-   - Click "Create"
+### Quick Start Workflow
 
-2. **Upload Data**
-   - Click "Upload Data" in the header
-   - Select your CSV file with magnetic field data
-   - Wait for processing to complete
+**Step 1: Project Setup**
+```
+1. Start application: python run.py
+2. Open browser: http://localhost:8000/app/
+3. Click "New Project" → Enter name → "Create Project"
+```
 
-3. **Label Your Data**
-   - Click "Select Mode" to enable data selection
-   - Drag across the chart to select data ranges
-   - Use quick label buttons or keyboard shortcuts:
-     - **1**: Fan Noise
-     - **2**: Motor Interference  
-     - **3**: Normal Operation
-     - **4**: Anomaly Detection
-     - **5**: Electrical Noise
+**Step 2: Data Upload**
+```
+1. Click "Upload CSV File" in Data tab
+2. Select your magnetic field CSV file
+3. Wait for "Data uploaded successfully" notification
+4. Click "Load" button next to your dataset
+```
 
-4. **Create and Train Models**
-   - Click "Create Model" in the sidebar
-   - Configure model parameters
-   - Click "Save Model"
-   - Click "Start Training" to begin training
+**Step 3: Interactive Labeling**
+```
+1. Click "Select Mode" to enable data selection
+2. Drag across chart to select data ranges
+3. Use keyboard shortcuts for instant labeling:
+   • Press 1: Fan Noise (red)
+   • Press 2: Motor (yellow) 
+   • Press 3: Normal (green)
+   • Press 4: Anomaly (orange)
+   • Press 5: Electrical (purple)
+4. Repeat until you have sufficient labeled data
+```
 
-5. **Monitor Training**
-   - Real-time progress bar shows training status
-   - Training completes automatically
-   - Models are saved for future use
+**Step 4: Model Training**
+```
+1. Go to Models tab → "Create New Model"
+2. Switch to "Model Config" tab
+3. Enter model name and configure epochs (default: 5)
+4. Click "Save Configuration"
+5. Switch to "Training" tab → "Start Training"
+6. Monitor real-time progress bar
+```
+
+### Detailed Feature Guide
+
+#### Data Management
+- **Supported Format**: CSV with columns: `timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id`
+- **Large Files**: Automatically optimized for performance (>5000 points decimated)
+- **Multiple Datasets**: Each project can contain multiple CSV files
+
+#### Interactive Labeling System
+- **Selection Tools**: Drag to select ranges on magnetic field charts
+- **Quick Labels**: 5 predefined categories with color coding
+- **Keyboard Shortcuts**: Numbers 1-5 for rapid labeling
+- **Visual Feedback**: Real-time overlays show labeled regions
+- **Precision**: Select exact data point ranges for training
+
+#### Machine Learning Training
+- **Algorithm**: Random Forest classifier (scikit-learn)
+- **Features**: Statistical features extracted from magnetic field components
+- **Training Data**: Uses your labeled annotations as ground truth
+- **Progress**: Real-time monitoring with epoch/progress tracking
+- **Reliability**: Simplified system that actually works
+
+#### Advanced Usage Tips
+- **Efficient Labeling**: Label diverse patterns for better model performance
+- **Training Data**: Aim for at least 10-20 labeled regions per category
+- **Performance**: Close other browser tabs for better responsiveness
+- **Data Quality**: Ensure consistent labeling for similar patterns
+
+### Keyboard Shortcuts Reference
+| Key | Action | Label Type |
+|-----|--------|------------|
+| `1` | Quick Label | Fan Noise (Red) |
+| `2` | Quick Label | Motor Interference (Yellow) |
+| `3` | Quick Label | Normal Operation (Green) |
+| `4` | Quick Label | Anomaly Detection (Orange) |
+| `5` | Quick Label | Electrical Noise (Purple) |
+
+### Troubleshooting Common Issues
+
+**Data Upload Problems:**
+- ✅ Verify CSV has all required columns
+- ✅ Check file encoding (UTF-8 recommended)
+- ✅ Ensure numeric data in magnetic field columns
+
+**Labeling Not Working:**
+- ✅ Enable "Select Mode" first
+- ✅ Create a project before uploading data
+- ✅ Refresh page if selection stops working
+
+**Training Failures:**
+- ✅ Create at least 5-10 annotations before training
+- ✅ Ensure model configuration is saved
+- ✅ Check that dataset is loaded and visible
+
+**Performance Issues:**
+- ✅ Large datasets are automatically optimized
+- ✅ Close unnecessary browser tabs
+- ✅ Restart application if needed
 
 ## Core API Endpoints
 
