@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """
 MagTrace Application Runner
-Starts the Django development server and serves the frontend
+Starts the integrated Django development server (backend + frontend)
 """
 
 import os
 import sys
 import subprocess
-import threading
-import time
 from pathlib import Path
 
 def check_dependencies():
@@ -106,29 +104,6 @@ def start_django_server():
     except Exception as e:
         print(f"Error starting Django server: {e}")
 
-def serve_frontend():
-    """Serve the frontend files"""
-    try:
-        import http.server
-        import socketserver
-        
-        # Change to root directory to serve frontend files
-        root_dir = Path(__file__).parent
-        os.chdir(root_dir)
-        
-        PORT = 3000
-        Handler = http.server.SimpleHTTPRequestHandler
-        
-        with socketserver.TCPServer(("", PORT), Handler) as httpd:
-            print(f"Frontend server started on http://localhost:{PORT}")
-            print("Serving frontend files...")
-            httpd.serve_forever()
-            
-    except KeyboardInterrupt:
-        print("\nFrontend server stopped")
-    except Exception as e:
-        print(f"Error starting frontend server: {e}")
-
 def main():
     """Main function to run the application"""
     print("=" * 50)
@@ -144,24 +119,19 @@ def main():
         return 1
     
     try:
-        # Start Django server in a separate thread
-        django_thread = threading.Thread(target=start_django_server, daemon=True)
-        django_thread.start()
-        
-        # Give Django time to start
-        time.sleep(3)
-        
-        # Start frontend server in main thread
         print("\n" + "=" * 50)
         print("Application started successfully!")
-        print("Frontend: http://localhost:3000")
-        print("Backend API: http://localhost:8000/api")
-        print("Admin Panel: http://localhost:8000/admin")
+        print("🏠 Landing Page: http://localhost:8000/")
+        print("🧲 MagTrace App: http://localhost:8000/app/")
+        print("📊 Backend API: http://localhost:8000/api/")
+        print("⚙️  Admin Panel: http://localhost:8000/admin/")
+        print("❤️  Health Check: http://localhost:8000/health/")
         print("=" * 50)
         print("Press Ctrl+C to stop the application")
         print("=" * 50)
         
-        serve_frontend()
+        # Start Django server (serves everything - frontend and backend)
+        start_django_server()
         
     except KeyboardInterrupt:
         print("\n\nShutting down MagTrace application...")

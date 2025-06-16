@@ -16,6 +16,8 @@ MagTrace is a self-contained, locally run application designed to provide a comp
 ### 🎨 User Interface
 - **Modern web-based interface** with responsive design
 - **Interactive D3.js visualizations** with zoom, pan, and brush selection
+- **Smart Data Labeling**: Interactive selection with keyboard shortcuts (1-5)
+- **Quick Labeling Toolbar**: Predefined categories (Fan Noise, Motor, Normal, Anomaly, Electrical)
 - **Multi-view charting**: Time series, components, 3D visualization, magnitude plots
 - **Real-time training progress** with live metrics and logs
 - **Comprehensive error handling** with user-friendly notifications
@@ -24,6 +26,7 @@ MagTrace is a self-contained, locally run application designed to provide a comp
 ### 🔧 Technical Capabilities
 - **Project-based organization** with complete export/import functionality
 - **Enhanced database schema** with hierarchical label categories
+- **Interactive data labeling** with brush selection and visual feedback
 - **Advanced prediction workflow** with accept/reject/modify capabilities
 - **Template system** for common magnetic field analysis models
 - **Script validation** and template generation
@@ -86,21 +89,18 @@ Where:
 
 4. **Start the application**
    ```bash
-   # Quick start (recommended) - runs both backend and frontend
+   # Quick start (recommended) - integrated Django server
    python run.py
    
    # Or manual start:
-   # Terminal 1: Backend
    cd backend && python manage.py runserver
-   
-   # Terminal 2: Frontend (in project root)
-   python3 -m http.server 3000
    ```
 
 5. **Access the application**
-   - **Main Application**: http://localhost:3000/magtrace_pro.html
-   - **Backend API**: http://localhost:8000/api
-   - **Admin Panel**: http://localhost:8000/admin
+   - **🏠 Landing Page**: http://localhost:8000/
+   - **🧲 MagTrace App**: http://localhost:8000/app/
+   - **📊 Backend API**: http://localhost:8000/api/
+   - **⚙️ Admin Panel**: http://localhost:8000/admin/
 
 ## 📱 Usage Workflow
 
@@ -115,10 +115,13 @@ Where:
 - Real-time statistics and data quality checks
 
 ### 3. Interactive Labeling
-- Visual data selection with brush tools
-- Hierarchical label category system
-- Manual annotation with confidence scores
-- Bulk annotation operations
+- **Visual data selection** with D3.js brush tools
+- **Quick labeling system** with keyboard shortcuts (1-5)
+- **Predefined categories**: Fan Noise, Motor Interference, Normal, Anomaly, Electrical Noise
+- **Real-time feedback** with selection stats and visual overlays
+- **Hierarchical label category system** with parent-child relationships
+- **Manual annotation** with confidence scores and custom notes
+- **Bulk annotation operations** for efficient labeling workflow
 
 ### 4. Model Configuration
 - Choose from built-in model templates (Classification, Autoencoder, Transformer, etc.)
@@ -152,12 +155,15 @@ MagTrace/
 │   │   ├── project_service.py # Project management service
 │   │   ├── training_service.py# Training orchestration
 │   │   └── user_script_service.py # Script validation
+│   ├── static/js/             # Frontend JavaScript
+│   │   └── magtrace-pro.js   # Main application logic
+│   ├── templates/             # Django templates
+│   │   ├── magtrace_pro.html # Main application interface
+│   │   └── landing.html      # Landing page
 │   ├── requirements.txt       # Python dependencies
 │   └── manage.py             # Django management
-├── js/                        # Frontend JavaScript
-│   └── magtrace-pro.js       # Main application logic
-├── magtrace_pro.html         # Main application interface
 ├── example/                   # Sample data files
+├── run.py                    # Application launcher
 ├── README.md                 # This file
 ├── CLAUDE.md                 # Development documentation
 └── .gitattributes           # Git line ending configuration
@@ -199,34 +205,38 @@ python manage.py migrate
 pip install -r requirements-lite.txt
 ```
 
-**Frontend Not Loading**
-- Ensure you're accessing http://localhost:3000/magtrace_pro.html
-- Check that both backend (port 8000) and frontend (port 3000) are running
+**Application Not Loading**
+- Ensure you're accessing http://localhost:8000/app/
+- Check that the Django server is running on port 8000
+- Verify the database migrations are complete
 
 **CORS Issues**
-- Backend includes CORS headers for local development
-- Ensure backend is running on localhost:8000
+- No longer applicable - frontend and backend are served from the same server
 
 ## 📋 Roadmap
 
 ### Completed ✅
 - Enhanced database schema with project-based organization
 - Complete API overhaul with REST framework
-- Interactive annotation system with D3.js
+- Interactive annotation system with D3.js brush selection
 - Advanced visualization with multiple chart views
+- Smart labeling system with keyboard shortcuts and quick toolbar
 - Prediction workflow with review capabilities
 - Enhanced model template system
 - Comprehensive error handling
+- Clean, streamlined codebase architecture
+- Single-server deployment with Django
 
 ### In Progress 🔄
-- End-to-end testing
+- End-to-end testing with new labeling features
 - Performance optimizations
+- ML backend architecture validation
 
 ### Planned 📅
-- Export functionality for annotations and predictions
-- Advanced model templates
-- Batch processing capabilities
-- Enhanced 3D visualization
+- Export functionality for labeled datasets
+- Advanced model templates for magnetic field analysis
+- Batch processing capabilities for large datasets
+- Enhanced 3D visualization with interactive controls
 
 ## 🤝 Contributing
 

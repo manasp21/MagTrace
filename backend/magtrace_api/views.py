@@ -14,7 +14,9 @@ from .serializers import (
     DatasetSerializer, MagnetometerReadingSerializer, LabelSerializer,
     MLModelSerializer, InferenceResultSerializer, ActiveLearningSuggestionSerializer,
     ProjectSerializer, LabelCategorySerializer, AnnotationSerializer,
-    UserDefinedModelSerializer, TrainingSessionSerializer, PredictionSerializer
+    UserDefinedModelSerializer, UserDefinedModelSummarySerializer, ModelVersionSerializer,
+    ModelRenameSerializer, ModelCloneSerializer, ModelMetadataSerializer,
+    TrainingSessionSerializer, PredictionSerializer
 )
 from .ml_service import ml_service
 
@@ -432,15 +434,35 @@ class AnnotationViewSet(viewsets.ModelViewSet):
 
 
 class UserDefinedModelViewSet(viewsets.ModelViewSet):
-    queryset = UserDefinedModel.objects.all().order_by('-created_at')
+    queryset = UserDefinedModel.objects.all().order_by('-updated_at')
     serializer_class = UserDefinedModelSerializer
     
     def get_queryset(self):
         queryset = super().get_queryset()
         project_id = self.request.query_params.get('project_id')
+        summary_only = self.request.query_params.get('summary', 'false').lower() == 'true'
+        
         if project_id:
             queryset = queryset.filter(project_id=project_id)
+        
+        # Filter by tags if provided
+        tags = self.request.query_params.get('tags')
+        if tags:
+            tag_list = [tag.strip() for tag in tags.split(',')]
+            for tag in tag_list:
+                queryset = queryset.filter(tags__contains=[tag])
+        
+        # Filter by category
+        category = self.request.query_params.get('category')
+        if category:
+            queryset = queryset.filter(category__icontains=category)
+        
         return queryset
+    
+    def get_serializer_class(self):
+        if self.action == 'list' and self.request.query_params.get('summary', 'false').lower() == 'true':
+            return UserDefinedModelSummarySerializer
+        return UserDefinedModelSerializer
     
     @action(detail=False, methods=['get'])
     def script_template(self, request):
@@ -470,6 +492,270 @@ class UserDefinedModelViewSet(viewsets.ModelViewSet):
                 {'error': str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+    
+    @action(detail=True, methods=['post'])
+    def rename(self, request, pk=None):
+        """Rename a model and optionally all its versions"""
+        model = self.get_object()
+        serializer = ModelRenameSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        new_name = serializer.validated_data['new_name']
+        update_all_versions = serializer.validated_data['update_all_versions']
+        
+        try:
+            if update_all_versions:
+                # Update all versions
+                all_versions = model.get_all_versions()
+                all_versions.update(name=new_name)
+                updated_count = all_versions.count()
+            else:
+                # Update only this version
+                model.name = new_name
+                model.save()
+                updated_count = 1
+            
+            return Response({
+                'message': f'Successfully renamed {updated_count} model(s) to "{new_name}"',
+                'updated_count': updated_count
+            })
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    @action(detail=True, methods=['post'])
+    def clone(self, request, pk=None):
+        """Clone a model with a new name"""
+        model = self.get_object()
+        serializer = ModelCloneSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        new_name = serializer.validated_data['new_name']
+        clone_version = serializer.validated_data['clone_version']
+        clone_notes = serializer.validated_data.get('clone_notes', '')
+        include_training_data = serializer.validated_data['include_training_data']
+        
+        try:
+            # Create cloned model
+            cloned_model = UserDefinedModel.objects.create(
+                project=model.project,
+                name=new_name,
+                model_type=model.model_type,
+                description=f"Cloned from {model.name} v{model.version}",
+                python_script=model.python_script,
+                hyperparameters=model.hyperparameters.copy(),
+                version=clone_version,
+                version_notes=clone_notes,
+                tags=model.tags.copy(),
+                category=model.category,
+                author=request.user.username if hasattr(request, 'user') and request.user.is_authenticated else 'user',
+                custom_metadata=model.custom_metadata.copy()
+            )
+            
+            if include_training_data:
+                cloned_model.training_datasets = model.training_datasets.copy()
+                cloned_model.performance_metrics = model.performance_metrics.copy()
+                cloned_model.save()
+            
+            serializer = UserDefinedModelSerializer(cloned_model)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    @action(detail=True, methods=['post'])
+    def create_version(self, request, pk=None):
+        """Create a new version of a model"""
+        model = self.get_object()
+        
+        version_number = request.data.get('version')
+        version_notes = request.data.get('version_notes', '')
+        
+        try:
+            new_version = model.create_new_version(version_number, version_notes)
+            serializer = UserDefinedModelSerializer(new_version)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    @action(detail=True, methods=['get'])
+    def versions(self, request, pk=None):
+        """Get all versions of a model"""
+        model = self.get_object()
+        versions = model.get_all_versions()
+        serializer = ModelVersionSerializer(versions, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'])
+    def generate_intelligent_name(self, request):
+        """Generate intelligent model name based on training data and labels"""
+        from .training_service import training_orchestrator
+        
+        dataset_ids = request.data.get('dataset_ids', [])
+        model_type = request.data.get('model_type', 'classification')
+        
+        if not dataset_ids:
+            return Response(
+                {'error': 'dataset_ids is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Analyze datasets and generate name
+            name_suggestion = self._generate_model_name(dataset_ids, model_type)
+            
+            return Response({
+                'suggested_name': name_suggestion['name'],
+                'description': name_suggestion['description'],
+                'suggested_tags': name_suggestion['tags'],
+                'suggested_category': name_suggestion['category']
+            })
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    def _generate_model_name(self, dataset_ids, model_type):
+        """Generate intelligent model name based on dataset analysis"""
+        datasets = Dataset.objects.filter(id__in=dataset_ids)
+        
+        if not datasets.exists():
+            raise Exception("No valid datasets found")
+        
+        # Analyze datasets
+        total_samples = 0
+        label_categories = set()
+        dataset_names = []
+        
+        for dataset in datasets:
+            total_samples += dataset.total_records
+            dataset_names.append(dataset.name)
+            
+            # Get label categories from annotations
+            annotations = dataset.annotations.all()
+            for annotation in annotations:
+                label_categories.add(annotation.category.name.lower())
+        
+        # Generate descriptive name components
+        unique_labels = list(label_categories)
+        
+        # Determine primary label types
+        if 'anomaly' in unique_labels or 'normal' in unique_labels:
+            label_focus = 'anomaly_detector'
+        elif 'fan_noise' in unique_labels or 'motor' in unique_labels:
+            label_focus = 'interference_classifier' 
+        elif len(unique_labels) > 3:
+            label_focus = 'multi_class_classifier'
+        else:
+            label_focus = 'magnetic_classifier'
+        
+        # Generate base name
+        if len(datasets) == 1:
+            base_name = f"{label_focus}_{datasets.first().name}"
+        else:
+            base_name = f"{label_focus}_multi_dataset"
+        
+        # Create version-specific elements
+        sample_size = "large" if total_samples > 10000 else "standard"
+        
+        # Generate full name
+        suggested_name = f"{base_name}_{sample_size}"
+        
+        # Generate description
+        label_str = ", ".join(unique_labels[:3])
+        if len(unique_labels) > 3:
+            label_str += f" and {len(unique_labels) - 3} more"
+        
+        description = f"{model_type.title()} model trained on {len(datasets)} dataset(s) " \
+                     f"with {total_samples:,} samples. Detects: {label_str}."
+        
+        # Generate tags
+        tags = [model_type, 'magnetic_field']
+        if len(datasets) > 1:
+            tags.append('multi_dataset')
+        if total_samples > 10000:
+            tags.append('large_scale')
+        tags.extend(unique_labels[:3])  # Add top 3 label types
+        
+        # Generate category
+        if 'anomaly' in unique_labels:
+            category = 'Anomaly Detection'
+        elif len(unique_labels) > 3:
+            category = 'Multi-Class Classification'
+        else:
+            category = 'Binary Classification'
+        
+        return {
+            'name': suggested_name,
+            'description': description,
+            'tags': tags,
+            'category': category
+        }
+    
+    @action(detail=True, methods=['patch'])
+    def update_metadata(self, request, pk=None):
+        """Update model metadata (tags, category, author, custom_metadata)"""
+        model = self.get_object()
+        serializer = ModelMetadataSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Update metadata fields
+        if 'tags' in serializer.validated_data:
+            model.tags = serializer.validated_data['tags']
+        if 'category' in serializer.validated_data:
+            model.category = serializer.validated_data['category']
+        if 'author' in serializer.validated_data:
+            model.author = serializer.validated_data['author']
+        if 'custom_metadata' in serializer.validated_data:
+            model.custom_metadata.update(serializer.validated_data['custom_metadata'])
+        
+        model.save()
+        
+        # Return updated model
+        serializer = UserDefinedModelSerializer(model)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def categories(self, request):
+        """Get all unique categories"""
+        project_id = request.query_params.get('project_id')
+        queryset = UserDefinedModel.objects.all()
+        
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        
+        categories = queryset.exclude(category='').values_list('category', flat=True).distinct()
+        return Response(list(categories))
+    
+    @action(detail=False, methods=['get'])
+    def tags(self, request):
+        """Get all unique tags"""
+        project_id = request.query_params.get('project_id')
+        queryset = UserDefinedModel.objects.all()
+        
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        
+        # Extract all tags from all models
+        all_tags = set()
+        for model in queryset:
+            all_tags.update(model.tags)
+        
+        return Response(sorted(list(all_tags)))
 
 
 class TrainingSessionViewSet(viewsets.ModelViewSet):
@@ -485,10 +771,14 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'])
     def start_training(self, request):
-        from .training_service import TrainingService
+        """Start training with support for multiple datasets and continued training"""
+        from .training_service import training_orchestrator
         
         model_id = request.data.get('model_id')
         dataset_id = request.data.get('dataset_id')
+        additional_dataset_ids = request.data.get('additional_dataset_ids', [])
+        continue_from_session = request.data.get('continue_from_session')
+        training_config = request.data.get('training_config', {})
         
         if not model_id or not dataset_id:
             return Response(
@@ -497,8 +787,19 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            training_session = TrainingService.start_training(model_id, dataset_id)
+            # Start training with enhanced features
+            session_id = training_orchestrator.start_training(
+                model_id=model_id,
+                dataset_id=dataset_id,
+                training_config=training_config,
+                additional_dataset_ids=additional_dataset_ids,
+                continue_from_session=continue_from_session
+            )
+            
+            # Get the created session
+            training_session = TrainingSession.objects.get(id=session_id)
             serializer = self.get_serializer(training_session)
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response(
@@ -508,19 +809,48 @@ class TrainingSessionViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'])
     def stop_training(self, request, pk=None):
-        from .training_service import TrainingService
+        """Stop an active training session"""
+        from .training_service import training_orchestrator
         
         training_session = self.get_object()
+        
         try:
-            TrainingService.stop_training(training_session.id)
-            training_session.refresh_from_db()
-            serializer = self.get_serializer(training_session)
-            return Response(serializer.data)
+            success = training_orchestrator.cancel_training(training_session.id)
+            if success:
+                training_session.refresh_from_db()
+                serializer = self.get_serializer(training_session)
+                return Response(serializer.data)
+            else:
+                return Response(
+                    {'error': 'Training session not found or not active'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
         except Exception as e:
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+    
+    @action(detail=True, methods=['get'])
+    def status(self, request, pk=None):
+        """Get real-time training status and progress"""
+        from .training_service import training_orchestrator
+        
+        training_session = self.get_object()
+        status_info = training_orchestrator.get_training_status(training_session.id)
+        
+        return Response(status_info)
+    
+    @action(detail=False, methods=['get'])
+    def active_sessions(self, request):
+        """Get all currently active training sessions"""
+        from .training_service import training_orchestrator
+        
+        active_session_ids = training_orchestrator.get_active_sessions()
+        active_sessions = TrainingSession.objects.filter(id__in=active_session_ids)
+        
+        serializer = self.get_serializer(active_sessions, many=True)
+        return Response(serializer.data)
 
 
 class PredictionViewSet(viewsets.ModelViewSet):

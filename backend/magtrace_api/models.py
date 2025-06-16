@@ -106,8 +106,111 @@ class UserDefinedModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     
+    # Versioning fields
+    version = models.CharField(max_length=50, default='1.0')
+    parent_model = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='versions')
+    version_notes = models.TextField(blank=True)
+    
+    # Advanced metadata fields
+    tags = models.JSONField(default=list)  # Array of tags
+    category = models.CharField(max_length=100, blank=True)
+    author = models.CharField(max_length=100, blank=True)
+    custom_metadata = models.JSONField(default=dict)  # User-defined metadata
+    
+    # Training tracking fields
+    training_datasets = models.ManyToManyField(Dataset, blank=True, related_name='trained_models')
+    performance_metrics = models.JSONField(default=dict)  # Best performance across all training sessions
+    
+    class Meta:
+        unique_together = ['project', 'name', 'version']
+        ordering = ['-updated_at']
+    
     def __str__(self):
-        return f"{self.project.name} - {self.name}"
+        return f"{self.project.name} - {self.name} v{self.version}"
+    
+    def get_full_name(self):
+        """Get full name with version"""
+        return f"{self.name} v{self.version}"
+    
+    def get_all_versions(self):
+        """Get all versions of this model"""
+        if self.parent_model:
+            return self.parent_model.versions.all()
+        else:
+            return self.versions.all()
+    
+    def get_latest_version(self):
+        """Get the latest version of this model"""
+        all_versions = self.get_all_versions()
+        if all_versions.exists():
+            return all_versions.order_by('-version').first()
+        return self
+    
+    def create_new_version(self, version=None, notes=""):
+        """Create a new version of this model"""
+        if not version:
+            # Auto-increment version
+            latest = self.get_latest_version()
+            try:
+                major, minor = latest.version.split('.')
+                version = f"{major}.{int(minor) + 1}"
+            except:
+                version = "2.0"
+        
+        # Find the root parent model
+        root_model = self.parent_model if self.parent_model else self
+        
+        new_model = UserDefinedModel.objects.create(
+            project=self.project,
+            name=self.name,
+            version=version,
+            model_type=self.model_type,
+            description=self.description,
+            python_script=self.python_script,
+            hyperparameters=self.hyperparameters.copy(),
+            parent_model=root_model,
+            version_notes=notes,
+            tags=self.tags.copy(),
+            category=self.category,
+            author=self.author,
+            custom_metadata=self.custom_metadata.copy()
+        )
+        
+        return new_model
+    
+    def get_latest_version(self):
+        """Get the latest version of this model"""
+        return self.get_all_versions().last()
+    
+    def create_new_version(self, version_number=None, version_notes=''):
+        """Create a new version of this model"""
+        if not version_number:
+            # Auto-increment version
+            latest = self.get_latest_version()
+            try:
+                major, minor = latest.version.split('.')
+                version_number = f"{major}.{int(minor) + 1}"
+            except:
+                version_number = "1.1"
+        
+        # Create new version
+        new_version = UserDefinedModel.objects.create(
+            project=self.project,
+            name=self.name,
+            model_type=self.model_type,
+            description=self.description,
+            python_script=self.python_script,
+            hyperparameters=self.hyperparameters.copy(),
+            version=version_number,
+            parent_model=self.parent_model or self,
+            version_notes=version_notes,
+            tags=self.tags.copy(),
+            category=self.category,
+            author=self.author,
+            custom_metadata=self.custom_metadata.copy()
+        )
+        
+        return new_version
 
 
 class TrainingSession(models.Model):
@@ -122,12 +225,18 @@ class TrainingSession(models.Model):
     
     model = models.ForeignKey(UserDefinedModel, on_delete=models.CASCADE, related_name='training_sessions')
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE, related_name='training_sessions')
+    additional_datasets = models.ManyToManyField(Dataset, blank=True, related_name='additional_training_sessions')
+    is_continued_training = models.BooleanField(default=False)
+    base_training_session = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     progress = models.FloatField(default=0.0)  # 0.0 to 100.0
     current_epoch = models.IntegerField(default=0)
     total_epochs = models.IntegerField(default=10)
     training_metrics = models.JSONField(default=dict)
     validation_metrics = models.JSONField(default=dict)
+    final_metrics = models.JSONField(default=dict)  # Final performance metrics
+    training_logs = models.JSONField(default=list)  # Real-time training logs
+    live_metrics = models.JSONField(default=dict)   # Current epoch metrics
     model_file = models.FileField(upload_to='trained_models/', null=True, blank=True)
     error_message = models.TextField(blank=True)
     started_at = models.DateTimeField(null=True, blank=True)

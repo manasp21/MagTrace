@@ -32,6 +32,8 @@ class TrainingOrchestrator:
         model_id: int, 
         dataset_id: int, 
         training_config: Dict[str, Any],
+        additional_dataset_ids: Optional[list] = None,
+        continue_from_session: Optional[int] = None,
         progress_callback: Optional[Callable] = None
     ) -> int:
         """
@@ -48,10 +50,16 @@ class TrainingOrchestrator:
         session = TrainingSession.objects.create(
             model=model,
             dataset=dataset,
-            config=training_config,
-            status='queued',
-            total_epochs=training_config.get('epochs', 100)
+            status='pending',
+            total_epochs=training_config.get('epochs', 100),
+            is_continued_training=bool(continue_from_session),
+            base_training_session_id=continue_from_session
         )
+        
+        # Add additional datasets if provided
+        if additional_dataset_ids:
+            additional_datasets = Dataset.objects.filter(id__in=additional_dataset_ids)
+            session.additional_datasets.set(additional_datasets)
         
         # Store progress callback
         if progress_callback:
@@ -146,62 +154,137 @@ class TrainingOrchestrator:
     
     def _prepare_training_data(self, session: TrainingSession):
         """
-        Prepare training data from dataset and annotations
+        Prepare training data from dataset and annotations, supporting multiple datasets
         """
-        dataset = session.dataset
-        readings = list(dataset.readings.all().order_by('timestamp_pc'))
+        # Collect all datasets (primary + additional)
+        datasets = [session.dataset]
+        if session.additional_datasets.exists():
+            datasets.extend(list(session.additional_datasets.all()))
         
-        if not readings:
-            raise Exception("No data found in dataset")
+        all_features = []
+        all_labels = []
         
-        # Extract features
-        features = []
-        for reading in readings:
-            feature_vector = [
-                reading.b_x, reading.b_y, reading.b_z,
-                reading.lat, reading.lon, reading.altitude,
-                reading.thetax, reading.thetay, reading.thetaz
-            ]
-            features.append(feature_vector)
+        # Process each dataset
+        for dataset in datasets:
+            readings = list(dataset.readings.all().order_by('timestamp_pc'))
+            
+            if not readings:
+                self._log_progress(session.id, f"Warning: No data found in dataset {dataset.name}", session.progress)
+                continue
+            
+            # Extract features for this dataset
+            features = []
+            for reading in readings:
+                feature_vector = [
+                    reading.b_x, reading.b_y, reading.b_z,
+                    reading.lat, reading.lon, reading.altitude,
+                    reading.thetax, reading.thetay, reading.thetaz
+                ]
+                features.append(feature_vector)
+            
+            features = np.array(features)
+            
+            # Extract labels from annotations for this dataset
+            labels = self._extract_labels_from_annotations(dataset, len(readings))
+            
+            all_features.append(features)
+            all_labels.append(labels)
+            
+            self._log_progress(
+                session.id, 
+                f"Loaded {len(readings)} samples from dataset {dataset.name}", 
+                session.progress
+            )
         
-        features = np.array(features)
+        if not all_features:
+            raise Exception("No data found in any dataset")
         
-        # Extract labels from annotations
-        labels = self._extract_labels_from_annotations(dataset, len(readings))
+        # Combine all datasets
+        combined_features = np.vstack(all_features)
+        combined_labels = np.concatenate(all_labels)
+        
+        # Track which datasets were used for training
+        session.model.training_datasets.set(datasets)
+        
+        self._log_progress(
+            session.id, 
+            f"Combined {len(combined_features)} total samples from {len(datasets)} dataset(s)", 
+            session.progress
+        )
         
         # Split data
-        split_ratio = session.config.get('validation_split', 0.2)
-        split_idx = int(len(features) * (1 - split_ratio))
+        split_ratio = 0.2  # Default validation split
+        split_idx = int(len(combined_features) * (1 - split_ratio))
         
-        train_data = features[:split_idx]
-        train_labels = labels[:split_idx]
-        val_data = features[split_idx:]
-        val_labels = labels[split_idx:]
+        train_data = combined_features[:split_idx]
+        train_labels = combined_labels[:split_idx]
+        val_data = combined_features[split_idx:]
+        val_labels = combined_labels[split_idx:]
         
         return train_data, train_labels, val_data, val_labels
     
     def _extract_labels_from_annotations(self, dataset, total_records):
         """
-        Extract labels from hierarchical annotations
+        Extract labels from hierarchical annotations with multi-label support
         """
-        labels = np.zeros(total_records, dtype=int)  # Default: 0 = unlabeled
-        
         # Get all annotations for this dataset
         annotations = dataset.annotations.all().order_by('start_index')
         
         # Create label mapping
-        categories = dataset.project.label_categories.all()
-        label_map = {cat.id: idx + 1 for idx, cat in enumerate(categories)}
+        categories = list(dataset.project.label_categories.all())
+        if not categories:
+            # No label categories defined, return all zeros
+            return np.zeros(total_records, dtype=int)
         
-        # Apply annotations
-        for annotation in annotations:
-            start_idx = max(0, annotation.start_index)
-            end_idx = min(total_records - 1, annotation.end_index)
-            label_value = label_map.get(annotation.category.id, 0)
+        # For multi-label: create binary matrix (samples x labels)
+        # For single-label: create integer array
+        num_categories = len(categories)
+        
+        # Check if we have overlapping annotations (multi-label scenario)
+        has_overlapping = self._check_overlapping_annotations(annotations)
+        
+        if has_overlapping and num_categories > 1:
+            # Multi-label classification: binary matrix
+            labels = np.zeros((total_records, num_categories), dtype=float)
+            label_map = {cat.id: idx for idx, cat in enumerate(categories)}
             
-            labels[start_idx:end_idx + 1] = label_value
+            # Apply annotations with confidence weighting
+            for annotation in annotations:
+                start_idx = max(0, annotation.start_index)
+                end_idx = min(total_records - 1, annotation.end_index)
+                label_idx = label_map.get(annotation.category.id)
+                
+                if label_idx is not None:
+                    # Use confidence score for weighting
+                    labels[start_idx:end_idx + 1, label_idx] = annotation.confidence
+            
+        else:
+            # Single-label classification: integer array
+            labels = np.zeros(total_records, dtype=int)
+            label_map = {cat.id: idx + 1 for idx, cat in enumerate(categories)}
+            
+            # Apply annotations (last annotation wins for overlapping regions)
+            for annotation in annotations:
+                start_idx = max(0, annotation.start_index)
+                end_idx = min(total_records - 1, annotation.end_index)
+                label_value = label_map.get(annotation.category.id, 0)
+                
+                labels[start_idx:end_idx + 1] = label_value
         
         return labels
+    
+    def _check_overlapping_annotations(self, annotations):
+        """Check if there are overlapping annotations"""
+        sorted_annotations = sorted(annotations, key=lambda x: x.start_index)
+        
+        for i in range(len(sorted_annotations) - 1):
+            current = sorted_annotations[i]
+            next_ann = sorted_annotations[i + 1]
+            
+            if current.end_index >= next_ann.start_index:
+                return True
+        
+        return False
     
     def _get_model_script(self, model: UserDefinedModel) -> str:
         """
@@ -215,9 +298,18 @@ class TrainingOrchestrator:
     
     def _create_model_from_script(self, session: TrainingSession, script_content: str, data_shape):
         """
-        Create model using user script
+        Create model using user script with transfer learning support
         """
-        # Execute script to get model
+        model = None
+        
+        # Check if this is continued training
+        if session.is_continued_training and session.base_training_session:
+            model = self._load_pretrained_model(session.base_training_session)
+            if model:
+                self._log_progress(session.id, "Loaded pre-trained model for continued training", 15.0)
+                return model
+        
+        # Create new model from script
         success, model, message = user_script_service.execute_script(
             script_content,
             np.zeros(data_shape),  # Dummy data for shape inference
@@ -231,6 +323,48 @@ class TrainingOrchestrator:
             raise Exception(f"Model creation failed: {message}")
         
         return model
+    
+    def _load_pretrained_model(self, base_session: TrainingSession):
+        """Load a pre-trained model from a previous training session"""
+        try:
+            if not base_session.model_file:
+                return None
+            
+            import tempfile
+            import joblib
+            
+            # Create temporary file from stored model
+            with tempfile.NamedTemporaryFile(suffix='.h5', delete=False) as temp_file:
+                # Copy model file content to temp file
+                base_session.model_file.open()
+                temp_file.write(base_session.model_file.read())
+                base_session.model_file.close()
+                temp_file.flush()
+                
+                # Load model
+                if self.tf_available:
+                    # Try loading as TensorFlow model
+                    try:
+                        import tensorflow as tf
+                        model = tf.keras.models.load_model(temp_file.name)
+                        return model
+                    except:
+                        pass
+                
+                # Try loading as sklearn model
+                try:
+                    model = joblib.load(temp_file.name)
+                    return model
+                except:
+                    pass
+                
+                # Clean up
+                os.unlink(temp_file.name)
+                
+        except Exception as e:
+            print(f"Failed to load pre-trained model: {e}")
+        
+        return None
     
     def _preprocess_data_with_script(self, session: TrainingSession, script_content: str, data, labels):
         """
@@ -383,12 +517,60 @@ class TrainingOrchestrator:
                 'final_val_accuracy': history.history.get('val_accuracy', [])[-1] if history.history.get('val_accuracy') else 0,
             }
         else:
-            final_metrics = history
+            final_metrics = history if history else {}
         
-        session.model.metrics = final_metrics
+        # Update training session
         session.final_metrics = final_metrics
         
-        session.model.save()
+        # Update model training metadata
+        model_instance = session.model
+        
+        # Add dataset to training_datasets if not already present
+        dataset_info = {
+            'dataset_id': session.dataset.id,
+            'dataset_name': session.dataset.name,
+            'trained_at': timezone.now().isoformat(),
+            'session_id': session.id
+        }
+        
+        # Update training datasets list
+        if session.dataset.id not in [d.get('dataset_id') for d in model_instance.training_datasets]:
+            model_instance.training_datasets.append(dataset_info)
+        
+        # Update performance metrics with best results
+        current_performance = model_instance.performance_metrics
+        
+        # Compare and update if this training session has better results
+        if final_metrics:
+            # For loss metrics, lower is better
+            if 'final_loss' in final_metrics:
+                if 'best_loss' not in current_performance or final_metrics['final_loss'] < current_performance.get('best_loss', float('inf')):
+                    current_performance['best_loss'] = final_metrics['final_loss']
+                    current_performance['best_loss_session'] = session.id
+            
+            if 'final_val_loss' in final_metrics:
+                if 'best_val_loss' not in current_performance or final_metrics['final_val_loss'] < current_performance.get('best_val_loss', float('inf')):
+                    current_performance['best_val_loss'] = final_metrics['final_val_loss']
+                    current_performance['best_val_loss_session'] = session.id
+            
+            # For accuracy metrics, higher is better
+            if 'final_accuracy' in final_metrics:
+                if 'best_accuracy' not in current_performance or final_metrics['final_accuracy'] > current_performance.get('best_accuracy', 0):
+                    current_performance['best_accuracy'] = final_metrics['final_accuracy']
+                    current_performance['best_accuracy_session'] = session.id
+            
+            if 'final_val_accuracy' in final_metrics:
+                if 'best_val_accuracy' not in current_performance or final_metrics['final_val_accuracy'] > current_performance.get('best_val_accuracy', 0):
+                    current_performance['best_val_accuracy'] = final_metrics['final_val_accuracy']
+                    current_performance['best_val_accuracy_session'] = session.id
+        
+        # Update training count
+        current_performance['total_training_sessions'] = current_performance.get('total_training_sessions', 0) + 1
+        current_performance['last_trained'] = timezone.now().isoformat()
+        
+        model_instance.performance_metrics = current_performance
+        model_instance.save()
+        
         session.save()
         
         # Clean up temp file

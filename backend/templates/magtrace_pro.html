@@ -214,6 +214,113 @@
             background: white;
         }
 
+        /* Quick Labeling Toolbar */
+        .quick-labeling-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .labeling-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-label {
+            font-weight: 500;
+            color: #495057;
+            margin-right: 0.5rem;
+        }
+
+        .quick-label-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .quick-label-btn:hover {
+            background: #f8f9fa;
+            border-color: #adb5bd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .quick-label-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .quick-label-btn.selected {
+            background: var(--label-color, #007bff);
+            border-color: var(--label-color, #007bff);
+            color: white;
+        }
+
+        .selection-info {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #495057;
+            min-width: 200px;
+        }
+
+        .selection-stats {
+            font-weight: 500;
+        }
+
+        /* Selection Mode Styles */
+        .chart-area.selection-mode {
+            cursor: crosshair;
+        }
+
+        .chart-area.selection-mode .brush .selection {
+            fill: rgba(0, 123, 255, 0.2);
+            stroke: #007bff;
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+        }
+
+        /* Enhanced Label Visualization */
+        .label-overlay {
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .label-overlay:hover {
+            opacity: 0.9;
+            cursor: pointer;
+        }
+
+        .label-overlay.selected {
+            opacity: 1;
+            filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));
+        }
+
+        .label-text {
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            pointer-events: none;
+        }
+
         /* Model Configuration */
         .model-config {
             padding: 1rem;
@@ -624,7 +731,35 @@
                                     <option value="symmetric">Symmetric</option>
                                     <option value="individual">Individual</option>
                                 </select>
+                                <button id="toggleSelectionMode" class="btn btn-primary btn-sm">🎯 Select Mode</button>
                                 <button id="exportChart" class="btn btn-secondary btn-sm">Export</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Labeling Toolbar -->
+                        <div class="quick-labeling-toolbar" id="quickLabelingToolbar" style="display: none;">
+                            <div class="labeling-controls">
+                                <span class="toolbar-label">Quick Label:</span>
+                                <button class="quick-label-btn" data-label="fan_noise" data-color="#ff6b6b" data-hotkey="1">
+                                    🔥 Fan Noise (1)
+                                </button>
+                                <button class="quick-label-btn" data-label="motor_interference" data-color="#ffd43b" data-hotkey="2">
+                                    ⚡ Motor (2)
+                                </button>
+                                <button class="quick-label-btn" data-label="normal" data-color="#51cf66" data-hotkey="3">
+                                    ✅ Normal (3)
+                                </button>
+                                <button class="quick-label-btn" data-label="anomaly" data-color="#ff922b" data-hotkey="4">
+                                    ⚠️ Anomaly (4)
+                                </button>
+                                <button class="quick-label-btn" data-label="electrical_noise" data-color="#845ef7" data-hotkey="5">
+                                    ⚡ Electrical (5)
+                                </button>
+                                <button id="customLabelBtn" class="btn btn-secondary btn-sm">+ Custom</button>
+                                <button id="clearSelectionBtn" class="btn btn-secondary btn-sm">Clear</button>
+                            </div>
+                            <div class="selection-info" id="selectionInfo">
+                                <span id="selectionStats">No selection</span>
                             </div>
                         </div>
                         

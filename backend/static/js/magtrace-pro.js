@@ -201,6 +201,16 @@ class MagTracePro {
         this.currentTransform = null;
         this.currentXScale = null;
         this.currentYScale = null;
+        this.selectionMode = false;
+        this.currentSelection = null;
+        this.selectedRange = null;
+        this.quickLabels = [
+            { name: 'fan_noise', label: 'Fan Noise', color: '#ff6b6b', hotkey: '1' },
+            { name: 'motor_interference', label: 'Motor', color: '#ffd43b', hotkey: '2' },
+            { name: 'normal', label: 'Normal', color: '#51cf66', hotkey: '3' },
+            { name: 'anomaly', label: 'Anomaly', color: '#ff922b', hotkey: '4' },
+            { name: 'electrical_noise', label: 'Electrical', color: '#845ef7', hotkey: '5' }
+        ];
         
         this.init();
     }
@@ -208,11 +218,14 @@ class MagTracePro {
     async init() {
         this.setupEventListeners();
         this.initializeScriptEditor();
+        this.setupQuickLabeling();
+        this.setupKeyboardShortcuts();
         this.loadProjects();
         
         // Initialize D3 chart
         this.initializeChart();
         
+        NotificationManager.showInfo('MagTrace Pro initialized successfully');
         console.log('MagTrace Pro initialized');
     }
 
@@ -276,6 +289,11 @@ class MagTracePro {
         });
         document.getElementById('chartYAxis')?.addEventListener('change', (e) => this.onChartOptionsChange());
         document.getElementById('exportChart')?.addEventListener('click', () => this.exportChart());
+        
+        // Enhanced selection controls
+        document.getElementById('toggleSelectionMode')?.addEventListener('click', () => this.toggleSelectionMode());
+        document.getElementById('clearSelectionBtn')?.addEventListener('click', () => this.clearSelection());
+        document.getElementById('customLabelBtn')?.addEventListener('click', () => this.showCustomLabelModal());
     }
 
     initializeScriptEditor() {
@@ -311,10 +329,185 @@ class MagTracePro {
         resizeChart();
     }
 
+    setupQuickLabeling() {
+        // Setup quick label buttons
+        document.querySelectorAll('.quick-label-btn').forEach(btn => {
+            const labelName = btn.dataset.label;
+            const labelColor = btn.dataset.color;
+            
+            btn.style.setProperty('--label-color', labelColor);
+            
+            btn.addEventListener('click', () => {
+                this.applyQuickLabel(labelName, labelColor);
+            });
+        });
+    }
+
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Only handle shortcuts when not typing in input fields
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            // Hotkeys for quick labels (1-5)
+            if (e.key >= '1' && e.key <= '5') {
+                e.preventDefault();
+                const labelIndex = parseInt(e.key) - 1;
+                if (labelIndex < this.quickLabels.length) {
+                    const label = this.quickLabels[labelIndex];
+                    this.applyQuickLabel(label.name, label.color);
+                }
+            }
+            
+            // Escape to clear selection
+            if (e.key === 'Escape') {
+                this.clearSelection();
+            }
+            
+            // S to toggle selection mode
+            if (e.key === 's' || e.key === 'S') {
+                e.preventDefault();
+                this.toggleSelectionMode();
+            }
+        });
+    }
+
+    toggleSelectionMode() {
+        this.selectionMode = !this.selectionMode;
+        const button = document.getElementById('toggleSelectionMode');
+        const chartArea = document.getElementById('chartArea');
+        
+        if (this.selectionMode) {
+            button.textContent = '🔄 Pan Mode';
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-success');
+            chartArea.classList.add('selection-mode');
+            this.showQuickLabelingToolbar();
+            NotificationManager.showInfo('Selection mode enabled. Drag to select data points.');
+        } else {
+            button.textContent = '🎯 Select Mode';
+            button.classList.remove('btn-success');
+            button.classList.add('btn-primary');
+            chartArea.classList.remove('selection-mode');
+            this.hideQuickLabelingToolbar();
+            this.clearSelection();
+            NotificationManager.showInfo('Pan/zoom mode enabled.');
+        }
+        
+        // Re-render chart to update interaction mode
+        if (this.currentDataset) {
+            this.renderChart();
+        }
+    }
+
+    showQuickLabelingToolbar() {
+        const toolbar = document.getElementById('quickLabelingToolbar');
+        toolbar.style.display = 'flex';
+    }
+
+    hideQuickLabelingToolbar() {
+        const toolbar = document.getElementById('quickLabelingToolbar');
+        toolbar.style.display = 'none';
+    }
+
+    clearSelection() {
+        this.selectedRange = null;
+        this.currentSelection = null;
+        
+        // Clear selection highlight
+        const svg = d3.select('#mainChart');
+        svg.selectAll('.selection-highlight').remove();
+        
+        // Clear selection info
+        const selectionStats = document.getElementById('selectionStats');
+        selectionStats.textContent = 'No selection';
+        
+        // Remove selected state from quick label buttons
+        document.querySelectorAll('.quick-label-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        NotificationManager.showInfo('Selection cleared');
+    }
+
+    async applyQuickLabel(labelName, labelColor) {
+        if (!this.selectedRange) {
+            NotificationManager.showWarning('Please select data points first');
+            return;
+        }
+        
+        if (!this.currentProject) {
+            NotificationManager.showWarning('Please select a project first');
+            return;
+        }
+        
+        try {
+            // Create or get label category
+            const category = await this.ensureLabelCategory(labelName, labelColor);
+            
+            // Create annotation
+            await this.createAnnotation(this.selectedRange.startIndex, this.selectedRange.endIndex, category.id);
+            
+            // Clear selection
+            this.clearSelection();
+            
+            NotificationManager.showSuccess(`Applied "${labelName}" label successfully`);
+            
+        } catch (error) {
+            console.error('Failed to apply label:', error);
+            NotificationManager.showError('Failed to apply label', error);
+        }
+    }
+
+    async ensureLabelCategory(labelName, labelColor) {
+        try {
+            // First try to find existing category
+            const response = await fetch(`/api/label-categories/?project=${this.currentProject.id}&name=${labelName}`);
+            const categories = await response.json();
+            
+            if (categories.length > 0) {
+                return categories[0];
+            }
+            
+            // Create new category if it doesn't exist
+            const newCategory = {
+                project: this.currentProject.id,
+                name: labelName,
+                description: `Auto-created category for ${labelName}`,
+                color: labelColor
+            };
+            
+            const createResponse = await fetch('/api/label-categories/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newCategory)
+            });
+            
+            if (!createResponse.ok) {
+                throw new Error('Failed to create label category');
+            }
+            
+            return await createResponse.json();
+            
+        } catch (error) {
+            console.error('Failed to ensure label category:', error);
+            throw error;
+        }
+    }
+
+    showCustomLabelModal() {
+        if (!this.selectedRange) {
+            NotificationManager.showWarning('Please select data points first');
+            return;
+        }
+        
+        // Show the existing annotation modal
+        this.showAnnotationModal();
+    }
+
     // Project Management
     async loadProjects() {
         try {
-            const response = await fetch('http://localhost:8000/api/projects/');
+            const response = await fetch('/api/projects/');
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -352,7 +545,7 @@ class MagTracePro {
         const loadingNotification = NotificationManager.showLoading('Creating project...');
 
         try {
-            const response = await fetch('http://localhost:8000/api/projects/', {
+            const response = await fetch('/api/projects/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name.trim(), description: description.trim() })
@@ -388,7 +581,7 @@ class MagTracePro {
         if (!projectId) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/projects/${projectId}/`);
+            const response = await fetch(`/api/projects/${projectId}/`);
             this.currentProject = await response.json();
             this.loadProjectData();
         } catch (error) {
@@ -423,7 +616,7 @@ class MagTracePro {
         const loadingNotification = NotificationManager.showLoading('Exporting project...');
 
         try {
-            const response = await fetch(`http://localhost:8000/api/projects/${this.currentProject.id}/export/`, {
+            const response = await fetch(`/api/projects/${this.currentProject.id}/export/`, {
                 method: 'GET'
             });
 
@@ -461,7 +654,7 @@ class MagTracePro {
                 formData.append('file', file);
 
                 try {
-                    const response = await fetch('http://localhost:8000/api/projects/import_project/', {
+                    const response = await fetch('/api/projects/import_project/', {
                         method: 'POST',
                         body: formData
                     });
@@ -515,7 +708,7 @@ class MagTracePro {
         formData.append('project_id', this.currentProject.id);
 
         try {
-            const response = await fetch('http://localhost:8000/api/datasets/upload/', {
+            const response = await fetch('/api/datasets/upload/', {
                 method: 'POST',
                 body: formData
             });
@@ -579,7 +772,7 @@ class MagTracePro {
         if (!this.currentProject) return;
 
         try {
-            const response = await fetch(`http://localhost:8000/api/datasets/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/datasets/?project=${this.currentProject.id}`);
             const datasets = await response.json();
             
             const container = document.getElementById('datasets');
@@ -602,11 +795,11 @@ class MagTracePro {
 
     async selectDataset(datasetId) {
         try {
-            const response = await fetch(`http://localhost:8000/api/datasets/${datasetId}/`);
+            const response = await fetch(`/api/datasets/${datasetId}/`);
             this.currentDataset = await response.json();
             
             // Load dataset data
-            const dataResponse = await fetch(`http://localhost:8000/api/datasets/${datasetId}/data/`);
+            const dataResponse = await fetch(`/api/datasets/${datasetId}/data/`);
             this.currentData = await dataResponse.json();
             
             this.renderChart();
@@ -1150,68 +1343,136 @@ class MagTracePro {
     }
 
     addSelectionModeToggle(svg, g, data, zoom, width, height) {
-        // Selection mode toggle button
-        const toggleButton = svg.append("g")
-            .attr("class", "selection-toggle")
-            .attr("transform", `translate(${width - 100}, 10)`)
-            .style("cursor", "pointer");
-
-        const toggleRect = toggleButton.append("rect")
-            .attr("width", 100)
-            .attr("height", 25)
-            .attr("rx", 4)
-            .attr("fill", "#007bff")
-            .attr("stroke", "#0056b3");
-
-        const toggleText = toggleButton.append("text")
-            .attr("x", 50)
-            .attr("y", 16)
-            .attr("text-anchor", "middle")
-            .style("font-size", "11px")
-            .style("fill", "white")
-            .text("Select Mode");
-
-        let selectionMode = false;
-        let brush = null;
-
-        toggleButton.on("click", () => {
-            selectionMode = !selectionMode;
+        // Enhanced brush selection based on current selection mode
+        if (this.selectionMode) {
+            // Disable zoom when in selection mode
+            svg.on(".zoom", null);
             
-            if (selectionMode) {
-                // Enable selection mode
-                svg.on(".zoom", null); // Disable zoom
-                
-                // Add brush
-                brush = d3.brushX()
-                    .extent([[0, 0], [width, height]])
-                    .on("end", (event) => {
-                        if (event.selection) {
-                            const [x0, x1] = event.selection;
-                            const currentXScale = this.currentXScale || this.chartScales.xScale;
-                            const startIndex = Math.round(currentXScale.invert(x0));
-                            const endIndex = Math.round(currentXScale.invert(x1));
-                            this.onDataSelection(startIndex, endIndex);
-                            
-                            // Clear brush after selection
-                            g.select(".brush").call(brush.clear);
-                        }
-                    });
+            // Remove existing brush
+            g.select(".brush").remove();
+            
+            // Create enhanced brush with better visual feedback
+            const brush = d3.brushX()
+                .extent([[0, 0], [width, height]])
+                .on("start", () => {
+                    // Clear previous selection when starting new one
+                    this.clearSelection();
+                })
+                .on("brush", (event) => {
+                    // Provide real-time feedback during brushing
+                    if (event.selection) {
+                        const [x0, x1] = event.selection;
+                        const currentXScale = this.currentXScale || this.chartScales.xScale;
+                        const startIndex = Math.round(currentXScale.invert(x0));
+                        const endIndex = Math.round(currentXScale.invert(x1));
+                        
+                        // Update selection info in real-time
+                        this.updateSelectionInfo(startIndex, endIndex);
+                    }
+                })
+                .on("end", (event) => {
+                    if (event.selection) {
+                        const [x0, x1] = event.selection;
+                        const currentXScale = this.currentXScale || this.chartScales.xScale;
+                        const startIndex = Math.round(currentXScale.invert(x0));
+                        const endIndex = Math.round(currentXScale.invert(x1));
+                        
+                        // Trigger selection
+                        this.onDataSelection(startIndex, endIndex);
+                        
+                        // Clear brush visually but keep the selection
+                        g.select(".brush").call(brush.clear);
+                    }
+                });
 
-                g.append("g")
-                    .attr("class", "brush")
-                    .call(brush);
-
-                toggleRect.attr("fill", "#28a745");
-                toggleText.text("Pan Mode");
-            } else {
-                // Enable pan/zoom mode
-                g.select(".brush").remove();
-                svg.call(zoom); // Re-enable zoom
+            // Add brush with enhanced styling
+            const brushGroup = g.append("g")
+                .attr("class", "brush")
+                .call(brush);
                 
-                toggleRect.attr("fill", "#007bff");
-                toggleText.text("Select Mode");
-            }
-        });
+            // Style the brush selection
+            brushGroup.selectAll(".selection")
+                .style("fill", "rgba(0, 123, 255, 0.2)")
+                .style("stroke", "#007bff")
+                .style("stroke-width", "2")
+                .style("stroke-dasharray", "5,5");
+                
+        } else {
+            // Enable pan/zoom mode
+            g.select(".brush").remove();
+            svg.call(zoom);
+        }
+    }
+
+    onDataSelection(startIndex, endIndex) {
+        console.log(`Selected data from ${startIndex} to ${endIndex}`);
+        
+        if (!this.currentDataset) {
+            NotificationManager.showWarning('Please select a dataset first');
+            return;
+        }
+        
+        // Store selection
+        this.selectedRange = { startIndex, endIndex };
+        this.currentSelection = { startIndex, endIndex };
+        
+        // Show quick labeling toolbar and update selection info
+        this.showQuickLabelingToolbar();
+        this.updateSelectionInfo(startIndex, endIndex);
+        
+        // Highlight selected area on chart
+        this.highlightSelection(startIndex, endIndex);
+        
+        NotificationManager.showInfo(`Selected ${endIndex - startIndex + 1} data points. Use hotkeys 1-5 or toolbar to label.`);
+    }
+
+    updateSelectionInfo(startIndex, endIndex) {
+        const selectionStats = document.getElementById('selectionStats');
+        const pointCount = endIndex - startIndex + 1;
+        
+        if (this.currentData && this.currentData.length > 0) {
+            const selectedData = this.currentData.slice(startIndex, endIndex + 1);
+            const timeSpan = selectedData.length > 1 ? 
+                `${selectedData[0].timestamp_pc} to ${selectedData[selectedData.length - 1].timestamp_pc}` :
+                selectedData[0].timestamp_pc;
+            
+            selectionStats.innerHTML = `
+                <strong>${pointCount}</strong> points selected<br>
+                <small>${timeSpan}</small>
+            `;
+        } else {
+            selectionStats.textContent = `${pointCount} points selected`;
+        }
+    }
+
+    highlightSelection(startIndex, endIndex) {
+        if (!this.chartScales) return;
+        
+        const svg = d3.select('#mainChart');
+        const g = svg.select('g');
+        
+        // Remove existing highlights
+        svg.selectAll('.selection-highlight').remove();
+        
+        const xScale = this.currentXScale || this.chartScales.xScale;
+        const startX = xScale(startIndex);
+        const endX = xScale(endIndex);
+        const width = Math.max(endX - startX, 2);
+        const height = this.chartScales.height;
+        
+        // Add selection highlight
+        g.append('rect')
+            .attr('class', 'selection-highlight')
+            .attr('x', startX)
+            .attr('y', 0)
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', '#007bff')
+            .attr('opacity', 0.2)
+            .attr('stroke', '#007bff')
+            .attr('stroke-width', 2)
+            .attr('stroke-dasharray', '5,5')
+            .style('pointer-events', 'none');
     }
 
     async renderAnnotations(g, xScale, height) {
@@ -1222,7 +1483,7 @@ class MagTracePro {
             g.selectAll(".annotation").remove();
             
             // Load annotations for current dataset
-            const response = await fetch(`http://localhost:8000/api/annotations/?dataset=${this.currentDataset.id}`);
+            const response = await fetch(`/api/annotations/?dataset=${this.currentDataset.id}`);
             if (!response.ok) return;
             
             const annotations = await response.json();
@@ -1395,8 +1656,8 @@ class MagTracePro {
         
         try {
             const url = this.currentModel 
-                ? `http://localhost:8000/api/user-models/${this.currentModel.id}/`
-                : 'http://localhost:8000/api/user-models/';
+                ? `/api/user-models/${this.currentModel.id}/`
+                : '/api/user-models/';
             
             const method = this.currentModel ? 'PUT' : 'POST';
 
@@ -1458,7 +1719,7 @@ class MagTracePro {
         const type = modelType || document.getElementById('templateSelect').value;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/script-templates/${type}/`);
+            const response = await fetch(`/api/script-templates/${type}/`);
             const template = await response.json();
             this.scriptEditor.setValue(template.content, -1);
         } catch (error) {
@@ -1836,7 +2097,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         const scriptContent = this.scriptEditor.getValue();
         
         try {
-            const response = await fetch('http://localhost:8000/api/validate-script/', {
+            const response = await fetch('/api/validate-script/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ script_content: scriptContent })
@@ -1863,7 +2124,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         const scriptContent = this.scriptEditor.getValue();
 
         try {
-            const response = await fetch(`http://localhost:8000/api/user-models/${this.currentModel.id}/`, {
+            const response = await fetch(`/api/user-models/${this.currentModel.id}/`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1911,7 +2172,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         const loadingNotification = NotificationManager.showLoading('Starting training session...');
 
         try {
-            const response = await fetch('http://localhost:8000/api/training-sessions/start_training/', {
+            const response = await fetch('/api/training-sessions/start_training/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1959,7 +2220,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
             }
 
             try {
-                const response = await fetch(`http://localhost:8000/api/training-sessions/${this.activeTrainingSession}/progress/`);
+                const response = await fetch(`/api/training-sessions/${this.activeTrainingSession}/progress/`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -2077,7 +2338,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         if (!this.activeTrainingSession) return;
 
         try {
-            const response = await fetch(`http://localhost:8000/api/training-sessions/${this.activeTrainingSession}/stop_training/`, {
+            const response = await fetch(`/api/training-sessions/${this.activeTrainingSession}/stop_training/`, {
                 method: 'POST'
             });
 
@@ -2119,7 +2380,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         if (!this.currentProject) return;
 
         try {
-            const response = await fetch(`http://localhost:8000/api/user-models/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/user-models/?project=${this.currentProject.id}`);
             const models = await response.json();
             
             const container = document.getElementById('modelsList');
@@ -2171,7 +2432,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         if (!this.currentProject) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/label-categories/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/label-categories/?project=${this.currentProject.id}`);
             const categories = await response.json();
             
             const container = document.getElementById('categoryTree');
@@ -2204,7 +2465,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         if (!this.currentDataset) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/annotations/?dataset=${this.currentDataset.id}`);
+            const response = await fetch(`/api/annotations/?dataset=${this.currentDataset.id}`);
             const annotations = await response.json();
             
             const container = document.getElementById('annotationsList');
@@ -2238,7 +2499,7 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         }
         
         try {
-            const response = await fetch(`http://localhost:8000/api/user-models/${this.currentModel.id}/generate_predictions/`, {
+            const response = await fetch(`/api/user-models/${this.currentModel.id}/generate_predictions/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ dataset_id: this.currentDataset.id })
@@ -2259,8 +2520,8 @@ def train_model(model, train_data, train_labels, val_data, val_labels, training_
         
         try {
             const url = predictionId 
-                ? `http://localhost:8000/api/predictions/${predictionId}/`
-                : `http://localhost:8000/api/predictions/?dataset=${this.currentDataset.id}`;
+                ? `/api/predictions/${predictionId}/`
+                : `/api/predictions/?dataset=${this.currentDataset.id}`;
                 
             const response = await fetch(url);
             const predictions = await response.json();
@@ -2578,7 +2839,7 @@ Click for detailed analysis`;
         
         try {
             const predictionId = this.currentPredictions[0].id;
-            const response = await fetch(`http://localhost:8000/api/predictions/${predictionId}/accept/`, {
+            const response = await fetch(`/api/predictions/${predictionId}/accept/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -2602,7 +2863,7 @@ Click for detailed analysis`;
         
         try {
             const predictionId = this.currentPredictions[0].id;
-            const response = await fetch(`http://localhost:8000/api/predictions/${predictionId}/accept/`, {
+            const response = await fetch(`/api/predictions/${predictionId}/accept/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ indices })
@@ -2627,7 +2888,7 @@ Click for detailed analysis`;
         
         try {
             const predictionId = this.currentPredictions[0].id;
-            const response = await fetch(`http://localhost:8000/api/predictions/${predictionId}/reject/`, {
+            const response = await fetch(`/api/predictions/${predictionId}/reject/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ indices })
@@ -2651,7 +2912,7 @@ Click for detailed analysis`;
         
         try {
             const predictionId = this.currentPredictions[0].id;
-            const response = await fetch(`http://localhost:8000/api/predictions/${predictionId}/modify/`, {
+            const response = await fetch(`/api/predictions/${predictionId}/modify/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ modifications })
@@ -2764,7 +3025,7 @@ Click for detailed analysis`;
         if (!this.currentProject) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/label-categories/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/label-categories/?project=${this.currentProject.id}`);
             const categories = await response.json();
             
             const select = document.getElementById('annotationCategory');
@@ -2785,37 +3046,61 @@ Click for detailed analysis`;
         }
     }
     
-    async createAnnotation() {
-        if (!this.selectedRange || !this.currentDataset) return;
+    async createAnnotation(startIndex = null, endIndex = null, categoryId = null, confidence = 1.0, notes = '') {
+        // Handle both quick labeling and modal-based annotation creation
+        let annotationData;
         
-        const categoryId = document.getElementById('annotationCategory')?.value;
-        const confidence = parseFloat(document.getElementById('annotationConfidence')?.value || '1.0');
-        const notes = document.getElementById('annotationNotes')?.value || '';
-        
-        if (!categoryId) {
-            NotificationManager.showWarning('Please select a category');
-            return;
+        if (startIndex !== null && endIndex !== null && categoryId !== null) {
+            // Quick labeling mode - parameters provided
+            annotationData = {
+                start_index: startIndex,
+                end_index: endIndex,
+                category: categoryId,
+                confidence: confidence,
+                notes: notes
+            };
+        } else {
+            // Modal-based annotation creation
+            if (!this.selectedRange || !this.currentDataset) return;
+            
+            const formCategoryId = document.getElementById('annotationCategory')?.value;
+            const formConfidence = parseFloat(document.getElementById('annotationConfidence')?.value || '1.0');
+            const formNotes = document.getElementById('annotationNotes')?.value || '';
+            
+            if (!formCategoryId) {
+                NotificationManager.showWarning('Please select a category');
+                return;
+            }
+
+            // Validate confidence range
+            if (formConfidence < 0 || formConfidence > 1) {
+                NotificationManager.showWarning('Confidence must be between 0 and 1');
+                return;
+            }
+
+            annotationData = {
+                start_index: this.selectedRange.startIndex,
+                end_index: this.selectedRange.endIndex,
+                category: formCategoryId,
+                confidence: formConfidence,
+                notes: formNotes.trim()
+            };
         }
 
-        // Validate confidence range
-        if (confidence < 0 || confidence > 1) {
-            NotificationManager.showWarning('Confidence must be between 0 and 1');
+        if (!this.currentDataset) {
+            NotificationManager.showWarning('Please select a dataset first');
             return;
         }
 
         const loadingNotification = NotificationManager.showLoading('Creating annotation...');
         
         try {
-            const response = await fetch('http://localhost:8000/api/annotations/', {
+            const response = await fetch('/api/annotations/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     dataset: this.currentDataset.id,
-                    category: categoryId,
-                    start_index: this.selectedRange.startIndex,
-                    end_index: this.selectedRange.endIndex,
-                    confidence: confidence,
-                    notes: notes.trim()
+                    ...annotationData
                 })
             });
             
@@ -2829,20 +3114,26 @@ Click for detailed analysis`;
             NotificationManager.hideLoading();
             NotificationManager.showSuccess('Annotation created successfully');
             
-            this.closeModals();
-            
-            // Clear form
-            document.getElementById('annotationCategory').value = '';
-            document.getElementById('annotationConfidence').value = '1.0';
-            document.getElementById('annotationNotes').value = '';
+            // Close modal if it was used
+            if (startIndex === null) {
+                this.closeModals();
+                
+                // Clear form
+                document.getElementById('annotationCategory').value = '';
+                document.getElementById('annotationConfidence').value = '1.0';
+                document.getElementById('annotationNotes').value = '';
+            }
             
             // Refresh displays
             this.renderChart();
             this.loadAnnotations();
             
+            return annotation;
+            
         } catch (error) {
             NotificationManager.hideLoading();
-            NotificationManager.showError('Failed to create annotation', error, () => this.createAnnotation());
+            NotificationManager.showError('Failed to create annotation', error, () => this.createAnnotation(startIndex, endIndex, categoryId, confidence, notes));
+            throw error;
         }
     }
     
@@ -2867,7 +3158,7 @@ Click for detailed analysis`;
         if (!this.currentProject) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/label-categories/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/label-categories/?project=${this.currentProject.id}`);
             const categories = await response.json();
             
             const select = document.getElementById('editAnnotationCategory');
@@ -2895,7 +3186,7 @@ Click for detailed analysis`;
         if (!annotationId || !categoryId) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/annotations/${annotationId}/`, {
+            const response = await fetch(`/api/annotations/${annotationId}/`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -2923,7 +3214,7 @@ Click for detailed analysis`;
         if (!confirm('Are you sure you want to delete this annotation?')) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/annotations/${annotationId}/`, {
+            const response = await fetch(`/api/annotations/${annotationId}/`, {
                 method: 'DELETE'
             });
             
@@ -2943,7 +3234,7 @@ Click for detailed analysis`;
         if (!this.currentDataset) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/annotations/?dataset=${this.currentDataset.id}`);
+            const response = await fetch(`/api/annotations/?dataset=${this.currentDataset.id}`);
             const annotations = await response.json();
             this.renderAnnotationsList(annotations);
         } catch (error) {
@@ -2994,7 +3285,7 @@ Click for detailed analysis`;
         if (!this.currentProject) return;
         
         try {
-            const response = await fetch(`http://localhost:8000/api/label-categories/?project=${this.currentProject.id}`);
+            const response = await fetch(`/api/label-categories/?project=${this.currentProject.id}`);
             const categories = await response.json();
             this.renderLabelCategoriesTree(categories);
         } catch (error) {
