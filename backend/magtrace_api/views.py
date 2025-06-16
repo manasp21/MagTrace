@@ -57,10 +57,18 @@ class DatasetViewSet(viewsets.ModelViewSet):
         file_path = dataset.file.path
         df = pd.read_csv(file_path)
         
-        required_columns = ['timestamp_pc', 'b_x', 'b_y', 'b_z', 'lat', 'lon', 'altitude', 'thetax', 'thetay', 'thetaz', 'sensor_id']
+        # Handle different column names for altitude
+        altitude_col = 'altitude'
+        if 'alt' in df.columns and 'altitude' not in df.columns:
+            altitude_col = 'alt'
+        elif 'altitude' in df.columns:
+            altitude_col = 'altitude'
+        
+        required_columns = ['timestamp_pc', 'b_x', 'b_y', 'b_z', 'lat', 'lon', altitude_col, 'thetax', 'thetay', 'thetaz', 'sensor_id']
         
         if not all(col in df.columns for col in required_columns):
-            raise ValueError(f"CSV must contain columns: {required_columns}")
+            available_cols = list(df.columns)
+            raise ValueError(f"CSV must contain columns: {required_columns}. Available columns: {available_cols}")
         
         readings = []
         for _, row in df.iterrows():
@@ -72,7 +80,7 @@ class DatasetViewSet(viewsets.ModelViewSet):
                 b_z=float(row['b_z']),
                 lat=float(row['lat']),
                 lon=float(row['lon']),
-                altitude=float(row['altitude']),
+                altitude=float(row[altitude_col]),  # Use the detected altitude column
                 thetax=float(row['thetax']),
                 thetay=float(row['thetay']),
                 thetaz=float(row['thetaz']),

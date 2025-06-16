@@ -16,7 +16,10 @@
       "Bash(./venv/bin/python manage.py makemigrations:*)",
       "Bash(./venv/bin/pip install:*)",
       "Bash(timeout:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }

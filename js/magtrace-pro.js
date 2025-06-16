@@ -233,8 +233,9 @@ class MagTracePro {
             tab.addEventListener('click', (e) => this.switchContentPanel(e.target.dataset.panel));
         });
 
-        // Data upload
-        document.getElementById('uploadBtn').addEventListener('click', () => this.uploadData());
+        // Data upload - make button trigger file dialog
+        document.getElementById('uploadBtn').addEventListener('click', () => document.getElementById('dataUpload').click());
+        document.getElementById('dataUpload').addEventListener('change', (e) => this.uploadDataFile(e.target.files[0]));
 
         // Model configuration
         document.getElementById('newModelBtn').addEventListener('click', () => this.createNewModel());
@@ -488,14 +489,10 @@ class MagTracePro {
     }
 
     // Data Management
-    async uploadData() {
-        const fileInput = document.getElementById('dataUpload');
-        const file = fileInput.files[0];
-
+    async uploadDataFile(file) {
         // Validation
         if (!file) {
-            NotificationManager.showWarning('Please select a CSV file');
-            return;
+            return; // No file selected, user cancelled
         }
 
         if (!this.currentProject) {
@@ -542,7 +539,7 @@ class MagTracePro {
             
         } catch (error) {
             NotificationManager.hideLoading();
-            NotificationManager.showError('Failed to upload data', error, () => this.uploadData());
+            NotificationManager.showError('Failed to upload data', error);
         }
     }
 
