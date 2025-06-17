@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module magtrace_api.models</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="magtrace_api.html" class="white">magtrace_api</a>.models</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/mnt/c/Users/Manas%20Pandey/Documents/github/MagTrace/backend/magtrace_api/models.py">/mnt/c/Users/Manas Pandey/Documents/github/MagTrace/backend/magtrace_api/models.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="json.html">json</a><br>
+</td><td class="multicolumn"><a href="django.db.models.html">django.db.models</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="django.db.models.base.html#Model">django.db.models.base.Model</a>(<a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="magtrace_api.models.html#ActiveLearningSuggestion">ActiveLearningSuggestion</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#Annotation">Annotation</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#Dataset">Dataset</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#InferenceResult">InferenceResult</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#Label">Label</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#LabelCategory">LabelCategory</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#MLModel">MLModel</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#MagnetometerReading">MagnetometerReading</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#Prediction">Prediction</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#Project">Project</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#TrainingSession">TrainingSession</a>
+</dt><dt class="heading-text"><a href="magtrace_api.models.html#UserDefinedModel">UserDefinedModel</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="ActiveLearningSuggestion">class <strong>ActiveLearningSuggestion</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#ActiveLearningSuggestion">ActiveLearningSuggestion</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Active&nbsp;learning&nbsp;suggestions&nbsp;for&nbsp;annotation<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#ActiveLearningSuggestion">ActiveLearningSuggestion</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="ActiveLearningSuggestion-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>confidence</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>end_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="ActiveLearningSuggestion-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>reviewed</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>start_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>suggested_label</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.ActiveLearningSuggestion.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.ActiveLearningSuggestion.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="ActiveLearningSuggestion-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="ActiveLearningSuggestion-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="ActiveLearningSuggestion-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="ActiveLearningSuggestion-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#ActiveLearningSuggestion-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#ActiveLearningSuggestion-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#ActiveLearningSuggestion-clean_fields">clean_fields</a>(),&nbsp;<a href="#ActiveLearningSuggestion-clean">clean</a>(),&nbsp;<a href="#ActiveLearningSuggestion-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#ActiveLearningSuggestion-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="ActiveLearningSuggestion-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="ActiveLearningSuggestion-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="ActiveLearningSuggestion-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Annotation">class <strong>Annotation</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Annotation">Annotation</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Time-series&nbsp;annotations&nbsp;with&nbsp;confidence&nbsp;scores<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#Annotation">Annotation</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Annotation-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>confidence</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_by</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>end_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="Annotation-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Annotation-get_next_by_updated_at"><strong>get_next_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Annotation-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Annotation-get_previous_by_updated_at"><strong>get_previous_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>notes</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>start_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>updated_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>category</strong></dt>
+</dl>
+<dl><dt><strong>category_id</strong></dt>
+</dl>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.Annotation.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.Annotation.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Annotation-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="Annotation-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Annotation-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="Annotation-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Annotation-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Annotation-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="Annotation-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="Annotation-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="Annotation-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="Annotation-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#Annotation-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="Annotation-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#Annotation-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="Annotation-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Annotation-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="Annotation-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="Annotation-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#Annotation-clean_fields">clean_fields</a>(),&nbsp;<a href="#Annotation-clean">clean</a>(),&nbsp;<a href="#Annotation-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#Annotation-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Annotation-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Annotation-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="Annotation-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="Annotation-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Annotation-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="Annotation-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="Annotation-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Annotation-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="Annotation-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="Annotation-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Annotation-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="Annotation-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="Annotation-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Dataset">class <strong>Dataset</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Dataset">Dataset</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+CSV&nbsp;file&nbsp;upload&nbsp;and&nbsp;processing&nbsp;with&nbsp;magnetic&nbsp;field&nbsp;data<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#Dataset">Dataset</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Dataset-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<dl><dt><a name="Dataset-get_next_by_uploaded_at"><strong>get_next_by_uploaded_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: uploaded_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Dataset-get_previous_by_uploaded_at"><strong>get_previous_by_uploaded_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: uploaded_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>name</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>processed</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>total_records</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>uploaded_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>additional_training_sessions</strong></dt>
+</dl>
+<dl><dt><strong>annotations</strong></dt>
+</dl>
+<dl><dt><strong>file</strong></dt>
+</dl>
+<dl><dt><strong>inference_results</strong></dt>
+</dl>
+<dl><dt><strong>labels</strong></dt>
+</dl>
+<dl><dt><strong>mlmodel_set</strong></dt>
+</dl>
+<dl><dt><strong>predictions</strong></dt>
+</dl>
+<dl><dt><strong>project</strong></dt>
+</dl>
+<dl><dt><strong>project_id</strong></dt>
+</dl>
+<dl><dt><strong>readings</strong></dt>
+</dl>
+<dl><dt><strong>suggestions</strong></dt>
+</dl>
+<dl><dt><strong>trained_models</strong></dt>
+</dl>
+<dl><dt><strong>training_sessions</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.Dataset.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.Dataset.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Dataset-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="Dataset-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Dataset-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="Dataset-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Dataset-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Dataset-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="Dataset-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="Dataset-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="Dataset-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="Dataset-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#Dataset-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="Dataset-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#Dataset-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="Dataset-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Dataset-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="Dataset-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="Dataset-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#Dataset-clean_fields">clean_fields</a>(),&nbsp;<a href="#Dataset-clean">clean</a>(),&nbsp;<a href="#Dataset-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#Dataset-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Dataset-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Dataset-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="Dataset-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="Dataset-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Dataset-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="Dataset-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="Dataset-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Dataset-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="Dataset-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="Dataset-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Dataset-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="Dataset-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="Dataset-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="InferenceResult">class <strong>InferenceResult</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#InferenceResult">InferenceResult</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Legacy&nbsp;inference&nbsp;result&nbsp;-&nbsp;use&nbsp;<a href="#Prediction">Prediction</a>&nbsp;for&nbsp;new&nbsp;implementations<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#InferenceResult">InferenceResult</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="InferenceResult-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>confidence_scores</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="InferenceResult-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="InferenceResult-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>predictions</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<dl><dt><strong>model</strong></dt>
+</dl>
+<dl><dt><strong>model_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.InferenceResult.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.InferenceResult.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="InferenceResult-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="InferenceResult-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="InferenceResult-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="InferenceResult-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#InferenceResult-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#InferenceResult-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="InferenceResult-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="InferenceResult-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#InferenceResult-clean_fields">clean_fields</a>(),&nbsp;<a href="#InferenceResult-clean">clean</a>(),&nbsp;<a href="#InferenceResult-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#InferenceResult-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="InferenceResult-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="InferenceResult-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="InferenceResult-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="InferenceResult-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="InferenceResult-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="InferenceResult-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="InferenceResult-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="InferenceResult-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Label">class <strong>Label</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Label">Label</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Legacy&nbsp;label&nbsp;model&nbsp;-&nbsp;use&nbsp;<a href="#Annotation">Annotation</a>&nbsp;for&nbsp;new&nbsp;implementations<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#Label">Label</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Label-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>confidence</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_by</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>end_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="Label-get_label_type_display"><strong>get_label_type_display</strong></a> = _method(self, *, field=&lt;django.db.models.fields.CharField: label_type&gt;)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Label-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Label-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>label_type</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>notes</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>start_index</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.Label.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>LABEL_TYPES</strong> = [('anomaly', 'Anomaly'), ('normal', 'Normal'), ('noise', 'Noise'), ('interference', 'Interference')]</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.Label.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Label-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="Label-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Label-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="Label-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Label-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Label-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="Label-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="Label-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="Label-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="Label-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#Label-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="Label-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#Label-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="Label-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Label-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="Label-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="Label-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#Label-clean_fields">clean_fields</a>(),&nbsp;<a href="#Label-clean">clean</a>(),&nbsp;<a href="#Label-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#Label-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Label-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Label-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="Label-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="Label-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Label-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="Label-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="Label-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Label-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="Label-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="Label-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Label-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="Label-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="Label-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="LabelCategory">class <strong>LabelCategory</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#LabelCategory">LabelCategory</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Hierarchical&nbsp;label&nbsp;categories&nbsp;with&nbsp;parent-child&nbsp;relationships<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#LabelCategory">LabelCategory</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="LabelCategory-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>color</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>description</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>is_active</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>name</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>order</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>annotations</strong></dt>
+</dl>
+<dl><dt><strong>children</strong></dt>
+</dl>
+<dl><dt><strong>parent</strong></dt>
+</dl>
+<dl><dt><strong>parent_id</strong></dt>
+</dl>
+<dl><dt><strong>project</strong></dt>
+</dl>
+<dl><dt><strong>project_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.LabelCategory.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.LabelCategory.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="LabelCategory-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="LabelCategory-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="LabelCategory-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="LabelCategory-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#LabelCategory-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#LabelCategory-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="LabelCategory-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="LabelCategory-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#LabelCategory-clean_fields">clean_fields</a>(),&nbsp;<a href="#LabelCategory-clean">clean</a>(),&nbsp;<a href="#LabelCategory-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#LabelCategory-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LabelCategory-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="LabelCategory-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="LabelCategory-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="LabelCategory-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="LabelCategory-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="LabelCategory-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="LabelCategory-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="LabelCategory-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="MLModel">class <strong>MLModel</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#MLModel">MLModel</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Legacy&nbsp;ML&nbsp;model&nbsp;-&nbsp;use&nbsp;<a href="#UserDefinedModel">UserDefinedModel</a>&nbsp;for&nbsp;new&nbsp;implementations<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#MLModel">MLModel</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MLModel-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="MLModel-get_model_type_display"><strong>get_model_type_display</strong></a> = _method(self, *, field=&lt;django.db.models.fields.CharField: model_type&gt;)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="MLModel-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="MLModel-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>is_active</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>model_type</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>name</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>parameters</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>version</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>inferenceresult_set</strong></dt>
+</dl>
+<dl><dt><strong>model_file</strong></dt>
+</dl>
+<dl><dt><strong>training_dataset</strong></dt>
+</dl>
+<dl><dt><strong>training_dataset_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.MLModel.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MODEL_TYPES</strong> = [('anomaly_detection', 'Anomaly Detection'), ('classification', 'Classification'), ('regression', 'Regression')]</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.MLModel.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="MLModel-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="MLModel-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="MLModel-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="MLModel-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="MLModel-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="MLModel-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="MLModel-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="MLModel-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="MLModel-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="MLModel-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#MLModel-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="MLModel-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#MLModel-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="MLModel-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="MLModel-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="MLModel-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="MLModel-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#MLModel-clean_fields">clean_fields</a>(),&nbsp;<a href="#MLModel-clean">clean</a>(),&nbsp;<a href="#MLModel-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#MLModel-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="MLModel-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MLModel-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="MLModel-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="MLModel-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="MLModel-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="MLModel-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="MLModel-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="MLModel-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="MLModel-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="MLModel-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="MLModel-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="MLModel-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="MLModel-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="MagnetometerReading">class <strong>MagnetometerReading</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#MagnetometerReading">MagnetometerReading</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Individual&nbsp;sensor&nbsp;readings&nbsp;(b_x,&nbsp;b_y,&nbsp;b_z,&nbsp;lat,&nbsp;lon,&nbsp;altitude,&nbsp;etc.)<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#MagnetometerReading">MagnetometerReading</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MagnetometerReading-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>altitude</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>b_x</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>b_y</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>b_z</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>lat</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>lon</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>sensor_id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>thetax</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>thetay</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>thetaz</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>timestamp_pc</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.MagnetometerReading.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.MagnetometerReading.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="MagnetometerReading-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="MagnetometerReading-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="MagnetometerReading-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="MagnetometerReading-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#MagnetometerReading-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#MagnetometerReading-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#MagnetometerReading-clean_fields">clean_fields</a>(),&nbsp;<a href="#MagnetometerReading-clean">clean</a>(),&nbsp;<a href="#MagnetometerReading-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#MagnetometerReading-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="MagnetometerReading-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="MagnetometerReading-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="MagnetometerReading-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="MagnetometerReading-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Prediction">class <strong>Prediction</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Prediction">Prediction</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+<a href="django.db.models.base.html#Model">Model</a>&nbsp;predictions&nbsp;with&nbsp;confidence&nbsp;scores&nbsp;and&nbsp;review&nbsp;status<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#Prediction">Prediction</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Prediction-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>confidence_scores</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="Prediction-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Prediction-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Prediction-get_review_status_display"><strong>get_review_status_display</strong></a> = _method(self, *, field=&lt;django.db.models.fields.CharField: review_status&gt;)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>modifications</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>predictions</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>review_status</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>reviewed_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>reviewed_by</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<dl><dt><strong>model</strong></dt>
+</dl>
+<dl><dt><strong>model_id</strong></dt>
+</dl>
+<dl><dt><strong>training_session</strong></dt>
+</dl>
+<dl><dt><strong>training_session_id</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.Prediction.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.Prediction.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>REVIEW_STATUS</strong> = [('pending', 'Pending Review'), ('accepted', 'Accepted'), ('rejected', 'Rejected'), ('modified', 'Modified')]</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Prediction-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="Prediction-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Prediction-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="Prediction-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Prediction-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Prediction-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="Prediction-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="Prediction-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="Prediction-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="Prediction-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#Prediction-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="Prediction-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#Prediction-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="Prediction-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Prediction-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="Prediction-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="Prediction-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#Prediction-clean_fields">clean_fields</a>(),&nbsp;<a href="#Prediction-clean">clean</a>(),&nbsp;<a href="#Prediction-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#Prediction-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Prediction-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Prediction-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="Prediction-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="Prediction-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Prediction-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="Prediction-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="Prediction-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Prediction-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="Prediction-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="Prediction-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Prediction-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="Prediction-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="Prediction-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Project">class <strong>Project</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Project">Project</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Container&nbsp;for&nbsp;complete&nbsp;ML&nbsp;projects&nbsp;with&nbsp;settings<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#Project">Project</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Project-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>description</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="Project-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Project-get_next_by_updated_at"><strong>get_next_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Project-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="Project-get_previous_by_updated_at"><strong>get_previous_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>name</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>settings</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>updated_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>datasets</strong></dt>
+</dl>
+<dl><dt><strong>label_categories</strong></dt>
+</dl>
+<dl><dt><strong>user_models</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.Project.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.Project.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Project-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="Project-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Project-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="Project-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Project-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="Project-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="Project-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="Project-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="Project-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="Project-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#Project-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="Project-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#Project-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="Project-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Project-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="Project-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="Project-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#Project-clean_fields">clean_fields</a>(),&nbsp;<a href="#Project-clean">clean</a>(),&nbsp;<a href="#Project-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#Project-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="Project-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Project-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="Project-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="Project-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Project-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="Project-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="Project-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="Project-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="Project-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="Project-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="Project-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="Project-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="Project-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="TrainingSession">class <strong>TrainingSession</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#TrainingSession">TrainingSession</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Training&nbsp;orchestration&nbsp;with&nbsp;real-time&nbsp;progress&nbsp;tracking<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#TrainingSession">TrainingSession</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="TrainingSession-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>completed_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>current_epoch</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>error_message</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>final_metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="TrainingSession-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="TrainingSession-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="TrainingSession-get_status_display"><strong>get_status_display</strong></a> = _method(self, *, field=&lt;django.db.models.fields.CharField: status&gt;)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>is_continued_training</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>live_metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>progress</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>started_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>status</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>total_epochs</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>training_logs</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>training_metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>validation_metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>additional_datasets</strong></dt>
+</dl>
+<dl><dt><strong>base_training_session</strong></dt>
+</dl>
+<dl><dt><strong>base_training_session_id</strong></dt>
+</dl>
+<dl><dt><strong>dataset</strong></dt>
+</dl>
+<dl><dt><strong>dataset_id</strong></dt>
+</dl>
+<dl><dt><strong>model</strong></dt>
+</dl>
+<dl><dt><strong>model_file</strong></dt>
+</dl>
+<dl><dt><strong>model_id</strong></dt>
+</dl>
+<dl><dt><strong>prediction_set</strong></dt>
+</dl>
+<dl><dt><strong>trainingsession_set</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.TrainingSession.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.TrainingSession.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>STATUS_CHOICES</strong> = [('pending', 'Pending'), ('running', 'Running'), ('completed', 'Completed'), ('failed', 'Failed'), ('cancelled', 'Cancelled')]</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="TrainingSession-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="TrainingSession-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="TrainingSession-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="TrainingSession-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#TrainingSession-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#TrainingSession-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="TrainingSession-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="TrainingSession-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#TrainingSession-clean_fields">clean_fields</a>(),&nbsp;<a href="#TrainingSession-clean">clean</a>(),&nbsp;<a href="#TrainingSession-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#TrainingSession-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="TrainingSession-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="TrainingSession-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="TrainingSession-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="TrainingSession-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="TrainingSession-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="TrainingSession-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="TrainingSession-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="TrainingSession-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="UserDefinedModel">class <strong>UserDefinedModel</strong></a>(<a href="django.db.models.base.html#Model">django.db.models.base.Model</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#UserDefinedModel">UserDefinedModel</a>(*args,&nbsp;**kwargs)<br>
+&nbsp;<br>
+Custom&nbsp;TensorFlow&nbsp;models&nbsp;with&nbsp;Python&nbsp;scripts&nbsp;and&nbsp;hyperparameters<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="magtrace_api.models.html#UserDefinedModel">UserDefinedModel</a></dd>
+<dd><a href="django.db.models.base.html#Model">django.db.models.base.Model</a></dd>
+<dd><a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="UserDefinedModel-__str__"><strong>__str__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<strong>author</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>category</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="UserDefinedModel-create_new_version"><strong>create_new_version</strong></a>(self, version_number=None, version_notes='')</dt><dd><span class="code">Create&nbsp;a&nbsp;new&nbsp;version&nbsp;of&nbsp;this&nbsp;model</span></dd></dl>
+
+<strong>created_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>custom_metadata</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>description</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<dl><dt><a name="UserDefinedModel-get_all_versions"><strong>get_all_versions</strong></a>(self)</dt><dd><span class="code">Get&nbsp;all&nbsp;versions&nbsp;of&nbsp;this&nbsp;model</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-get_full_name"><strong>get_full_name</strong></a>(self)</dt><dd><span class="code">Get&nbsp;full&nbsp;name&nbsp;with&nbsp;version</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-get_latest_version"><strong>get_latest_version</strong></a>(self)</dt><dd><span class="code">Get&nbsp;the&nbsp;latest&nbsp;version&nbsp;of&nbsp;this&nbsp;model</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-get_model_type_display"><strong>get_model_type_display</strong></a> = _method(self, *, field=&lt;django.db.models.fields.CharField: model_type&gt;)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="UserDefinedModel-get_next_by_created_at"><strong>get_next_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="UserDefinedModel-get_next_by_updated_at"><strong>get_next_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=True, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="UserDefinedModel-get_previous_by_created_at"><strong>get_previous_by_created_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: created_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<dl><dt><a name="UserDefinedModel-get_previous_by_updated_at"><strong>get_previous_by_updated_at</strong></a> = _method(self, *, field=&lt;django.db.models.fields.DateTimeField: updated_at&gt;, is_next=False, **kwargs)<span class="grey"><span class="heading-text"> from functools.partialmethod._make_unbound_method.<locals></span></span></dt></dl>
+
+<strong>hyperparameters</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>id</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>is_active</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>model_type</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>name</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>performance_metrics</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>python_script</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>tags</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>updated_at</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>version</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<strong>version_notes</strong> = &lt;django.db.models.query_utils.DeferredAttribute object&gt;
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>parent_model</strong></dt>
+</dl>
+<dl><dt><strong>parent_model_id</strong></dt>
+</dl>
+<dl><dt><strong>predictions</strong></dt>
+</dl>
+<dl><dt><strong>project</strong></dt>
+</dl>
+<dl><dt><strong>project_id</strong></dt>
+</dl>
+<dl><dt><strong>training_datasets</strong></dt>
+</dl>
+<dl><dt><strong>training_sessions</strong></dt>
+</dl>
+<dl><dt><strong>versions</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DoesNotExist</strong> = &lt;class 'magtrace_api.models.UserDefinedModel.DoesNotExist'&gt;</dl>
+
+<dl><dt><strong>MODEL_TYPES</strong> = [('classification', 'Classification'), ('autoencoder', 'Autoencoder'), ('transformer', 'Transformer'), ('custom', 'Custom')]</dl>
+
+<dl><dt><strong>MultipleObjectsReturned</strong> = &lt;class 'magtrace_api.models.UserDefinedModel.MultipleObjectsReturned'&gt;</dl>
+
+<dl><dt><strong>objects</strong> = &lt;django.db.models.manager.Manager object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="UserDefinedModel-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><span class="code">Return&nbsp;self==value.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__getstate__"><strong>__getstate__</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;to&nbsp;allow&nbsp;choosing&nbsp;the&nbsp;attributes&nbsp;to&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__hash__"><strong>__hash__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;hash(self).</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt>async <a name="UserDefinedModel-adelete"><strong>adelete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt>async <a name="UserDefinedModel-arefresh_from_db"><strong>arefresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt></dl>
+
+<dl><dt>async <a name="UserDefinedModel-asave"><strong>asave</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">#&nbsp;RemovedInDjango60Warning:&nbsp;When&nbsp;the&nbsp;deprecation&nbsp;ends,&nbsp;replace&nbsp;with:<br>
+#&nbsp;async&nbsp;def&nbsp;<a href="#UserDefinedModel-asave">asave</a>(<br>
+#&nbsp;&nbsp;&nbsp;self,&nbsp;*,&nbsp;force_insert=False,&nbsp;force_update=False,&nbsp;using=None,&nbsp;update_fields=None,<br>
+#&nbsp;):</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-clean"><strong>clean</strong></a>(self)</dt><dd><span class="code">Hook&nbsp;for&nbsp;doing&nbsp;any&nbsp;extra&nbsp;model-wide&nbsp;validation&nbsp;after&nbsp;<a href="#UserDefinedModel-clean">clean</a>()&nbsp;has&nbsp;been<br>
+called&nbsp;on&nbsp;every&nbsp;field&nbsp;by&nbsp;self.<strong>clean_fields</strong>.&nbsp;Any&nbsp;ValidationError&nbsp;raised<br>
+by&nbsp;this&nbsp;method&nbsp;will&nbsp;not&nbsp;be&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;field;&nbsp;it&nbsp;will<br>
+have&nbsp;a&nbsp;special-case&nbsp;association&nbsp;with&nbsp;the&nbsp;field&nbsp;defined&nbsp;by&nbsp;NON_FIELD_ERRORS.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-clean_fields"><strong>clean_fields</strong></a>(self, exclude=None)</dt><dd><span class="code">Clean&nbsp;all&nbsp;fields&nbsp;and&nbsp;raise&nbsp;a&nbsp;ValidationError&nbsp;containing&nbsp;a&nbsp;dict<br>
+of&nbsp;all&nbsp;validation&nbsp;errors&nbsp;if&nbsp;any&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-date_error_message"><strong>date_error_message</strong></a>(self, lookup_type, field_name, unique_for)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-delete"><strong>delete</strong></a>(self, using=None, keep_parents=False)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-full_clean"><strong>full_clean</strong></a>(self, exclude=None, validate_unique=True, validate_constraints=True)</dt><dd><span class="code">Call&nbsp;<a href="#UserDefinedModel-clean_fields">clean_fields</a>(),&nbsp;<a href="#UserDefinedModel-clean">clean</a>(),&nbsp;<a href="#UserDefinedModel-validate_unique">validate_unique</a>(),&nbsp;and<br>
+<a href="#UserDefinedModel-validate_constraints">validate_constraints</a>()&nbsp;on&nbsp;the&nbsp;model.&nbsp;Raise&nbsp;a&nbsp;ValidationError&nbsp;for&nbsp;any<br>
+errors&nbsp;that&nbsp;occur.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-get_constraints"><strong>get_constraints</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-get_deferred_fields"><strong>get_deferred_fields</strong></a>(self)</dt><dd><span class="code">Return&nbsp;a&nbsp;set&nbsp;containing&nbsp;names&nbsp;of&nbsp;deferred&nbsp;fields&nbsp;for&nbsp;this&nbsp;instance.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-prepare_database_save"><strong>prepare_database_save</strong></a>(self, field)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-refresh_from_db"><strong>refresh_from_db</strong></a>(self, using=None, fields=None, from_queryset=None)</dt><dd><span class="code">Reload&nbsp;field&nbsp;values&nbsp;from&nbsp;the&nbsp;database.<br>
+&nbsp;<br>
+By&nbsp;default,&nbsp;the&nbsp;reloading&nbsp;happens&nbsp;from&nbsp;the&nbsp;database&nbsp;this&nbsp;instance&nbsp;was<br>
+loaded&nbsp;from,&nbsp;or&nbsp;by&nbsp;the&nbsp;read&nbsp;router&nbsp;if&nbsp;this&nbsp;instance&nbsp;wasn't&nbsp;loaded&nbsp;from<br>
+any&nbsp;database.&nbsp;The&nbsp;using&nbsp;parameter&nbsp;will&nbsp;override&nbsp;the&nbsp;default.<br>
+&nbsp;<br>
+Fields&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;specify&nbsp;which&nbsp;fields&nbsp;to&nbsp;reload.&nbsp;The&nbsp;fields<br>
+should&nbsp;be&nbsp;an&nbsp;iterable&nbsp;of&nbsp;field&nbsp;attnames.&nbsp;If&nbsp;fields&nbsp;is&nbsp;None,&nbsp;then<br>
+all&nbsp;non-deferred&nbsp;fields&nbsp;are&nbsp;reloaded.<br>
+&nbsp;<br>
+When&nbsp;accessing&nbsp;deferred&nbsp;fields&nbsp;of&nbsp;an&nbsp;instance,&nbsp;the&nbsp;deferred&nbsp;loading<br>
+of&nbsp;the&nbsp;field&nbsp;will&nbsp;call&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-save"><strong>save</strong></a>(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Save&nbsp;the&nbsp;current&nbsp;instance.&nbsp;Override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass&nbsp;if&nbsp;you&nbsp;want&nbsp;to<br>
+control&nbsp;the&nbsp;saving&nbsp;process.<br>
+&nbsp;<br>
+The&nbsp;'force_insert'&nbsp;and&nbsp;'force_update'&nbsp;parameters&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;insist<br>
+that&nbsp;the&nbsp;"save"&nbsp;must&nbsp;be&nbsp;an&nbsp;SQL&nbsp;insert&nbsp;or&nbsp;update&nbsp;(or&nbsp;equivalent&nbsp;for<br>
+non-SQL&nbsp;backends),&nbsp;respectively.&nbsp;Normally,&nbsp;they&nbsp;should&nbsp;not&nbsp;be&nbsp;set.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-save_base"><strong>save_base</strong></a>(self, raw=False, force_insert=False, force_update=False, using=None, update_fields=None)</dt><dd><span class="code">Handle&nbsp;the&nbsp;parts&nbsp;of&nbsp;saving&nbsp;which&nbsp;should&nbsp;be&nbsp;done&nbsp;only&nbsp;once&nbsp;per&nbsp;save,<br>
+yet&nbsp;need&nbsp;to&nbsp;be&nbsp;done&nbsp;in&nbsp;raw&nbsp;saves,&nbsp;too.&nbsp;This&nbsp;includes&nbsp;some&nbsp;sanity<br>
+checks&nbsp;and&nbsp;signal&nbsp;sending.<br>
+&nbsp;<br>
+The&nbsp;'raw'&nbsp;argument&nbsp;is&nbsp;telling&nbsp;save_base&nbsp;not&nbsp;to&nbsp;save&nbsp;any&nbsp;parent<br>
+models&nbsp;and&nbsp;not&nbsp;to&nbsp;do&nbsp;any&nbsp;changes&nbsp;to&nbsp;the&nbsp;values&nbsp;before&nbsp;save.&nbsp;This<br>
+is&nbsp;used&nbsp;by&nbsp;fixture&nbsp;loading.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-serializable_value"><strong>serializable_value</strong></a>(self, field_name)</dt><dd><span class="code">Return&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;field&nbsp;name&nbsp;for&nbsp;this&nbsp;instance.&nbsp;If&nbsp;the&nbsp;field&nbsp;is<br>
+a&nbsp;foreign&nbsp;key,&nbsp;return&nbsp;the&nbsp;id&nbsp;value&nbsp;instead&nbsp;of&nbsp;the&nbsp;object.&nbsp;If&nbsp;there's<br>
+no&nbsp;Field&nbsp;object&nbsp;with&nbsp;this&nbsp;name&nbsp;on&nbsp;the&nbsp;model,&nbsp;return&nbsp;the&nbsp;model<br>
+attribute's&nbsp;value.<br>
+&nbsp;<br>
+Used&nbsp;to&nbsp;serialize&nbsp;a&nbsp;field's&nbsp;value&nbsp;(in&nbsp;the&nbsp;serializer,&nbsp;or&nbsp;form&nbsp;output,<br>
+for&nbsp;example).&nbsp;Normally,&nbsp;you&nbsp;would&nbsp;just&nbsp;access&nbsp;the&nbsp;attribute&nbsp;directly<br>
+and&nbsp;not&nbsp;use&nbsp;this&nbsp;method.</span></dd></dl>
+
+<dl><dt><a name="UserDefinedModel-unique_error_message"><strong>unique_error_message</strong></a>(self, model_class, unique_check)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-validate_constraints"><strong>validate_constraints</strong></a>(self, exclude=None)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-validate_unique"><strong>validate_unique</strong></a>(self, exclude=None)</dt><dd><span class="code">Check&nbsp;unique&nbsp;constraints&nbsp;on&nbsp;the&nbsp;model&nbsp;and&nbsp;raise&nbsp;ValidationError&nbsp;if&nbsp;any<br>
+failed.</span></dd></dl>
+
+<hr>
+Class methods inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><a name="UserDefinedModel-check"><strong>check</strong></a>(**kwargs)</dt></dl>
+
+<dl><dt><a name="UserDefinedModel-from_db"><strong>from_db</strong></a>(db, field_names, values)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.base.html#Model">django.db.models.base.Model</a>:<br>
+<dl><dt><strong>pk</strong></dt>
+</dl>
+<hr>
+Class methods inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><a name="UserDefinedModel-__init_subclass__"><strong>__init_subclass__</strong></a>(**kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
+overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="django.db.models.utils.html#AltersData">django.db.models.utils.AltersData</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

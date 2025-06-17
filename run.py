@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
 MagTrace Application Runner
+
+Author: Manas Pandey
+Developed with the assistance of Claude
+
 Starts the integrated Django development server (backend + frontend)
 """
 

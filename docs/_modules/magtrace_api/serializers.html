@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>magtrace_api.serializers &mdash; MagTrace Pro 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MagTrace Pro
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_results.html">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MagTrace Pro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">magtrace_api.serializers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for magtrace_api.serializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Dataset</span><span class="p">,</span> <span class="n">MagnetometerReading</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">MLModel</span><span class="p">,</span> <span class="n">InferenceResult</span><span class="p">,</span> <span class="n">ActiveLearningSuggestion</span><span class="p">,</span>
+    <span class="n">Project</span><span class="p">,</span> <span class="n">LabelCategory</span><span class="p">,</span> <span class="n">Annotation</span><span class="p">,</span> <span class="n">UserDefinedModel</span><span class="p">,</span> <span class="n">TrainingSession</span><span class="p">,</span> <span class="n">Prediction</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="DatasetSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.DatasetSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">DatasetSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="DatasetSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.DatasetSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Dataset</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MagnetometerReadingSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.MagnetometerReadingSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">MagnetometerReadingSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="MagnetometerReadingSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.MagnetometerReadingSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MagnetometerReading</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LabelSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.LabelSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">LabelSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="LabelSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.LabelSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Label</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MLModelSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.MLModelSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">MLModelSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="MLModelSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.MLModelSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MLModel</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="InferenceResultSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.InferenceResultSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">InferenceResultSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="InferenceResultSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.InferenceResultSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">InferenceResult</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ActiveLearningSuggestionSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ActiveLearningSuggestionSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ActiveLearningSuggestionSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ActiveLearningSuggestionSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ActiveLearningSuggestionSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ActiveLearningSuggestion</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<span class="c1"># Enhanced Model Serializers</span>
+<div class="viewcode-block" id="ProjectSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ProjectSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ProjectSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="ProjectSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ProjectSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Project</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LabelCategorySerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.LabelCategorySerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">LabelCategorySerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="LabelCategorySerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.LabelCategorySerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LabelCategory</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+
+    
+<div class="viewcode-block" id="LabelCategorySerializer.get_children">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.LabelCategorySerializer.get_children">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LabelCategorySerializer</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">data</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AnnotationSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.AnnotationSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">AnnotationSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">category_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;category.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">category_color</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;category.color&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="AnnotationSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.AnnotationSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Annotation</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserDefinedModelSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">UserDefinedModelSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;project.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;get_full_name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_model_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;parent_model.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">version_count</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+    <span class="n">latest_version</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="UserDefinedModelSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">UserDefinedModel</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+
+    
+<div class="viewcode-block" id="UserDefinedModelSerializer.get_version_count">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSerializer.get_version_count">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_version_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get total number of versions for this model&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_all_versions</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="UserDefinedModelSerializer.get_latest_version">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSerializer.get_latest_version">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_latest_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latest version number&quot;&quot;&quot;</span>
+        <span class="n">latest</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_latest_version</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">latest</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="n">latest</span> <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">version</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UserDefinedModelSummarySerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSummarySerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">UserDefinedModelSummarySerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lightweight serializer for model lists&quot;&quot;&quot;</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;project.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">full_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;get_full_name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">version_count</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="UserDefinedModelSummarySerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSummarySerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">UserDefinedModel</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;model_type&#39;</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;tags&#39;</span><span class="p">,</span> 
+                 <span class="s1">&#39;project_name&#39;</span><span class="p">,</span> <span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="s1">&#39;version_count&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="UserDefinedModelSummarySerializer.get_version_count">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.UserDefinedModelSummarySerializer.get_version_count">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_version_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_all_versions</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ModelVersionSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ModelVersionSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelVersionSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializer for model versions&quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ModelVersionSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ModelVersionSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">UserDefinedModel</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;version_notes&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ModelRenameSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ModelRenameSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelRenameSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializer for model rename operations&quot;&quot;&quot;</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">update_all_versions</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ModelCloneSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ModelCloneSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelCloneSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializer for model clone operations&quot;&quot;&quot;</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">clone_version</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">clone_notes</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">include_training_data</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ModelMetadataSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.ModelMetadataSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelMetadataSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serializer for model metadata updates&quot;&quot;&quot;</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ListField</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">custom_metadata</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">JSONField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TrainingSessionSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.TrainingSessionSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">TrainingSessionSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;model.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dataset_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;dataset.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">additional_dataset_names</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">SerializerMethodField</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="TrainingSessionSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.TrainingSessionSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">TrainingSession</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+
+    
+<div class="viewcode-block" id="TrainingSessionSerializer.get_additional_dataset_names">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.TrainingSessionSerializer.get_additional_dataset_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_additional_dataset_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">ds</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">additional_datasets</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PredictionSerializer">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.PredictionSerializer">[docs]</a>
+<span class="k">class</span> <span class="nc">PredictionSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;model.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dataset_name</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;dataset.name&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="PredictionSerializer.Meta">
+<a class="viewcode-back" href="../../index.html#magtrace_api.views.PredictionSerializer.Meta">[docs]</a>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Prediction</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s1">&#39;__all__&#39;</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+**Project Author: Manas Pandey**  
+*Developed with the assistance of Claude*
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview

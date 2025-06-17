@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>magtrace_api.project_service &mdash; MagTrace Pro 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MagTrace Pro
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing_results.html">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MagTrace Pro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">magtrace_api.project_service</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for magtrace_api.project_service</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">django.core.files.base</span> <span class="kn">import</span> <span class="n">ContentFile</span>
+<span class="kn">from</span> <span class="nn">django.core.serializers</span> <span class="kn">import</span> <span class="n">serialize</span><span class="p">,</span> <span class="n">deserialize</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">LabelCategory</span><span class="p">,</span> <span class="n">Annotation</span><span class="p">,</span> <span class="n">UserDefinedModel</span><span class="p">,</span> <span class="n">Prediction</span>
+
+
+<div class="viewcode-block" id="ProjectService">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService">[docs]</a>
+<span class="k">class</span> <span class="nc">ProjectService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Service for saving and loading complete MagTrace projects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ProjectService.__init__">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span></div>
+
+    
+<div class="viewcode-block" id="ProjectService.create_project">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService.create_project">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new project&quot;&quot;&quot;</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">settings</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                <span class="s1">&#39;created_with&#39;</span><span class="p">:</span> <span class="s1">&#39;MagTrace&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;auto_save&#39;</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Create default label categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_default_categories</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">project</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">_create_default_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create default hierarchical label categories&quot;&quot;&quot;</span>
+        <span class="c1"># Root categories</span>
+        <span class="n">geophysical</span> <span class="o">=</span> <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Geophysical&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FF6B6B&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Geophysical signals and features&quot;</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Noise&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FFA726&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Various types of noise and interference&quot;</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
+        
+        <span class="n">instrumental</span> <span class="o">=</span> <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Instrumental&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#42A5F5&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Instrument-related artifacts&quot;</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="mi">3</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Geophysical subcategories</span>
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">geophysical</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Anomaly&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#E53E3E&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Magnetic anomalies&quot;</span>
+        <span class="p">)</span>
+        
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">geophysical</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dipolar&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#D53F8C&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Dipolar magnetic signatures&quot;</span>
+        <span class="p">)</span>
+        
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">geophysical</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Regional Field&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#805AD5&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Regional magnetic field variations&quot;</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Noise subcategories</span>
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Electronic&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FF8A65&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Electronic interference&quot;</span>
+        <span class="p">)</span>
+        
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Motion&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FFAB40&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Motion-induced noise&quot;</span>
+        <span class="p">)</span>
+        
+        <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Environmental&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FFCC02&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Environmental interference&quot;</span>
+        <span class="p">)</span>
+    
+<div class="viewcode-block" id="ProjectService.save_project">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService.save_project">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save complete project to a zip file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+        
+        <span class="c1"># Create temporary directory</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">temp_dir</span><span class="p">:</span>
+            <span class="n">project_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_project_data</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+            
+            <span class="c1"># Save project file</span>
+            <span class="n">project_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s1">&#39;project.json&#39;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">project_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">project_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+            
+            <span class="c1"># Create zip archive</span>
+            <span class="n">zip_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.magproj&quot;</span>
+            <span class="n">zip_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
+            
+            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+                <span class="c1"># Add project data</span>
+                <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">project_file</span><span class="p">,</span> <span class="s1">&#39;project.json&#39;</span><span class="p">)</span>
+                
+                <span class="c1"># Add datasets</span>
+                <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+                        <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;datasets/</span><span class="si">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+                <span class="c1"># Add user scripts as text files</span>
+                <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">user_models</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">python_script</span><span class="p">:</span>
+                        <span class="n">script_content</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">python_script</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                        <span class="n">zf</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;scripts/</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_script.py&quot;</span><span class="p">,</span> <span class="n">script_content</span><span class="p">)</span>
+                    
+                    <span class="c1"># Add trained model files from training sessions</span>
+                    <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">training_sessions</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s1">&#39;completed&#39;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">model_file</span><span class="p">:</span>
+                            <span class="n">zf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">model_file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;models/</span><span class="si">{</span><span class="n">session</span><span class="o">.</span><span class="n">model_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Return the zip file path for download</span>
+            <span class="k">return</span> <span class="n">zip_path</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">_export_project_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export all project data to dictionary&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+            <span class="s1">&#39;project&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s1">&#39;settings&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span>
+                <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                <span class="s1">&#39;updated_at&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">updated_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;datasets&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;label_categories&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;models&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+        
+        <span class="c1"># Export datasets</span>
+        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;datasets&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">file</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;total_records&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">total_records</span><span class="p">,</span>
+                <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                <span class="s1">&#39;uploaded_at&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">uploaded_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="p">})</span>
+        
+        <span class="c1"># Export label categories (hierarchical)</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">label_categories</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label_categories&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;parent_name&#39;</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">parent</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">color</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="n">category</span><span class="o">.</span><span class="n">order</span>
+            <span class="p">})</span>
+        
+        <span class="c1"># Export annotations</span>
+        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;category_name&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">category</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;start_index&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">start_index</span><span class="p">,</span>
+                    <span class="s1">&#39;end_index&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">end_index</span><span class="p">,</span>
+                    <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+                    <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span>
+                    <span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span>
+                    <span class="s1">&#39;created_by&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">created_by</span><span class="p">,</span>
+                    <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+                    <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span>
+                    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">properties</span><span class="p">,</span>
+                    <span class="s1">&#39;validated&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">validated</span><span class="p">,</span>
+                    <span class="s1">&#39;validated_by&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">validated_by</span><span class="p">,</span>
+                    <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="n">annotation</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+                <span class="p">})</span>
+        
+        <span class="c1"># Export models</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;models&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s1">&#39;model_type&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+                <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                <span class="s1">&#39;script_file_name&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">python_script</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">python_script</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;script_content&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">script_content</span><span class="p">,</span>
+                <span class="s1">&#39;hyperparameters&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">,</span>
+                <span class="s1">&#39;input_shape&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">input_shape</span><span class="p">,</span>
+                <span class="s1">&#39;output_shape&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">output_shape</span><span class="p">,</span>
+                <span class="s1">&#39;training_config&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_config</span><span class="p">,</span>
+                <span class="s1">&#39;is_trained&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">is_trained</span><span class="p">,</span>
+                <span class="s1">&#39;training_status&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_status</span><span class="p">,</span>
+                <span class="s1">&#39;metrics&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
+                <span class="s1">&#39;training_history&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">training_history</span>
+            <span class="p">})</span>
+        
+        <span class="c1"># Export predictions</span>
+        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">predictions</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;predictions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;model_name&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span>
+                    <span class="s1">&#39;confidence_scores&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">confidence_scores</span><span class="p">,</span>
+                    <span class="s1">&#39;prediction_metadata&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">prediction_metadata</span><span class="p">,</span>
+                    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                    <span class="s1">&#39;reviewed_by&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">reviewed_by</span><span class="p">,</span>
+                    <span class="s1">&#39;review_notes&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">review_notes</span><span class="p">,</span>
+                    <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+                <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">data</span>
+    
+<div class="viewcode-block" id="ProjectService.load_project">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService.load_project">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_file</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load project from uploaded zip file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">temp_dir</span><span class="p">:</span>
+            <span class="c1"># Extract zip file</span>
+            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">project_file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zf</span><span class="p">:</span>
+                <span class="n">zf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">)</span>
+            
+            <span class="c1"># Load project data</span>
+            <span class="n">project_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s1">&#39;project.json&#39;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">project_file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">project_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            
+            <span class="c1"># Create project</span>
+            <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; (Imported)&quot;</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+                <span class="n">settings</span><span class="o">=</span><span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;project&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># Import label categories</span>
+            <span class="n">category_map</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_import_categories</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;label_categories&#39;</span><span class="p">],</span> <span class="n">category_map</span><span class="p">)</span>
+            
+            <span class="c1"># Import datasets</span>
+            <span class="n">dataset_map</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_import_datasets</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;datasets&#39;</span><span class="p">],</span> <span class="n">temp_dir</span><span class="p">,</span> <span class="n">dataset_map</span><span class="p">)</span>
+            
+            <span class="c1"># Import annotations</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_import_annotations</span><span class="p">(</span><span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">],</span> <span class="n">dataset_map</span><span class="p">,</span> <span class="n">category_map</span><span class="p">)</span>
+            
+            <span class="c1"># Import models</span>
+            <span class="n">model_map</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_import_models</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;models&#39;</span><span class="p">],</span> <span class="n">temp_dir</span><span class="p">,</span> <span class="n">model_map</span><span class="p">)</span>
+            
+            <span class="c1"># Import predictions</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_import_predictions</span><span class="p">(</span><span class="n">project_data</span><span class="p">[</span><span class="s1">&#39;predictions&#39;</span><span class="p">],</span> <span class="n">dataset_map</span><span class="p">,</span> <span class="n">model_map</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="n">project</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">_import_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">categories_data</span><span class="p">,</span> <span class="n">category_map</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import label categories maintaining hierarchy&quot;&quot;&quot;</span>
+        <span class="c1"># First pass: create all categories without parents</span>
+        <span class="k">for</span> <span class="n">cat_data</span> <span class="ow">in</span> <span class="n">categories_data</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">LabelCategory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">],</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+                <span class="n">order</span><span class="o">=</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">category_map</span><span class="p">[</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">category</span>
+        
+        <span class="c1"># Second pass: set up parent relationships</span>
+        <span class="k">for</span> <span class="n">cat_data</span> <span class="ow">in</span> <span class="n">categories_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;parent_name&#39;</span><span class="p">]:</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="n">category_map</span><span class="p">[</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">category_map</span><span class="p">[</span><span class="n">cat_data</span><span class="p">[</span><span class="s1">&#39;parent_name&#39;</span><span class="p">]]</span>
+                <span class="n">category</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+                <span class="n">category</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_import_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">datasets_data</span><span class="p">,</span> <span class="n">temp_dir</span><span class="p">,</span> <span class="n">dataset_map</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import datasets and their files&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">dataset_data</span> <span class="ow">in</span> <span class="n">datasets_data</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="n">total_records</span><span class="o">=</span><span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;total_records&#39;</span><span class="p">],</span>
+                <span class="n">metadata</span><span class="o">=</span><span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># Copy dataset file if exists</span>
+            <span class="k">if</span> <span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]:</span>
+                <span class="n">source_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s1">&#39;datasets&#39;</span><span class="p">,</span> <span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">source_file</span><span class="p">):</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">dataset</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">],</span> <span class="n">ContentFile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+            
+            <span class="n">dataset_map</span><span class="p">[</span><span class="n">dataset_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataset</span>
+    
+    <span class="k">def</span> <span class="nf">_import_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations_data</span><span class="p">,</span> <span class="n">dataset_map</span><span class="p">,</span> <span class="n">category_map</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import annotations&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">ann_data</span> <span class="ow">in</span> <span class="n">annotations_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">dataset_map</span> <span class="ow">and</span> <span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;category_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">category_map</span><span class="p">:</span>
+                <span class="n">Annotation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset_map</span><span class="p">[</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">]],</span>
+                    <span class="n">category</span><span class="o">=</span><span class="n">category_map</span><span class="p">[</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;category_name&#39;</span><span class="p">]],</span>
+                    <span class="n">start_index</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;start_index&#39;</span><span class="p">],</span>
+                    <span class="n">end_index</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;end_index&#39;</span><span class="p">],</span>
+                    <span class="n">start_time</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">],</span>
+                    <span class="n">end_time</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;end_time&#39;</span><span class="p">],</span>
+                    <span class="n">confidence</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">],</span>
+                    <span class="n">created_by</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;created_by&#39;</span><span class="p">],</span>
+                    <span class="n">notes</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;notes&#39;</span><span class="p">],</span>
+                    <span class="n">tags</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">],</span>
+                    <span class="n">properties</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">],</span>
+                    <span class="n">validated</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;validated&#39;</span><span class="p">],</span>
+                    <span class="n">validated_by</span><span class="o">=</span><span class="n">ann_data</span><span class="p">[</span><span class="s1">&#39;validated_by&#39;</span><span class="p">]</span>
+                <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_import_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">models_data</span><span class="p">,</span> <span class="n">temp_dir</span><span class="p">,</span> <span class="n">model_map</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import user-defined models&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">model_data</span> <span class="ow">in</span> <span class="n">models_data</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">UserDefinedModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span>
+                <span class="n">model_type</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;model_type&#39;</span><span class="p">],</span>
+                <span class="n">version</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">],</span>
+                <span class="n">script_content</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;script_content&#39;</span><span class="p">],</span>
+                <span class="n">hyperparameters</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">],</span>
+                <span class="n">input_shape</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;input_shape&#39;</span><span class="p">],</span>
+                <span class="n">output_shape</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;output_shape&#39;</span><span class="p">],</span>
+                <span class="n">training_config</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;training_config&#39;</span><span class="p">],</span>
+                <span class="n">is_trained</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;is_trained&#39;</span><span class="p">],</span>
+                <span class="n">training_status</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;training_status&#39;</span><span class="p">],</span>
+                <span class="n">metrics</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;metrics&#39;</span><span class="p">],</span>
+                <span class="n">training_history</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;training_history&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+            
+            <span class="c1"># Copy script file if exists</span>
+            <span class="k">if</span> <span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;script_file_name&#39;</span><span class="p">]:</span>
+                <span class="n">source_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">,</span> <span class="s1">&#39;scripts&#39;</span><span class="p">,</span> <span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;script_file_name&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">source_file</span><span class="p">):</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">model</span><span class="o">.</span><span class="n">python_script</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;script_file_name&#39;</span><span class="p">],</span> <span class="n">ContentFile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+            
+            <span class="n">model_map</span><span class="p">[</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">model</span>
+    
+    <span class="k">def</span> <span class="nf">_import_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions_data</span><span class="p">,</span> <span class="n">dataset_map</span><span class="p">,</span> <span class="n">model_map</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import predictions&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">pred_data</span> <span class="ow">in</span> <span class="n">predictions_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">dataset_map</span> <span class="ow">and</span> <span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;model_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">model_map</span><span class="p">:</span>
+                <span class="n">Prediction</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset_map</span><span class="p">[</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">]],</span>
+                    <span class="n">model</span><span class="o">=</span><span class="n">model_map</span><span class="p">[</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;model_name&#39;</span><span class="p">]],</span>
+                    <span class="n">predictions</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;predictions&#39;</span><span class="p">],</span>
+                    <span class="n">confidence_scores</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;confidence_scores&#39;</span><span class="p">],</span>
+                    <span class="n">prediction_metadata</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;prediction_metadata&#39;</span><span class="p">],</span>
+                    <span class="n">status</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">],</span>
+                    <span class="n">reviewed_by</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;reviewed_by&#39;</span><span class="p">],</span>
+                    <span class="n">review_notes</span><span class="o">=</span><span class="n">pred_data</span><span class="p">[</span><span class="s1">&#39;review_notes&#39;</span><span class="p">]</span>
+                <span class="p">)</span>
+    
+<div class="viewcode-block" id="ProjectService.auto_save_project">
+<a class="viewcode-back" href="../../index.html#magtrace_api.project_service.ProjectService.auto_save_project">[docs]</a>
+    <span class="k">def</span> <span class="nf">auto_save_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Auto-save project periodically&quot;&quot;&quot;</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auto_save&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_project</span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+
+
+<span class="n">project_service</span> <span class="o">=</span> <span class="n">ProjectService</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

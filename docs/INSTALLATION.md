@@ -1,4 +1,7 @@
-# Installation Guide
+# MagTrace Pro Installation Guide
+
+**Author: Manas Pandey**  
+*Developed with the assistance of Claude*
 
 ## System Requirements
 

@@ -26,7 +26,9 @@
       "Bash(./venv/bin/python -m pip install sphinx sphinx-rtd-theme)",
       "Bash(git restore:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(. venv/bin/activate)",
+      "Bash(make:*)"
     ],
     "deny": []
   }
