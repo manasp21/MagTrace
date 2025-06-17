@@ -79,6 +79,7 @@ htmlcov/
 
 # Documentation builds
 docs/_build/
+docs/build/
 docs/.doctrees/
 site/
 
