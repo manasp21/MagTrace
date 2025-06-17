@@ -77,9 +77,9 @@ yarn-error.log*
 .coverage
 htmlcov/
 
-# Documentation builds
-docs/_build/
-docs/build/
+# Documentation builds (exclude source builds, but allow docs root for GitHub Pages)
+docs/source/_build/
+docs/source/build/
 docs/.doctrees/
 site/
 
