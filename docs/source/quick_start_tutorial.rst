@@ -1,262 +1,289 @@
 Quick Start Tutorial
 ===================
 
-Complete your first magnetic field analysis in 10 minutes! This tutorial walks you through the entire MagTrace workflow using sample data.
+Complete your first magnetic field analysis in 10 minutes using real magnetometer data.
 
 Prerequisites
 =============
 
 ✅ MagTrace installed and running (see :doc:`installation`)
 ✅ Application accessible at http://localhost:8000/app/
-✅ Sample data available in the ``example/`` directory
+✅ Sample data available: ``example/data_1.csv``
+
+Tutorial Overview
+================
+
+This tutorial uses real magnetic field data from sensor ``S963350075783`` to demonstrate:
+
+1. **Project Creation** - Organize your magnetic field analysis
+2. **Data Upload** - Import CSV magnetometer readings  
+3. **Data Visualization** - Interactive B_x, B_y, B_z charts
+4. **Anomaly Labeling** - Mark regions with brush selection
+5. **Model Training** - Scikit-learn classification on magnetic field features
+6. **Results Review** - Model performance and predictions
+
+**Sample Data Details:**
+- **File:** ``example/data_1.csv`` (included with MagTrace)
+- **Format:** ``timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,sensor_id``
+- **Content:** Real magnetometer readings with GPS coordinates
+- **Size:** 46 data points for quick demonstration
 
 Step 1: Create Your First Project
 =================================
 
-**1.1. Open MagTrace**
+**1.1. Open MagTrace Interface**
 
-Navigate to http://localhost:8000/app/ in your browser. You should see the clean MagTrace interface.
+Navigate to http://localhost:8000/app/ in your browser.
+
+You should see the clean MagTrace interface with:
+- Header with project controls
+- Left sidebar with Data/Labels/Models tabs
+- Main content area for visualization
 
 **1.2. Create New Project**
 
-.. raw:: html
-
-   <div style="padding: 15px; background: #e3f2fd; border-left: 4px solid #2196f3; margin: 15px 0;">
-     <strong>💡 Tip:</strong> Projects help organize your magnetic field analysis work. Each project can contain multiple datasets and trained models.
-   </div>
-
-1. Click the **"New Project"** button in the header
-2. Enter project details:
-   - **Name:** "My First Analysis"
-   - **Description:** "Learning MagTrace with sample data"
+1. Click **"New Project"** button in the header
+2. Fill in project details:
+   - **Name:** "Magnetometer Analysis Demo"  
+   - **Description:** "Learning MagTrace with real magnetic field data"
 3. Click **"Create Project"**
 
-✅ **Success:** You should see "Project created successfully" and your project is now selected in the dropdown.
+✅ **Success Indicator:** "Project created successfully" notification appears and project is selected in dropdown.
 
-Step 2: Upload Magnetic Field Data
-==================================
+Step 2: Upload Real Magnetic Field Data
+=======================================
 
 **2.1. Navigate to Data Tab**
 
 1. In the left sidebar, click the **"Data"** tab
-2. You should see the data upload section
+2. You'll see the data upload section
 
-**2.2. Upload Sample Data**
+**2.2. Upload Sample Magnetometer Data**
 
-.. code-block:: bash
-
-   # Sample data location (included with MagTrace)
-   example/data_1.csv
-
-1. Click **"Upload CSV File"**
+1. Click **"Upload CSV File"** button
 2. Select ``example/data_1.csv`` from your MagTrace directory
-3. Wait for upload to complete
+3. Wait for upload processing
 
-✅ **Success:** You should see "Dataset uploaded successfully" and the dataset appears in your data list.
+✅ **Success Indicator:** "Dataset uploaded successfully" and dataset appears in your data list.
 
-**2.3. Load the Dataset**
+**2.3. Load Dataset for Analysis**
 
 1. Click the **"Load"** button next to your uploaded dataset
-2. Watch as the interactive magnetic field visualization appears
+2. Watch the interactive magnetic field visualization appear
 
 **What You're Seeing:**
+- **X-axis:** Time sequence of magnetometer measurements
+- **Y-axis:** Magnetic field magnitude (calculated from B_x, B_y, B_z components)
+- **Interactive Chart:** D3.js powered visualization with zoom and pan capabilities
 
-- **X-axis:** Time sequence of measurements
-- **Y-axis:** Magnetic field magnitude (combined B_x, B_y, B_z)
-- **Interactive Chart:** Zoom and pan to explore the data
+**Real Data Values:**
+The chart displays actual magnetic field strength values from sensor S963350075783, showing natural variations in the Earth's magnetic field.
 
-Step 3: Label Regions of Interest
-=================================
-
-Now we'll identify and label different types of magnetic field patterns.
+Step 3: Label Magnetic Field Anomalies
+======================================
 
 **3.1. Enable Selection Mode**
 
 1. Click **"Select Mode"** button above the chart
-2. Notice the cursor changes to crosshair
-3. The quick labeling toolbar appears below the chart
+2. Notice cursor changes to crosshair
+3. Quick labeling toolbar appears below chart
 
 **3.2. Select Your First Region**
 
-1. **Drag to select** a region on the chart that looks anomalous (different from the baseline)
-2. You should see a blue selection box
-3. The selection info shows the number of points selected
+1. **Drag to select** a region on the magnetic field chart that shows variation from baseline
+2. You see a blue selection rectangle 
+3. Selection info shows: "Selected: X points (start-end indices)"
 
-.. raw:: html
+**3.3. Label the Magnetic Field Pattern**
 
-   <div style="padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; margin: 15px 0;">
-     <strong>⚡ Pro Tip:</strong> Look for sudden spikes, drops, or unusual patterns in the magnetic field data. These often indicate interesting phenomena!
-   </div>
+Choose an appropriate label for the selected magnetic field pattern:
 
-**3.3. Label the Selection**
+- **Normal (3)** - Baseline magnetic field readings
+- **Anomaly (4)** - Unusual magnetic field variations  
+- **Fan Noise (1)** - Electromagnetic interference patterns
+- **Motor (2)** - Motor-related magnetic signatures
+- **Electrical (5)** - Electrical interference
 
-1. Choose a label type by clicking one of the quick label buttons:
-   - **Fan Noise (1)** - For electromagnetic interference
-   - **Motor (2)** - For motor-related magnetic signatures  
-   - **Normal (3)** - For baseline/background readings
-   - **Anomaly (4)** - For unusual or interesting patterns
-   - **Electrical (5)** - For electrical interference
+**Quick Labeling:** Press keyboard keys 1-5 to instantly label selected regions.
 
-2. **Or use keyboard shortcuts:** Press keys 1-5 to quickly label selected regions
+✅ **Success Indicator:** "Annotation created successfully" and colored overlay appears on selection.
 
-✅ **Success:** You should see "Annotation created successfully" and a colored overlay appears on your selection.
+**3.4. Label Multiple Magnetic Field Regions**
 
-**3.4. Label Multiple Regions**
+Create 3-4 annotations with different characteristics:
 
-Repeat the selection and labeling process for 3-4 different regions:
+1. Select **baseline region** → Label as "Normal (3)"
+2. Select **highest peaks** → Label as "Anomaly (4)"  
+3. Select **different pattern** → Label appropriately
 
-- Select a **normal baseline** region → Label as "Normal (3)"
-- Select an **obvious spike** → Label as "Anomaly (4)"  
-- Select a **different pattern** → Label as appropriate category
+**Best Practice:** Label regions with clearly different magnetic field characteristics for effective model training.
 
-.. raw:: html
-
-   <div style="padding: 15px; background: #e8f5e8; border-left: 4px solid #4caf50; margin: 15px 0;">
-     <strong>✅ Best Practice:</strong> Label at least 3-5 regions with different characteristics for effective model training.
-   </div>
-
-Step 4: Create and Configure Model
-==================================
+Step 4: Configure ML Model for Magnetic Data
+============================================
 
 **4.1. Switch to Models Tab**
 
-1. Click **"Models"** tab in the left sidebar
+1. Click **"Models"** tab in left sidebar
 2. Click **"Create New Model"**
 
-**4.2. Configure Your Model**
+**4.2. Configure Magnetic Field Classifier**
 
-The Model Config panel opens. Fill in:
+The Model Config panel opens. Configure for magnetic field analysis:
 
-- **Model Name:** "Anomaly Detector v1"  
-- **Description:** "My first magnetic field anomaly detection model"
-- **Model Type:** "Classification" (default)
-- **Epochs:** 5 (for quick training)
+- **Model Name:** "Magnetic Anomaly Detector"
+- **Description:** "Classifies magnetic field patterns using B_x, B_y, B_z features"  
+- **Model Type:** "Classification" (for anomaly detection)
+- **Epochs:** 5 (quick training for demo)
 - **Learning Rate:** 0.001 (default)
 
 **4.3. Save Model Configuration**
 
 1. Click **"Save Configuration"**
-2. ✅ You should see "Model configuration saved"
+2. ✅ "Model configuration saved" confirmation
 
-Step 5: Train Your Model
-========================
+Step 5: Train on Magnetic Field Features
+========================================
 
-**5.1. Start Training**
+**5.1. Start ML Training**
 
-1. Click the **"Training"** tab in the main content area
+1. Click **"Training"** tab in main content area
 2. Click **"Start Training"**
 
 **5.2. Monitor Training Progress**
 
-You'll see real-time training progress:
+Real-time training progress for magnetic field classification:
 
-- **Status:** Changes from "pending" → "running" → "completed"
-- **Progress Bar:** Shows training completion percentage  
-- **Epoch Counter:** Current epoch out of total epochs
-- **Live Updates:** Progress updates every 2 seconds
+- **Status:** "pending" → "running" → "completed"
+- **Progress Bar:** Shows completion percentage
+- **Epoch Counter:** Current training epoch
+- **Live Updates:** Every 2 seconds
 
-.. raw:: html
+**What's Happening:**
+MagTrace extracts statistical features from magnetic field data (B_x, B_y, B_z):
+- Mean, standard deviation, min, max of each component
+- Segment length and magnetic field magnitude
+- Trains Random Forest classifier on these features
 
-   <div style="padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; margin: 15px 0;">
-     <strong>⏱️ Training Time:</strong> With sample data and 5 epochs, training typically completes in 30-60 seconds.
-   </div>
+**Training Time:** Typically completes in 30-60 seconds for sample data.
 
-✅ **Success:** Training completes with "Training completed successfully" message.
+✅ **Success Indicator:** "Training completed successfully" with accuracy metrics.
 
-Step 6: Review Results
-=====================
+Step 6: Review Magnetic Field Analysis Results
+==============================================
 
-**6.1. Check Training Metrics**
+**6.1. Check Model Performance**
 
-After training completes, you should see:
+After training completion:
 
-- **Accuracy:** Model performance percentage
-- **Training Samples:** Number of labeled regions used
+- **Accuracy:** Model performance on magnetic field classification
+- **Training Samples:** Number of labeled magnetic field regions used
 - **Model Status:** "Completed" with timestamp
 
-**6.2. View Your Annotations**
+**6.2. View Your Magnetic Field Annotations**
 
-1. Switch to **"Labels"** tab in the sidebar
-2. See all your created annotations with:
-   - Category names and colors
-   - Time ranges (start-end indices)
+1. Switch to **"Labels"** tab in sidebar
+2. See all created annotations:
+   - Category names with colors
+   - Magnetic field data ranges (indices)
    - Confidence scores
 
-**6.3. Verify Data Visualization**
+**6.3. Verify Visualization**
 
-1. Go back to **"Visualization"** panel  
-2. Your labeled regions should be visible as colored overlays
-3. Different label types have different colors
+1. Return to **"Visualization"** panel
+2. Labeled regions visible as colored overlays on magnetic field chart
+3. Different magnetic field patterns have different colors
 
 Congratulations! 🎉
 ==================
 
-You've successfully completed your first magnetic field analysis workflow:
+You've successfully completed magnetic field analysis workflow:
 
-✅ **Created** a project for organizing your work
-✅ **Uploaded** and visualized magnetic field data  
-✅ **Labeled** regions of interest using interactive selection
-✅ **Trained** a machine learning model on your annotations
+✅ **Created** a project for magnetometer data organization
+✅ **Uploaded** real magnetic field measurements (B_x, B_y, B_z)
+✅ **Visualized** magnetometer data with interactive charts
+✅ **Labeled** magnetic field patterns and anomalies  
+✅ **Trained** ML model on magnetic field features
 ✅ **Monitored** real-time training progress
-✅ **Reviewed** results and model performance
+✅ **Reviewed** classification results and performance
 
-Next Steps
-==========
+Real-World Applications
+======================
 
-**Explore More Features:**
+This workflow applies to various magnetic field analysis scenarios:
 
-1. **Upload Your Own Data** - Try with your own CSV magnetic field measurements
-2. **Advanced Labeling** - Use custom categories and confidence scores
-3. **Model Comparison** - Train multiple models with different configurations
-4. **Large Datasets** - Test with larger files to see automatic optimization
+**🚁 Drone Magnetometer Surveys**
+   Analyze magnetic field data from UAV surveys to detect buried objects or geological features
 
-**Learn Advanced Workflows:**
+**🏭 Industrial Equipment Monitoring**
+   Monitor magnetic signatures of machinery for predictive maintenance
 
-- :doc:`user_guide` - Comprehensive feature documentation
-- :doc:`examples/drone_survey` - Drone magnetic survey analysis
-- :doc:`examples/industrial_monitoring` - Equipment monitoring use case
-- :doc:`api_reference` - Developer integration guide
+**🔬 Geological Field Surveys**  
+   Process magnetometer data to identify mineral deposits or archaeological sites
 
-**Troubleshooting:**
+**⚡ Infrastructure Inspection**
+   Detect anomalies in electrical systems through magnetic field analysis
 
-If something didn't work as expected:
+Next Steps with Your Own Data
+=============================
 
-1. **Check Browser Console** - Look for JavaScript errors
-2. **Verify File Format** - Ensure CSV has required columns (timestamp_pc, b_x, b_y, b_z)
-3. **Review Server Logs** - Check terminal output for Django errors
-4. **Test Connectivity** - Verify http://localhost:8000/health/ responds
+**Upload Your Magnetometer Data:**
 
-Common Issues & Solutions
-========================
+1. **Prepare CSV file** with required columns:
+   ``timestamp_pc,b_x,b_y,b_z`` (minimum)
+   Plus optional: ``lat,lon,altitude,sensor_id``
 
-**"No data points" Error:**
-   Verify your CSV file has the required column format
+2. **Follow same workflow:**
+   - Create project → Upload data → Visualize → Label → Train
 
-**Training Doesn't Start:**
-   Ensure you have at least 2-3 labeled annotations
+3. **Optimize for your data:**
+   - Label patterns specific to your application
+   - Adjust model parameters for your magnetic field ranges
+   - Use more training epochs for complex patterns
+
+**Advanced Features:**
+
+- **Multiple datasets** in one project
+- **Different model types** for various analyses  
+- **API integration** for automated processing
+- **Batch processing** for large magnetometer surveys
+
+Troubleshooting
+===============
 
 **Chart Not Loading:**
-   Check browser compatibility (use Chrome/Firefox) and JavaScript enabled
+   - Verify CSV has ``timestamp_pc,b_x,b_y,b_z`` columns
+   - Check browser console for JavaScript errors
+   - Ensure numeric values for magnetic field components
 
 **Upload Fails:**
-   Verify file size (<100MB) and CSV format
+   - Check file size (<100MB)
+   - Verify CSV format matches sample data
+   - Ensure file contains valid magnetometer readings
 
-**Model Training Timeout:**
-   Normal for large datasets; wait longer or reduce data size
+**Training Doesn't Start:**
+   - Create at least 2-3 labeled annotations first
+   - Check that annotations have different categories
+   - Verify model configuration is saved
 
-Need Help?
+**"No Data Points" Error:**
+   - Confirm CSV file format matches requirements
+   - Check for missing or invalid B_x, B_y, B_z values
+
+Learn More
 ==========
 
-- 📖 **Full Documentation:** https://manasp21.github.io/MagTrace/docs/
-- 🐛 **Report Issues:** https://github.com/manasp21/MagTrace/issues  
-- 💬 **Ask Questions:** https://github.com/manasp21/MagTrace/discussions
-- 📧 **Support:** Create a GitHub issue with your question
+**Technical Details:** :doc:`api_reference` - Complete API documentation
+**Testing Results:** :doc:`testing_results` - System validation and performance
+**Installation Help:** :doc:`installation` - Setup and troubleshooting
+
+**Automated Testing:**
+Run ``python3 test_workflow.py`` to verify your installation follows this exact workflow programmatically.
 
 .. raw:: html
 
    <div style="text-align: center; margin: 40px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
-     <h3>Ready for Advanced Features?</h3>
+     <h3>Ready for advanced magnetic field analysis?</h3>
      <p style="margin: 15px 0;">
-       <a href="user_guide.html" style="background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Continue to User Guide →</a>
+       <a href="api_reference.html" style="background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Explore API Reference →</a>
      </p>
    </div>

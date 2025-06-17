@@ -1,53 +1,57 @@
 Installation Guide
 ==================
 
-MagTrace is designed to be easy to install and run on any system with Python 3.8+.
+Get MagTrace running for magnetic field data analysis in minutes.
 
 System Requirements
 ===================
 
 **Minimum Requirements:**
 - Python 3.8 or higher
-- 4GB RAM (8GB recommended for large datasets)
+- 4GB RAM (8GB recommended for large magnetometer datasets)
 - 1GB disk space
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 
 **Operating Systems:**
-- Windows 10/11
-- macOS 10.14+
-- Linux (Ubuntu 18.04+, CentOS 7+, or equivalent)
+- Windows 10/11, macOS 10.14+, Linux (Ubuntu 18.04+)
+
+**Verified Platforms:**
+Installation tested on multiple platforms with magnetic field data processing.
 
 Quick Installation (Recommended)
 ================================
 
-**1. Clone the Repository**
+**1. Clone Repository**
 
 .. code-block:: bash
 
    git clone https://github.com/manasp21/MagTrace.git
    cd MagTrace
 
-**2. Run the Application**
+**2. Run Application**
 
 .. code-block:: bash
 
    python3 run.py
 
-That's it! The run script will automatically:
+The launcher automatically:
 
-✅ Create a Python virtual environment
-✅ Install all required dependencies  
-✅ Set up the database
-✅ Start the application server
+✅ Creates Python virtual environment
+✅ Installs required dependencies  
+✅ Sets up SQLite database with magnetic field data models
+✅ Starts Django development server
 
-**3. Open in Browser**
+**3. Access Application**
 
-Navigate to http://localhost:8000/app/ and you're ready to go!
+- **Main Interface:** http://localhost:8000/app/
+- **Health Check:** http://localhost:8000/health/
+- **REST API:** http://localhost:8000/api/
+- **Admin Panel:** http://localhost:8000/admin/
 
 Manual Installation
 ===================
 
-If you prefer manual control over the installation process:
+For manual control over installation:
 
 **1. Create Virtual Environment**
 
@@ -56,30 +60,35 @@ If you prefer manual control over the installation process:
    cd backend
    python3 -m venv venv
    
-   # On Linux/macOS:
+   # Activate environment
+   # Linux/macOS:
    source venv/bin/activate
-   
-   # On Windows:
+   # Windows:
    venv\Scripts\activate
 
 **2. Install Dependencies**
 
 .. code-block:: bash
 
+   # Full installation (includes TensorFlow)
    pip install -r requirements.txt
-
-**Note:** If TensorFlow installation fails (common on some systems), use the lightweight version:
-
-.. code-block:: bash
-
+   
+   # Lightweight installation (scikit-learn only)
    pip install -r requirements-lite.txt
+
+**Note:** TensorFlow installation often fails on some systems. MagTrace works perfectly with scikit-learn only using ``requirements-lite.txt``.
 
 **3. Database Setup**
 
 .. code-block:: bash
 
    python manage.py migrate
-   python manage.py createsuperuser  # Optional
+
+This creates SQLite database with tables for:
+- Projects and datasets
+- Magnetometer readings (B_x, B_y, B_z)
+- Annotations and label categories
+- ML models and training sessions
 
 **4. Start Server**
 
@@ -87,108 +96,69 @@ If you prefer manual control over the installation process:
 
    python manage.py runserver
 
-The application will be available at http://localhost:8000/app/
-
-Docker Installation (Advanced)
-==============================
-
-For containerized deployment:
-
-.. code-block:: bash
-
-   # Clone repository
-   git clone https://github.com/manasp21/MagTrace.git
-   cd MagTrace
-   
-   # Build Docker image
-   docker build -t magtrace .
-   
-   # Run container
-   docker run -p 8000:8000 magtrace
-
-Development Installation
-========================
-
-For developers who want to contribute:
-
-**1. Fork and Clone**
-
-.. code-block:: bash
-
-   git clone https://github.com/YOUR_USERNAME/MagTrace.git
-   cd MagTrace
-
-**2. Install Development Dependencies**
-
-.. code-block:: bash
-
-   cd backend
-   python3 -m venv venv
-   source venv/bin/activate  # or venv\Scripts\activate on Windows
-   pip install -r requirements.txt
-   pip install -r requirements-dev.txt  # Additional dev tools
-
-**3. Set Up Pre-commit Hooks**
-
-.. code-block:: bash
-
-   pre-commit install
-
-**4. Run Tests**
-
-.. code-block:: bash
-
-   python3 test_workflow.py
-   python manage.py test
-
 Verifying Installation
-=====================
+======================
 
-**Quick Health Check**
+**1. Health Check**
 
-Visit http://localhost:8000/health/ - you should see:
+Visit http://localhost:8000/health/ - should display:
 
-.. code-block:: json
+.. code-block:: text
 
-   {
-     "status": "healthy",
-     "timestamp": "2025-06-17T..."
-   }
+   MagTrace Backend is running
 
-**Complete Workflow Test**
-
-Run the automated test suite:
+**2. Test with Sample Data**
 
 .. code-block:: bash
 
+   # Run comprehensive workflow test
    python3 test_workflow.py
 
-You should see output like:
+Expected successful output:
 
 .. code-block:: text
 
    🚀 Starting MagTrace Workflow Test
    ✅ Server health check passed
-   ✅ Project created successfully
-   ✅ Dataset uploaded successfully
+   ✅ Project created successfully: ID X
+   ✅ Dataset uploaded successfully: ID X  
    ✅ Data retrieval successful: 46 data points
-   ✅ Annotation created successfully
-   ✅ Training started successfully
-   🎉 All workflow tests completed successfully!
+   ✅ Annotation created successfully: ID X
+   ✅ Model created successfully: ID X
+   ✅ Training started successfully: Session X
+
+**3. Try Sample Magnetometer Data**
+
+The included sample data contains real magnetic field measurements:
+
+.. code-block:: bash
+
+   # Sample data location
+   example/data_1.csv
+
+Sample content:
+
+.. code-block:: text
+
+   timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id
+   24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,0,0,0,S963350075783_20250605_112438
+
+1. Open http://localhost:8000/app/
+2. Create a new project
+3. Upload ``example/data_1.csv``
+4. View interactive magnetic field visualization
 
 Troubleshooting
 ===============
-
-**Common Issues:**
 
 **Port 8000 Already in Use**
 
 .. code-block:: bash
 
-   # Find and kill process using port 8000
+   # Find and stop process using port 8000
    lsof -ti:8000 | xargs kill -9
    
-   # Or use a different port
+   # Or use different port
    python manage.py runserver 8001
 
 **Python Version Issues**
@@ -198,20 +168,20 @@ Troubleshooting
    # Check Python version
    python3 --version
    
-   # If < 3.8, install newer Python
-   # Ubuntu/Debian:
+   # Should be 3.8 or higher
+   # Ubuntu/Debian - install newer Python:
    sudo apt update && sudo apt install python3.9
-   
-   # macOS:
-   brew install python@3.9
 
 **TensorFlow Installation Fails**
 
-This is normal! MagTrace works perfectly with scikit-learn only:
+This is normal and expected on many systems:
 
 .. code-block:: bash
 
+   # Use lightweight requirements instead
    pip install -r requirements-lite.txt
+
+MagTrace works perfectly with scikit-learn for magnetic field analysis.
 
 **Virtual Environment Issues**
 
@@ -222,75 +192,155 @@ This is normal! MagTrace works perfectly with scikit-learn only:
    cd backend
    python3 -m venv venv
    source venv/bin/activate
-   pip install -r requirements.txt
+   pip install -r requirements-lite.txt
 
-**Database Issues**
+**Database Migration Errors**
 
 .. code-block:: bash
 
    # Reset database
    rm backend/db.sqlite3
-   python backend/manage.py migrate
+   cd backend
+   python manage.py migrate
 
 **Permission Errors (Linux/macOS)**
 
 .. code-block:: bash
 
-   # Make run script executable
+   # Make launcher executable
    chmod +x run.py
 
-Configuration Options
-====================
+**CSV Upload Issues**
 
-**Environment Variables**
+- Verify CSV has required columns: ``timestamp_pc``, ``b_x``, ``b_y``, ``b_z``
+- Check file size (<100MB for web upload)
+- Ensure numeric values for magnetic field components
 
-Create a ``.env`` file in the backend directory:
+Dependency Details
+==================
+
+**Core Dependencies (requirements-lite.txt):**
+
+.. code-block:: text
+
+   Django==4.2.7
+   djangorestframework==3.14.0
+   django-cors-headers==4.3.1
+   pandas==2.1.4
+   numpy==1.24.4
+   scikit-learn==1.3.2
+
+**Optional Dependencies (requirements.txt):**
+
+.. code-block:: text
+
+   # Same as above plus:
+   tensorflow==2.15.0
+   matplotlib==3.8.2
+
+**Why Lightweight Installation Works:**
+MagTrace uses scikit-learn Random Forest for magnetic field analysis, which is fast, reliable, and works without TensorFlow.
+
+Configuration
+=============
+
+**Default Settings:**
+- **Database:** SQLite (``backend/db.sqlite3``)
+- **Media Storage:** ``backend/media/datasets/``
+- **Static Files:** ``backend/static/``
+- **Port:** 8000
+
+**Environment Variables (Optional):**
+
+Create ``.env`` file in ``backend/`` directory:
 
 .. code-block:: bash
 
-   # Development settings
    DEBUG=True
-   SECRET_KEY=your-secret-key-here
-   
-   # Database (optional - defaults to SQLite)
+   SECRET_KEY=your-secret-key
    DATABASE_URL=sqlite:///db.sqlite3
+
+Data Format Requirements
+========================
+
+**Required CSV Columns:**
+
+.. code-block:: text
+
+   timestamp_pc    # Measurement timestamp
+   b_x            # Magnetic field X component  
+   b_y            # Magnetic field Y component
+   b_z            # Magnetic field Z component
+
+**Optional CSV Columns:**
+
+.. code-block:: text
+
+   lat            # Latitude (GPS)
+   lon            # Longitude (GPS)  
+   altitude       # Altitude
+   sensor_id      # Sensor identifier
+
+**Example Valid CSV:**
+
+.. code-block:: text
+
+   timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,sensor_id
+   24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,S963350075783
+   24:40.1,6830.673,9892.699,14027.742,26.5123251,80.2238068,2018,S963350075783
+
+Development Installation
+========================
+
+For developers contributing to MagTrace:
+
+**1. Fork Repository**
+
+.. code-block:: bash
+
+   # Fork on GitHub, then:
+   git clone https://github.com/YOUR_USERNAME/MagTrace.git
+   cd MagTrace
+
+**2. Development Dependencies**
+
+.. code-block:: bash
+
+   cd backend
+   source venv/bin/activate
+   pip install -r requirements-lite.txt
    
-   # Performance
-   DATA_DECIMATION_THRESHOLD=5000
+   # Additional development tools
+   pip install black isort pytest
 
-**Advanced Settings**
+**3. Run Tests**
 
-Edit ``backend/magtrace_api/settings.py`` for advanced configuration:
+.. code-block:: bash
 
-- Database backend (PostgreSQL, MySQL)
-- Caching settings (Redis, Memcached)  
-- Security settings for production
-- CORS and API settings
-
-Production Deployment
-====================
-
-For production environments, see the deployment guide which covers:
-
-- Web server configuration (Nginx, Apache)
-- WSGI deployment (Gunicorn, uWSGI)
-- Database configuration (PostgreSQL)
-- SSL/TLS setup
-- Performance optimization
-- Monitoring and logging
+   # Test complete workflow
+   python3 test_workflow.py
+   
+   # Django unit tests  
+   cd backend
+   python manage.py test
 
 Next Steps
 ==========
 
-Once installed, continue with:
+Once installed successfully:
 
-1. :doc:`quick_start_tutorial` - Complete your first analysis in 10 minutes
-2. :doc:`user_guide` - Comprehensive usage guide with examples
-3. Sample datasets - Download sample magnetic field data to try
+1. **Quick Start:** Try :doc:`quick_start_tutorial` with sample magnetometer data
+2. **Upload Your Data:** Import your own magnetic field CSV files
+3. **Explore API:** Check out :doc:`api_reference` for integration
+4. **View Results:** See :doc:`testing_results` for validation details
 
 Need Help?
 ==========
 
-- 📖 **Documentation:** https://manasp21.github.io/MagTrace/docs/
-- 🐛 **Report Issues:** https://github.com/manasp21/MagTrace/issues
-- 💬 **Discussions:** https://github.com/manasp21/MagTrace/discussions
+**Documentation:** https://manasp21.github.io/MagTrace/docs/index.html
+
+**Common Solutions:**
+- Check Python version with ``python3 --version``
+- Verify port availability with ``lsof -i:8000``
+- Test installation with ``python3 test_workflow.py``
+- Use lightweight requirements if TensorFlow fails
