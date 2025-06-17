@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>] &mdash; MagTrace 1.0 documentation</title>
+  <title>MagTrace API Reference &mdash; MagTrace 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="}" href="testing_results.html" />
-    <link rel="prev" title="Quick Start Tutorial" href="quick_start_tutorial.html" /> 
+    <link rel="next" title="MagTrace Testing Results" href="testing_results.html" />
+    <link rel="prev" title="API Endpoints Reference" href="api_endpoints.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -73,18 +73,100 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id10">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id23">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id28">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id33">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id38">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id43">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id48">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id53">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id90">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id95">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html">API Endpoints Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#base-configuration">Base Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#actual-api-endpoints">Actual API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#request-response-examples">Request/Response Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#critical-implementation-gaps">Critical Implementation Gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#production-deployment-considerations">Production Deployment Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#testing-and-validation">Testing and Validation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MagTrace API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#base-url">Base URL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#core-api-endpoints">Core API Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#projects-management">Projects Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-projects">List Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-project">Create Project</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset-management">Dataset Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#upload-dataset">Upload Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-dataset-data">Get Dataset Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-system">Annotation System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-annotation">Create Annotation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#training-system">Training System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-training">Start Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-training-status">Get Training Status</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#data-models">Data Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#project-model">Project Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset-model">Dataset Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-model">Annotation Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#error-handling">Error Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-response-format">Error Response Format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#performance-considerations">Performance Considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-decimation">Data Decimation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#security-notes">Security Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#integration-examples">Integration Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#javascript-frontend-integration">JavaScript Frontend Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-client-integration">Python Client Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">MagTrace Testing Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#test-summary">Test Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#detailed-test-results">Detailed Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#performance-metrics">Performance Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#api-endpoint-validation">API Endpoint Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#known-working-features">Known Working Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#recommendations-for-production">Recommendations for Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#conclusion">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#installation-issues">Installation Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#data-upload-issues">Data Upload Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#visualization-issues">Visualization Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#training-issues">Training Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#database-issues">Database Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#network-and-api-issues">Network and API Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#browser-and-frontend-issues">Browser and Frontend Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#performance-issues">Performance Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#development-issues">Development Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#production-deployment-issues">Production Deployment Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#system-resource-issues">System Resource Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#getting-help">Getting Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html">Production Deployment Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#current-development-status">Current Development Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#critical-security-vulnerabilities">Critical Security Vulnerabilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#infrastructure-requirements">Infrastructure Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#required-production-components">Required Production Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#security-hardening-checklist">Security Hardening Checklist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#production-configuration">Production Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#performance-optimization">Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#monitoring-and-logging">Monitoring and Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#backup-and-disaster-recovery">Backup and Disaster Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#testing-strategy">Testing Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#cost-estimation">Cost Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#development-timeline">Development Timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#risk-assessment-summary">Risk Assessment Summary</a></li>
 </ul>
 
         </div>
@@ -101,7 +183,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">]</li>
+      <li class="breadcrumb-item active">MagTrace API Reference</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/api_reference.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,368 +193,293 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p># MagTrace API Reference</p>
-<p>## Overview
-Complete API documentation for MagTrace magnetic field data analysis platform.</p>
-<p>## Base URL
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">http://localhost:8000/api/</span>
-<span class="pre">`</span></code></p>
-<p>## Authentication
-Currently using Django session authentication. CSRF tokens required for POST requests.</p>
-<p>## Core API Endpoints</p>
-<p>### Projects Management</p>
-<p>#### List Projects
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/projects/</span>
-<span class="pre">`</span></code>
-<strong>Response:</strong>
-<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>json
-[</p>
-<blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>“id”: 1,
-“name”: “Magnetic Survey 2024”,
-“description”: “Field survey data analysis”,
-“created_at”: “2024-06-17T10:00:00Z”</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<section id="id5">
-<h1>]<a class="headerlink" href="#id5" title="Link to this heading"></a></h1>
-<p>#### Create Project
-<a href="#id6"><span class="problematic" id="id7">``</span></a><a href="#id8"><span class="problematic" id="id9">`</span></a>http
-POST /api/projects/
-Content-Type: application/json</p>
-<dl class="simple">
-<dt>{</dt><dd><p>“name”: “New Project”,
-“description”: “Project description”</p>
-</dd>
-</dl>
+  <section id="magtrace-api-reference">
+<h1>MagTrace API Reference<a class="headerlink" href="#magtrace-api-reference" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Complete API documentation for MagTrace magnetic field data analysis platform.</p>
 </section>
-<section id="id10">
-<h1>}<a class="headerlink" href="#id10" title="Link to this heading"></a></h1>
-<p>### Dataset Management</p>
-<p>#### Upload Dataset
-<a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a>http
-POST /api/datasets/upload/
-Content-Type: multipart/form-data</p>
-<p>file: [CSV file]
-project_id: 1
-<a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
-<p><strong>CSV Format Required:</strong>
-<code class="docutils literal notranslate"><span class="pre">`csv</span>
-<span class="pre">timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id</span>
-<span class="pre">1623456789,0.25,-0.15,0.30,40.7128,-74.0060,100,0.1,0.2,0.3,sensor_01</span>
-<span class="pre">`</span></code></p>
-<p>#### Get Dataset Data
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/datasets/{id}/data/</span>
-<span class="pre">`</span></code></p>
-<p><strong>Query Parameters:</strong>
-- <cite>decimation_factor</cite> (optional): Data reduction factor for large datasets
-- <cite>start_time</cite> (optional): Filter start time
-- <cite>end_time</cite> (optional): Filter end time</p>
-<p><strong>Response:</strong>
-<a href="#id19"><span class="problematic" id="id20">``</span></a><a href="#id21"><span class="problematic" id="id22">`</span></a>json
-{</p>
-<blockquote>
-<div><dl>
-<dt>“data”: [</dt><dd><dl class="simple">
-<dt>{</dt><dd><p>“timestamp_pc”: 1623456789,
-“b_x”: 0.25,
-“b_y”: -0.15,
-“b_z”: 0.30,
-“lat”: 40.7128,
-“lon”: -74.0060,
-“altitude”: 100</p>
-</dd>
-</dl>
-<p>}</p>
-</dd>
-</dl>
-<p>],
-“decimated”: false,
-“original_count”: 5000,
-“returned_count”: 5000</p>
-</div></blockquote>
+<section id="base-url">
+<h2>Base URL<a class="headerlink" href="#base-url" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8000</span><span class="o">/</span><span class="n">api</span><span class="o">/</span>
+</pre></div>
+</div>
 </section>
-<section id="id23">
-<h1>}<a class="headerlink" href="#id23" title="Link to this heading"></a></h1>
-<p>### Annotation System</p>
-<p>#### Create Annotation
-<a href="#id24"><span class="problematic" id="id25">``</span></a><a href="#id26"><span class="problematic" id="id27">`</span></a>http
-POST /api/annotations/
-Content-Type: application/json</p>
-<dl class="simple">
-<dt>{</dt><dd><p>“dataset”: 1,
-“start_time”: 1623456789,
-“end_time”: 1623456899,
-“label”: “anomaly”,
-“confidence”: 0.95,
-“notes”: “Magnetic disturbance detected”</p>
-</dd>
-</dl>
+<section id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h2>
+<p>Currently using Django session authentication. CSRF tokens required for POST requests.</p>
 </section>
-<section id="id28">
-<h1>}<a class="headerlink" href="#id28" title="Link to this heading"></a></h1>
-<p>#### List Annotations
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/annotations/?dataset={dataset_id}</span>
-<span class="pre">`</span></code></p>
-<p>#### Update Annotation
-<a href="#id29"><span class="problematic" id="id30">``</span></a><a href="#id31"><span class="problematic" id="id32">`</span></a>http
-PUT /api/annotations/{id}/
-Content-Type: application/json</p>
-<dl class="simple">
-<dt>{</dt><dd><p>“label”: “normal”,
-“confidence”: 0.8,
-“notes”: “Reviewed - false positive”</p>
-</dd>
-</dl>
 </section>
-<section id="id33">
-<h1>}<a class="headerlink" href="#id33" title="Link to this heading"></a></h1>
-<p>#### Delete Annotation
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">DELETE</span> <span class="pre">/api/annotations/{id}/</span>
-<span class="pre">`</span></code></p>
-<p>### Machine Learning Training</p>
-<p>#### Start Training Session
-<a href="#id34"><span class="problematic" id="id35">``</span></a><a href="#id36"><span class="problematic" id="id37">`</span></a>http
-POST /api/training/start/
-Content-Type: application/json</p>
-<dl>
-<dt>{</dt><dd><p>“dataset_id”: 1,
-“model_name”: “Anomaly Detection Model”,
-“algorithm”: “random_forest”,
-“parameters”: {</p>
-<blockquote>
-<div><p>“n_estimators”: 100,
-“max_depth”: 10</p>
-</div></blockquote>
-<p>}</p>
-</dd>
-</dl>
+<section id="core-api-endpoints">
+<h1>Core API Endpoints<a class="headerlink" href="#core-api-endpoints" title="Link to this heading"></a></h1>
+<section id="projects-management">
+<h2>Projects Management<a class="headerlink" href="#projects-management" title="Link to this heading"></a></h2>
+<section id="list-projects">
+<h3>List Projects<a class="headerlink" href="#list-projects" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">GET /api/projects/</span>
+</pre></div>
+</div>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Magnetic Survey 2024&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field survey data analysis&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-06-17T10:00:00Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
 </section>
-<section id="id38">
-<h1>}<a class="headerlink" href="#id38" title="Link to this heading"></a></h1>
-<p><strong>Response:</strong>
-<a href="#id39"><span class="problematic" id="id40">``</span></a><a href="#id41"><span class="problematic" id="id42">`</span></a>json
-{</p>
-<blockquote>
-<div><p>“session_id”: “train_123456789”,
-“status”: “started”,
-“message”: “Training initiated”</p>
-</div></blockquote>
+<section id="create-project">
+<h3>Create Project<a class="headerlink" href="#create-project" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/projects/</span>
+<span class="err">Content-Type: application/json</span>
+
+<span class="err">{</span>
+<span class="err">  &quot;name&quot;: &quot;New Project&quot;,</span>
+<span class="err">  &quot;description&quot;: &quot;Project description&quot;</span>
+<span class="err">}</span>
+</pre></div>
+</div>
 </section>
-<section id="id43">
-<h1>}<a class="headerlink" href="#id43" title="Link to this heading"></a></h1>
-<p>#### Get Training Status
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/training/status/{session_id}/</span>
-<span class="pre">`</span></code></p>
-<p><strong>Response:</strong>
-<a href="#id44"><span class="problematic" id="id45">``</span></a><a href="#id46"><span class="problematic" id="id47">`</span></a>json
-{</p>
-<blockquote>
-<div><p>“session_id”: “train_123456789”,
-“status”: “training”,
-“progress”: 0.65,
-“current_step”: “Feature extraction”,
-“steps_completed”: 3,
-“total_steps”: 5,
-“start_time”: “2024-06-17T10:00:00Z”,
-“metrics”: {</p>
-<blockquote>
-<div><p>“accuracy”: 0.92,
-“precision”: 0.89,
-“recall”: 0.94</p>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
 </section>
-<section id="id48">
-<h1>}<a class="headerlink" href="#id48" title="Link to this heading"></a></h1>
-<p>#### Stop Training
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">POST</span> <span class="pre">/api/training/stop/{session_id}/</span>
-<span class="pre">`</span></code></p>
-<p>### Model Management</p>
-<p>#### List Trained Models
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/models/</span>
-<span class="pre">`</span></code></p>
-<p>#### Get Model Details
-<code class="docutils literal notranslate"><span class="pre">`http</span>
-<span class="pre">GET</span> <span class="pre">/api/models/{id}/</span>
-<span class="pre">`</span></code></p>
-<p>#### Model Prediction
-<a href="#id49"><span class="problematic" id="id50">``</span></a><a href="#id51"><span class="problematic" id="id52">`</span></a>http
-POST /api/models/{id}/predict/
-Content-Type: application/json</p>
-<dl class="simple">
-<dt>{</dt><dd><p>“dataset_id”: 2,
-“start_time”: 1623456789,
-“end_time”: 1623456899</p>
-</dd>
-</dl>
+<section id="dataset-management">
+<h2>Dataset Management<a class="headerlink" href="#dataset-management" title="Link to this heading"></a></h2>
+<section id="upload-dataset">
+<h3>Upload Dataset<a class="headerlink" href="#upload-dataset" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/datasets/upload/</span>
+<span class="err">Content-Type: multipart/form-data</span>
+
+<span class="err">file: [CSV file]</span>
+<span class="err">project_id: 1</span>
+</pre></div>
+</div>
+<p><strong>CSV Format Required:</strong></p>
+<div class="highlight-csv notranslate"><div class="highlight"><pre><span></span>timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id
+1623456789,0.25,-0.15,0.30,40.7128,-74.0060,100,0.1,0.2,0.3,sensor_01
+</pre></div>
+</div>
 </section>
-<section id="id53">
-<h1>}<a class="headerlink" href="#id53" title="Link to this heading"></a></h1>
-<p>## Data Models</p>
-<p>### Project
-<a href="#id54"><span class="problematic" id="id55">``</span></a><a href="#id56"><span class="problematic" id="id57">`</span></a>python
-class Project(models.Model):</p>
-<blockquote>
-<div><p>name = models.CharField(max_length=200)
-description = models.TextField(blank=True)
-created_at = models.DateTimeField(auto_now_add=True)
-updated_at = models.DateTimeField(auto_now=True)</p>
-</div></blockquote>
-<p><a href="#id58"><span class="problematic" id="id59">``</span></a><a href="#id60"><span class="problematic" id="id61">`</span></a></p>
-<p>### Dataset
-<a href="#id62"><span class="problematic" id="id63">``</span></a><a href="#id64"><span class="problematic" id="id65">`</span></a>python
-class Dataset(models.Model):</p>
-<blockquote>
-<div><p>project = models.ForeignKey(Project, on_delete=models.CASCADE)
-name = models.CharField(max_length=200)
-file_path = models.FileField(upload_to=’datasets/’)
-uploaded_at = models.DateTimeField(auto_now_add=True)
-data_count = models.IntegerField(default=0)</p>
-</div></blockquote>
-<p><a href="#id66"><span class="problematic" id="id67">``</span></a><a href="#id68"><span class="problematic" id="id69">`</span></a></p>
-<p>### Annotation
-<a href="#id70"><span class="problematic" id="id71">``</span></a><a href="#id72"><span class="problematic" id="id73">`</span></a>python
-class Annotation(models.Model):</p>
-<blockquote>
-<div><p>dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
-start_time = models.FloatField()
-end_time = models.FloatField()
-label = models.CharField(max_length=100)
-confidence = models.FloatField(default=1.0)
-notes = models.TextField(blank=True)
-created_at = models.DateTimeField(auto_now_add=True)</p>
-</div></blockquote>
-<p><a href="#id74"><span class="problematic" id="id75">``</span></a><a href="#id76"><span class="problematic" id="id77">`</span></a></p>
-<p>### UserDefinedModel
-<a href="#id78"><span class="problematic" id="id79">``</span></a><a href="#id80"><span class="problematic" id="id81">`</span></a>python
-class UserDefinedModel(models.Model):</p>
-<blockquote>
-<div><p>name = models.CharField(max_length=200)
-dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
-algorithm = models.CharField(max_length=100)
-parameters = models.JSONField()
-model_file_path = models.CharField(max_length=500)
-training_accuracy = models.FloatField()
-created_at = models.DateTimeField(auto_now_add=True)</p>
-</div></blockquote>
-<p><a href="#id82"><span class="problematic" id="id83">``</span></a><a href="#id84"><span class="problematic" id="id85">`</span></a></p>
-<p>## Error Handling</p>
-<p>### HTTP Status Codes
-- <cite>200 OK</cite> - Successful request
-- <cite>201 Created</cite> - Resource created successfully
-- <cite>400 Bad Request</cite> - Invalid request data
-- <cite>401 Unauthorized</cite> - Authentication required
-- <cite>403 Forbidden</cite> - Permission denied
-- <cite>404 Not Found</cite> - Resource not found
-- <cite>500 Internal Server Error</cite> - Server error</p>
-<p>### Error Response Format
-<a href="#id86"><span class="problematic" id="id87">``</span></a><a href="#id88"><span class="problematic" id="id89">`</span></a>json
-{</p>
-<blockquote>
-<div><p>“error”: “Invalid dataset format”,
-“details”: “CSV file must contain required columns: timestamp_pc, b_x, b_y, b_z”,
-“code”: “INVALID_FORMAT”</p>
-</div></blockquote>
+<section id="get-dataset-data">
+<h3>Get Dataset Data<a class="headerlink" href="#get-dataset-data" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">GET /api/datasets/{id}/data/</span>
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">decimation_factor</span></code> (optional): Data reduction factor for large datasets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_time</span></code> (optional): Filter start time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_time</span></code> (optional): Filter end time</p></li>
+</ul>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;timestamp_pc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1623456789</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;b_x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;b_y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.15</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;b_z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.30</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">40.7128</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;lon&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-74.0060</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;altitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;decimated&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;original_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;returned_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
-<section id="id90">
-<h1>}<a class="headerlink" href="#id90" title="Link to this heading"></a></h1>
-<p>## Performance Considerations</p>
-<p>### Data Decimation
-Large datasets (&gt;5000 points) are automatically decimated for visualization:
-- Preserves statistical properties
-- Maintains anomaly visibility
-- Reduces frontend rendering time
-- Original data preserved for training</p>
-<p>### Optimization Features
-- Efficient Django ORM queries with <cite>select_related</cite>
-- Background training with progress callbacks
-- Chunked data processing for large files
-- Client-side caching of visualizations</p>
-<p>## Rate Limiting
-Currently no rate limiting implemented. Consider adding for production use.</p>
-<p>## Security Notes
-- CSRF protection enabled for state-changing operations
-- File upload validation for CSV format
-- SQL injection prevention through Django ORM
-- No sensitive data logging</p>
-<p>## Testing
-Use the provided test data in <cite>example/</cite> directory:
-- <cite>example_data.csv</cite> - Small dataset for quick testing
-- <cite>mag_data_*.csv</cite> - Various sized datasets for comprehensive testing</p>
-<p>## Integration Examples</p>
-<p>### JavaScript Frontend Integration
-<a href="#id91"><span class="problematic" id="id92">``</span></a><a href="#id93"><span class="problematic" id="id94">`</span></a>javascript
-// Upload dataset
-const formData = new FormData();
-formData.append(‘file’, csvFile);
-formData.append(‘project_id’, projectId);</p>
-<dl>
-<dt>fetch(‘/api/datasets/upload/’, {</dt><dd><p>method: ‘POST’,
-body: formData,
-headers: {</p>
-<blockquote>
-<div><p>‘X-CSRFToken’: getCsrfToken()</p>
-</div></blockquote>
-<p>}</p>
-</dd>
-</dl>
-<p>})
-.then(response =&gt; response.json())
-.then(data =&gt; console.log(‘Upload successful:’, data));</p>
-<p>// Get training status
-async function checkTrainingStatus(sessionId) {</p>
-<blockquote>
-<div><p>const response = await fetch(<cite>/api/training/status/${sessionId}/</cite>);
-const status = await response.json();
-return status;</p>
-</div></blockquote>
 </section>
-<section id="id95">
-<h1>}<a class="headerlink" href="#id95" title="Link to this heading"></a></h1>
-<p>### Python Client Integration
-<a href="#id96"><span class="problematic" id="id97">``</span></a><a href="#id98"><span class="problematic" id="id99">`</span></a>python
-import requests</p>
-<p># Start training
-training_data = {</p>
-<blockquote>
-<div><p>‘dataset_id’: 1,
-‘model_name’: ‘Anomaly Detector’,
-‘algorithm’: ‘random_forest’</p>
-</div></blockquote>
-<p>}</p>
-<dl class="simple">
-<dt>response = requests.post(</dt><dd><p>‘<a class="reference external" href="http://localhost:8000/api/training/start/">http://localhost:8000/api/training/start/</a>’,
-json=training_data,
-headers={‘Content-Type’: ‘application/json’}</p>
-</dd>
-</dl>
-<p>)</p>
-<p>session_info = response.json()
-print(f”Training started: {session_info[‘session_id’]}”)
-<a href="#id100"><span class="problematic" id="id101">``</span></a><a href="#id102"><span class="problematic" id="id103">`</span></a></p>
-<p>—</p>
-<p>For detailed implementation information, see the generated HTML documentation files and source code in <cite>magtrace_api/</cite> modules.</p>
+<section id="annotation-system">
+<h2>Annotation System<a class="headerlink" href="#annotation-system" title="Link to this heading"></a></h2>
+<section id="create-annotation">
+<h3>Create Annotation<a class="headerlink" href="#create-annotation" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/annotations/</span>
+<span class="err">Content-Type: application/json</span>
+
+<span class="err">{</span>
+<span class="err">  &quot;dataset&quot;: 1,</span>
+<span class="err">  &quot;start_time&quot;: 1623456789,</span>
+<span class="err">  &quot;end_time&quot;: 1623456899,</span>
+<span class="err">  &quot;label&quot;: &quot;anomaly&quot;,</span>
+<span class="err">  &quot;confidence&quot;: 0.95,</span>
+<span class="err">  &quot;notes&quot;: &quot;Magnetic interference detected&quot;</span>
+<span class="err">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="training-system">
+<h2>Training System<a class="headerlink" href="#training-system" title="Link to this heading"></a></h2>
+<section id="start-training">
+<h3>Start Training<a class="headerlink" href="#start-training" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/training-sessions/start_training/</span>
+<span class="err">Content-Type: application/json</span>
+
+<span class="err">{</span>
+<span class="err">  &quot;dataset_id&quot;: 1,</span>
+<span class="err">  &quot;model_name&quot;: &quot;Anomaly Detector&quot;,</span>
+<span class="err">  &quot;algorithm&quot;: &quot;random_forest&quot;</span>
+<span class="err">}</span>
+</pre></div>
+</div>
+</section>
+<section id="get-training-status">
+<h3>Get Training Status<a class="headerlink" href="#get-training-status" title="Link to this heading"></a></h3>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">GET /api/training-sessions/{id}/status/</span>
+</pre></div>
+</div>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;training&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;accuracy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.92</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Training in progress...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-models">
+<h1>Data Models<a class="headerlink" href="#data-models" title="Link to this heading"></a></h1>
+<section id="project-model">
+<h2>Project Model<a class="headerlink" href="#project-model" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dataset-model">
+<h2>Dataset Model<a class="headerlink" href="#dataset-model" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;datasets/&#39;</span><span class="p">)</span>
+    <span class="n">uploaded_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data_count</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="annotation-model">
+<h2>Annotation Model<a class="headerlink" href="#annotation-model" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Annotation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">confidence</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-handling">
+<h1>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
+<section id="http-status-codes">
+<h2>HTTP Status Codes<a class="headerlink" href="#http-status-codes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">200</span> <span class="pre">OK</span></code> - Successful request</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">201</span> <span class="pre">Created</span></code> - Resource created successfully</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span> <span class="pre">Bad</span> <span class="pre">Request</span></code> - Invalid request data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">401</span> <span class="pre">Unauthorized</span></code> - Authentication required</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">403</span> <span class="pre">Forbidden</span></code> - Permission denied</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">404</span> <span class="pre">Not</span> <span class="pre">Found</span></code> - Resource not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span> <span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code> - Server error</p></li>
+</ul>
+</section>
+<section id="error-response-format">
+<h2>Error Response Format<a class="headerlink" href="#error-response-format" title="Link to this heading"></a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid dataset format&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CSV file must contain required columns: timestamp_pc, b_x, b_y, b_z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INVALID_FORMAT&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-considerations">
+<h1>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Link to this heading"></a></h1>
+<section id="data-decimation">
+<h2>Data Decimation<a class="headerlink" href="#data-decimation" title="Link to this heading"></a></h2>
+<p>Large datasets (&gt;5000 points) are automatically decimated for visualization:</p>
+<ul class="simple">
+<li><p>Preserves statistical properties</p></li>
+<li><p>Maintains anomaly visibility</p></li>
+<li><p>Reduces frontend rendering time</p></li>
+<li><p>Original data preserved for training</p></li>
+</ul>
+</section>
+</section>
+<section id="security-notes">
+<h1>Security Notes<a class="headerlink" href="#security-notes" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>CSRF protection enabled for state-changing operations</p></li>
+<li><p>File upload validation for CSV format</p></li>
+<li><p>SQL injection prevention through Django ORM</p></li>
+<li><p>No sensitive data logging</p></li>
+</ul>
+</section>
+<section id="integration-examples">
+<h1>Integration Examples<a class="headerlink" href="#integration-examples" title="Link to this heading"></a></h1>
+<section id="javascript-frontend-integration">
+<h2>JavaScript Frontend Integration<a class="headerlink" href="#javascript-frontend-integration" title="Link to this heading"></a></h2>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Upload dataset</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">formData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">FormData</span><span class="p">();</span>
+<span class="nx">formData</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">csvFile</span><span class="p">);</span>
+<span class="nx">formData</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">projectId</span><span class="p">);</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/datasets/upload/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nx">formData</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">&#39;X-CSRFToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Upload successful:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">));</span>
+</pre></div>
+</div>
+</section>
+<section id="python-client-integration">
+<h2>Python Client Integration<a class="headerlink" href="#python-client-integration" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># Start training</span>
+<span class="n">training_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;dataset_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;model_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Anomaly Detector&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;random_forest&#39;</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s1">&#39;http://localhost:8000/api/training-sessions/start_training/&#39;</span><span class="p">,</span>
+    <span class="n">json</span><span class="o">=</span><span class="n">training_data</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">session_info</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training started: </span><span class="si">{</span><span class="n">session_info</span><span class="p">[</span><span class="s1">&#39;session_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="quick_start_tutorial.html" class="btn btn-neutral float-left" title="Quick Start Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="testing_results.html" class="btn btn-neutral float-right" title="}" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api_endpoints.html" class="btn btn-neutral float-left" title="API Endpoints Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="testing_results.html" class="btn btn-neutral float-right" title="MagTrace Testing Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

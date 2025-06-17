@@ -18,7 +18,9 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MagTrace API Reference" href="api_reference.html" />
+    <link rel="prev" title="Quick Start Tutorial" href="quick_start_tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -70,19 +72,64 @@
 <li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#learn-more">Learn More</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Endpoints Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#base-configuration">Base Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#actual-api-endpoints">Actual API Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-resource-endpoints">Core Resource Endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#machine-learning-endpoints">Machine Learning Endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#legacy-endpoints-deprecated">Legacy Endpoints (Deprecated)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#request-response-examples">Request/Response Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#critical-implementation-gaps">Critical Implementation Gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#production-deployment-considerations">Production Deployment Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#testing-and-validation">Testing and Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">MagTrace API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#core-api-endpoints">Core API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#data-models">Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#security-notes">Security Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">MagTrace Testing Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#test-summary">Test Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#detailed-test-results">Detailed Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#performance-metrics">Performance Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#api-endpoint-validation">API Endpoint Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#known-working-features">Known Working Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#recommendations-for-production">Recommendations for Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#conclusion">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#installation-issues">Installation Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#data-upload-issues">Data Upload Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#visualization-issues">Visualization Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#training-issues">Training Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#database-issues">Database Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#network-and-api-issues">Network and API Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#browser-and-frontend-issues">Browser and Frontend Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#performance-issues">Performance Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#development-issues">Development Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#production-deployment-issues">Production Deployment Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#system-resource-issues">System Resource Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#getting-help">Getting Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html">Production Deployment Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#current-development-status">Current Development Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#critical-security-vulnerabilities">Critical Security Vulnerabilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#infrastructure-requirements">Infrastructure Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#required-production-components">Required Production Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#security-hardening-checklist">Security Hardening Checklist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#production-configuration">Production Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#performance-optimization">Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#monitoring-and-logging">Monitoring and Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#backup-and-disaster-recovery">Backup and Disaster Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#testing-strategy">Testing Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#cost-estimation">Cost Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#development-timeline">Development Timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#risk-assessment-summary">Risk Assessment Summary</a></li>
 </ul>
 
         </div>
@@ -595,7 +642,10 @@ curl<span class="w"> </span>http://localhost:8000/api/
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quick_start_tutorial.html" class="btn btn-neutral float-left" title="Quick Start Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="MagTrace API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

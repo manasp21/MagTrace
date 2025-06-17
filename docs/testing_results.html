@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>} &mdash; MagTrace 1.0 documentation</title>
+  <title>MagTrace Testing Results &mdash; MagTrace 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="]" href="api_reference.html" /> 
+    <link rel="next" title="Troubleshooting Guide" href="troubleshooting.html" />
+    <link rel="prev" title="MagTrace API Reference" href="api_reference.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -72,18 +73,89 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html">API Endpoints Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#base-configuration">Base Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#actual-api-endpoints">Actual API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#request-response-examples">Request/Response Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#critical-implementation-gaps">Critical Implementation Gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#performance-characteristics">Performance Characteristics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#production-deployment-considerations">Production Deployment Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#testing-and-validation">Testing and Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">MagTrace API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#core-api-endpoints">Core API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#data-models">Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#security-notes">Security Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MagTrace Testing Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#test-summary">Test Summary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#passed-tests">✅ Passed Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#observations">⚠️ Observations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#detailed-test-results">Detailed Test Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#project-management">1. Project Management ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-upload-processing">2. Data Upload &amp; Processing ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-system">3. Annotation System ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ml-training-pipeline">4. ML Training Pipeline ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-integration">5. System Integration ✅</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#performance-metrics">Performance Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#response-times">Response Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-handling">Data Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#api-endpoint-validation">API Endpoint Validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#working-endpoints">Working Endpoints ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#required-data-formats">Required Data Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#known-working-features">Known Working Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-processing">Data Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-labeling">Interactive Labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#machine-learning">Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-interface">User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#recommendations-for-production">Recommendations for Production</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security-enhancements">2. Security Enhancements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling">3. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#feature-completeness">4. Feature Completeness</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#installation-issues">Installation Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#data-upload-issues">Data Upload Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#visualization-issues">Visualization Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#training-issues">Training Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#database-issues">Database Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#network-and-api-issues">Network and API Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#browser-and-frontend-issues">Browser and Frontend Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#performance-issues">Performance Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#development-issues">Development Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#production-deployment-issues">Production Deployment Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#system-resource-issues">System Resource Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#getting-help">Getting Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html">Production Deployment Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#current-development-status">Current Development Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#critical-security-vulnerabilities">Critical Security Vulnerabilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#infrastructure-requirements">Infrastructure Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#required-production-components">Required Production Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#security-hardening-checklist">Security Hardening Checklist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#production-configuration">Production Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#performance-optimization">Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#monitoring-and-logging">Monitoring and Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#backup-and-disaster-recovery">Backup and Disaster Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#testing-strategy">Testing Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#cost-estimation">Cost Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#development-timeline">Development Timeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="production_deployment.html#risk-assessment-summary">Risk Assessment Summary</a></li>
 </ul>
 
         </div>
@@ -100,7 +172,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">}</li>
+      <li class="breadcrumb-item active">MagTrace Testing Results</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/testing_results.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -110,182 +182,270 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p># MagTrace Testing Results</p>
+  <section id="magtrace-testing-results">
+<h1>MagTrace Testing Results<a class="headerlink" href="#magtrace-testing-results" title="Link to this heading"></a></h1>
 <p><strong>Test Date</strong>: June 17, 2025
 <strong>Status</strong>: ✅ Core Functionality Verified
 <strong>Test Coverage</strong>: End-to-end workflow validation</p>
-<p>## Test Summary</p>
-<p>### ✅ Passed Tests
-1. <strong>Server Health Check</strong> - Backend server responding correctly
-2. <strong>Project Creation</strong> - API endpoints working for project management
-3. <strong>Data Upload</strong> - CSV file upload and processing successful
-4. <strong>Data Retrieval</strong> - Dataset data access with 46 data points confirmed
-5. <strong>Annotation System</strong> - Label category creation and annotation storage working
-6. <strong>Model Creation</strong> - User-defined model creation successful
-7. <strong>Training Initiation</strong> - ML training system starts correctly
-8. <strong>UI Access</strong> - Main application interface loads properly</p>
-<p>### ⚠️ Observations
-- <strong>Training Duration</strong>: ML training takes longer than 30 seconds (expected for real ML processing)
-- <strong>CSRF Tokens</strong>: System works without CSRF tokens in test environment
-- <strong>Data Processing</strong>: Automatic data decimation and processing working correctly</p>
-<p>## Detailed Test Results</p>
-<p>### 1. Project Management ✅
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">✅</span> <span class="pre">Project</span> <span class="pre">created</span> <span class="pre">successfully:</span> <span class="pre">ID</span> <span class="pre">16</span>
-<span class="pre">`</span></code>
-- API endpoint: <cite>POST /api/projects/</cite>
-- Response time: &lt; 1 second
-- Data persistence: Confirmed</p>
-<p>### 2. Data Upload &amp; Processing ✅
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">✅</span> <span class="pre">Dataset</span> <span class="pre">uploaded</span> <span class="pre">successfully:</span> <span class="pre">ID</span> <span class="pre">14</span>
-<span class="pre">✅</span> <span class="pre">Data</span> <span class="pre">retrieval</span> <span class="pre">successful:</span> <span class="pre">46</span> <span class="pre">data</span> <span class="pre">points</span>
-<span class="pre">`</span></code>
-- API endpoints: <cite>POST /api/datasets/upload/</cite>, <cite>GET /api/datasets/{id}/data/</cite>
-- File format: CSV with magnetic field data
-- Processing: Automatic data parsing and storage
-- Records processed: 46 data points from test file</p>
-<p>### 3. Annotation System ✅
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">✅</span> <span class="pre">Annotation</span> <span class="pre">created</span> <span class="pre">successfully:</span> <span class="pre">ID</span> <span class="pre">6</span>
-<span class="pre">`</span></code>
-- Label category creation working
-- Annotation storage with proper relationships
-- Required fields: <cite>dataset</cite>, <cite>category</cite>, <cite>start_index</cite>, <cite>end_index</cite>
-- API endpoint: <cite>POST /api/annotations/</cite></p>
-<p>### 4. ML Training Pipeline ✅
-<code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">✅</span> <span class="pre">Model</span> <span class="pre">created</span> <span class="pre">successfully:</span> <span class="pre">ID</span> <span class="pre">7</span>
-<span class="pre">✅</span> <span class="pre">Training</span> <span class="pre">started</span> <span class="pre">successfully:</span> <span class="pre">Session</span> <span class="pre">4</span>
-<span class="pre">📊</span> <span class="pre">Training</span> <span class="pre">status:</span> <span class="pre">pending</span> <span class="pre">(0.0%)</span>
-<span class="pre">`</span></code>
-- Model creation with required fields working
-- Training session initiation successful
-- Background processing active
-- API endpoints: <cite>POST /api/user-models/</cite>, <cite>POST /api/training-sessions/</cite></p>
-<p>### 5. System Integration ✅
-- <strong>Frontend</strong>: Main application loads at <cite>http://localhost:8000/app/</cite>
-- <strong>API</strong>: All core endpoints responding correctly
-- <strong>Database</strong>: Data persistence across all operations
-- <strong>File Handling</strong>: CSV upload and processing working</p>
-<p>## Performance Metrics</p>
-<p>### Response Times
-- Health check: &lt; 100ms
-- Project creation: &lt; 1s
-- Data upload: &lt; 3s (46 records)
-- Data retrieval: &lt; 500ms
-- Annotation creation: &lt; 1s
-- Model creation: &lt; 1s
-- Training initiation: &lt; 2s</p>
-<p>### Data Handling
-- <strong>Test Dataset</strong>: 46 magnetic field records
-- <strong>File Size</strong>: Small test file (&lt; 10KB)
-- <strong>Processing Speed</strong>: Real-time for small datasets
-- <strong>Data Integrity</strong>: All fields preserved and accessible</p>
-<p>## API Endpoint Validation</p>
-<p>### Working Endpoints ✅
-- <cite>GET /health/</cite> - Server health check
-- <cite>GET /api/</cite> - API root with endpoint discovery
-- <cite>POST /api/projects/</cite> - Project creation
-- <cite>GET /api/projects/</cite> - Project listing
-- <cite>POST /api/datasets/upload/</cite> - Data upload
-- <cite>GET /api/datasets/{id}/data/</cite> - Data retrieval
-- <cite>POST /api/label-categories/</cite> - Label management
-- <cite>POST /api/annotations/</cite> - Annotation creation
-- <cite>POST /api/user-models/</cite> - Model creation
-- <cite>POST /api/training-sessions/</cite> - Training initiation
-- <cite>GET /api/training-sessions/{id}/</cite> - Training status</p>
-<p>### Required Data Formats
-<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>json
-// Project Creation
-{</p>
-<blockquote>
-<div><p>“name”: “Project Name”,
-“description”: “Description”</p>
-</div></blockquote>
-<p>}</p>
-<p>// Dataset Upload
-FormData: {</p>
-<blockquote>
-<div><p>“file”: CSV_FILE,
-“project”: PROJECT_ID</p>
-</div></blockquote>
-<p>}</p>
-<p>// Annotation Creation
-{</p>
-<blockquote>
-<div><p>“dataset”: DATASET_ID,
-“category”: CATEGORY_ID,
-“start_index”: 0,
-“end_index”: 10,
-“confidence”: 0.95</p>
-</div></blockquote>
-<p>}</p>
-<p>// Model Creation
-{</p>
-<blockquote>
-<div><p>“name”: “Model Name”,
-“model_type”: “classification”,
-“python_script”: “# Code here”,
-“project”: PROJECT_ID,
-“hyperparameters”: {}</p>
-</div></blockquote>
-<section id="id5">
-<h1>}<a class="headerlink" href="#id5" title="Link to this heading"></a></h1>
-<p>## Known Working Features</p>
-<p>### Data Processing
-- ✅ CSV file upload and parsing
-- ✅ Magnetic field data extraction (<cite>b_x</cite>, <cite>b_y</cite>, <cite>b_z</cite>)
-- ✅ Timestamp and GPS coordinate handling
-- ✅ Automatic data type conversion
-- ✅ Database storage and retrieval</p>
-<p>### Interactive Labeling
-- ✅ Label category management
-- ✅ Annotation creation with time ranges
-- ✅ Confidence scoring system
-- ✅ Project-based organization</p>
-<p>### Machine Learning
-- ✅ User-defined model creation
-- ✅ Training session management
-- ✅ Background training processing
-- ✅ Status monitoring capabilities</p>
-<p>### User Interface
-- ✅ Main application loads correctly
-- ✅ D3.js and required libraries loading
-- ✅ Professional interface without clutter
-- ✅ Responsive design elements</p>
-<p>## Recommendations for Production</p>
-<p>### 1. Performance Optimization
-- <strong>Large Dataset Testing</strong>: Test with datasets &gt;10,000 points
-- <strong>Concurrent Users</strong>: Load testing with multiple simultaneous users
-- <strong>Memory Usage</strong>: Monitor training with larger models</p>
-<p>### 2. Security Enhancements
-- <strong>CSRF Protection</strong>: Ensure CSRF tokens work in production
-- <strong>File Validation</strong>: Additional CSV format validation
-- <strong>Input Sanitization</strong>: Validate all user inputs</p>
-<p>### 3. Error Handling
-- <strong>Training Timeouts</strong>: Implement proper timeout handling
-- <strong>Network Failures</strong>: Graceful degradation for API failures
-- <strong>User Feedback</strong>: Better error messages for failed operations</p>
-<p>### 4. Feature Completeness
-- <strong>Model Prediction</strong>: Test prediction capabilities
-- <strong>Data Export</strong>: Validate export functionality
-- <strong>Model Management</strong>: Test model versioning and updates</p>
-<p>## Conclusion</p>
+</section>
+<section id="test-summary">
+<h1>Test Summary<a class="headerlink" href="#test-summary" title="Link to this heading"></a></h1>
+<section id="passed-tests">
+<h2>✅ Passed Tests<a class="headerlink" href="#passed-tests" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Server Health Check</strong> - Backend server responding correctly</p></li>
+<li><p><strong>Project Creation</strong> - API endpoints working for project management</p></li>
+<li><p><strong>Data Upload</strong> - CSV file upload and processing successful</p></li>
+<li><p><strong>Data Retrieval</strong> - Dataset data access with 46 data points confirmed</p></li>
+<li><p><strong>Annotation System</strong> - Label category creation and annotation storage working</p></li>
+<li><p><strong>Model Creation</strong> - User-defined model creation successful</p></li>
+<li><p><strong>Training Initiation</strong> - ML training system starts correctly</p></li>
+<li><p><strong>UI Access</strong> - Main application interface loads properly</p></li>
+</ol>
+</section>
+<section id="observations">
+<h2>⚠️ Observations<a class="headerlink" href="#observations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Training Duration</strong>: ML training takes longer than 30 seconds (expected for real ML processing)</p></li>
+<li><p><strong>CSRF Tokens</strong>: System works without CSRF tokens in test environment</p></li>
+<li><p><strong>Data Processing</strong>: Automatic data decimation and processing working correctly</p></li>
+</ul>
+</section>
+</section>
+<section id="detailed-test-results">
+<h1>Detailed Test Results<a class="headerlink" href="#detailed-test-results" title="Link to this heading"></a></h1>
+<section id="project-management">
+<h2>1. Project Management ✅<a class="headerlink" href="#project-management" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>✅ Project created successfully: ID 16
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>API endpoint: <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/projects/</span></code></p></li>
+<li><p>Response time: &lt; 1 second</p></li>
+<li><p>Data persistence: Confirmed</p></li>
+</ul>
+</section>
+<section id="data-upload-processing">
+<h2>2. Data Upload &amp; Processing ✅<a class="headerlink" href="#data-upload-processing" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>✅ Dataset uploaded successfully: ID 14
+✅ Data retrieval successful: 46 data points
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>API endpoints: <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/datasets/upload/</span></code>, <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/datasets/{id}/data/</span></code></p></li>
+<li><p>File format: CSV with magnetic field data</p></li>
+<li><p>Processing: Automatic data parsing and storage</p></li>
+<li><p>Records processed: 46 data points from test file</p></li>
+</ul>
+</section>
+<section id="annotation-system">
+<h2>3. Annotation System ✅<a class="headerlink" href="#annotation-system" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>✅ Annotation created successfully: ID 6
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Label category creation working</p></li>
+<li><p>Annotation storage with proper relationships</p></li>
+<li><p>Required fields: <code class="docutils literal notranslate"><span class="pre">dataset</span></code>, <code class="docutils literal notranslate"><span class="pre">category</span></code>, <code class="docutils literal notranslate"><span class="pre">start_index</span></code>, <code class="docutils literal notranslate"><span class="pre">end_index</span></code></p></li>
+<li><p>API endpoint: <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/annotations/</span></code></p></li>
+</ul>
+</section>
+<section id="ml-training-pipeline">
+<h2>4. ML Training Pipeline ✅<a class="headerlink" href="#ml-training-pipeline" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>✅ Model created successfully: ID 7
+✅ Training started successfully: Session 4
+📊 Training status: pending (0.0%)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Model creation with required fields working</p></li>
+<li><p>Training session initiation successful</p></li>
+<li><p>Background processing active</p></li>
+<li><p>API endpoints: <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/user-models/</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/training-sessions/</span></code></p></li>
+</ul>
+</section>
+<section id="system-integration">
+<h2>5. System Integration ✅<a class="headerlink" href="#system-integration" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Frontend</strong>: Main application loads at <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/app/</span></code></p></li>
+<li><p><strong>API</strong>: All core endpoints responding correctly</p></li>
+<li><p><strong>Database</strong>: Data persistence across all operations</p></li>
+<li><p><strong>File Handling</strong>: CSV upload and processing working</p></li>
+</ul>
+</section>
+</section>
+<section id="performance-metrics">
+<h1>Performance Metrics<a class="headerlink" href="#performance-metrics" title="Link to this heading"></a></h1>
+<section id="response-times">
+<h2>Response Times<a class="headerlink" href="#response-times" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Health check: &lt; 100ms</p></li>
+<li><p>Project creation: &lt; 1s</p></li>
+<li><p>Data upload: &lt; 3s (46 records)</p></li>
+<li><p>Data retrieval: &lt; 500ms</p></li>
+<li><p>Annotation creation: &lt; 1s</p></li>
+<li><p>Model creation: &lt; 1s</p></li>
+<li><p>Training initiation: &lt; 2s</p></li>
+</ul>
+</section>
+<section id="data-handling">
+<h2>Data Handling<a class="headerlink" href="#data-handling" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Test Dataset</strong>: 46 magnetic field records</p></li>
+<li><p><strong>File Size</strong>: Small test file (&lt; 10KB)</p></li>
+<li><p><strong>Processing Speed</strong>: Real-time for small datasets</p></li>
+<li><p><strong>Data Integrity</strong>: All fields preserved and accessible</p></li>
+</ul>
+</section>
+</section>
+<section id="api-endpoint-validation">
+<h1>API Endpoint Validation<a class="headerlink" href="#api-endpoint-validation" title="Link to this heading"></a></h1>
+<section id="working-endpoints">
+<h2>Working Endpoints ✅<a class="headerlink" href="#working-endpoints" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health/</span></code> - Server health check</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/</span></code> - API root with endpoint discovery</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/projects/</span></code> - Project creation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/projects/</span></code> - Project listing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/datasets/upload/</span></code> - Data upload</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/datasets/{id}/data/</span></code> - Data retrieval</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/label-categories/</span></code> - Label management</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/annotations/</span></code> - Annotation creation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/user-models/</span></code> - Model creation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/training-sessions/</span></code> - Training initiation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/training-sessions/{id}/</span></code> - Training status</p></li>
+</ul>
+</section>
+<section id="required-data-formats">
+<h2>Required Data Formats<a class="headerlink" href="#required-data-formats" title="Link to this heading"></a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="c1">// Project Creation</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Project Name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Description&quot;</span>
+<span class="p">}</span>
+
+<span class="c1">// Dataset Upload</span>
+<span class="err">FormDa</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">CSV_FILE</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">PROJECT_ID</span>
+<span class="p">}</span>
+
+<span class="c1">// Annotation Creation</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;dataset&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">DATASET_ID</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">CATEGORY_ID</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;start_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;end_index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span>
+<span class="p">}</span>
+
+<span class="c1">// Model Creation</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Model Name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;python_script&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;# Code here&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">PROJECT_ID</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hyperparameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="known-working-features">
+<h1>Known Working Features<a class="headerlink" href="#known-working-features" title="Link to this heading"></a></h1>
+<section id="data-processing">
+<h2>Data Processing<a class="headerlink" href="#data-processing" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>✅ CSV file upload and parsing</p></li>
+<li><p>✅ Magnetic field data extraction (<code class="docutils literal notranslate"><span class="pre">b_x</span></code>, <code class="docutils literal notranslate"><span class="pre">b_y</span></code>, <code class="docutils literal notranslate"><span class="pre">b_z</span></code>)</p></li>
+<li><p>✅ Timestamp and GPS coordinate handling</p></li>
+<li><p>✅ Automatic data type conversion</p></li>
+<li><p>✅ Database storage and retrieval</p></li>
+</ul>
+</section>
+<section id="interactive-labeling">
+<h2>Interactive Labeling<a class="headerlink" href="#interactive-labeling" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>✅ Label category management</p></li>
+<li><p>✅ Annotation creation with time ranges</p></li>
+<li><p>✅ Confidence scoring system</p></li>
+<li><p>✅ Project-based organization</p></li>
+</ul>
+</section>
+<section id="machine-learning">
+<h2>Machine Learning<a class="headerlink" href="#machine-learning" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>✅ User-defined model creation</p></li>
+<li><p>✅ Training session management</p></li>
+<li><p>✅ Background training processing</p></li>
+<li><p>✅ Status monitoring capabilities</p></li>
+</ul>
+</section>
+<section id="user-interface">
+<h2>User Interface<a class="headerlink" href="#user-interface" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>✅ Main application loads correctly</p></li>
+<li><p>✅ D3.js and required libraries loading</p></li>
+<li><p>✅ Professional interface without clutter</p></li>
+<li><p>✅ Responsive design elements</p></li>
+</ul>
+</section>
+</section>
+<section id="recommendations-for-production">
+<h1>Recommendations for Production<a class="headerlink" href="#recommendations-for-production" title="Link to this heading"></a></h1>
+<section id="performance-optimization">
+<h2>1. Performance Optimization<a class="headerlink" href="#performance-optimization" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Large Dataset Testing</strong>: Test with datasets &gt;10,000 points</p></li>
+<li><p><strong>Concurrent Users</strong>: Load testing with multiple simultaneous users</p></li>
+<li><p><strong>Memory Usage</strong>: Monitor training with larger models</p></li>
+</ul>
+</section>
+<section id="security-enhancements">
+<h2>2. Security Enhancements<a class="headerlink" href="#security-enhancements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>CSRF Protection</strong>: Ensure CSRF tokens work in production</p></li>
+<li><p><strong>File Validation</strong>: Additional CSV format validation</p></li>
+<li><p><strong>Input Sanitization</strong>: Validate all user inputs</p></li>
+</ul>
+</section>
+<section id="error-handling">
+<h2>3. Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Training Timeouts</strong>: Implement proper timeout handling</p></li>
+<li><p><strong>Network Failures</strong>: Graceful degradation for API failures</p></li>
+<li><p><strong>User Feedback</strong>: Better error messages for failed operations</p></li>
+</ul>
+</section>
+<section id="feature-completeness">
+<h2>4. Feature Completeness<a class="headerlink" href="#feature-completeness" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Model Prediction</strong>: Test prediction capabilities</p></li>
+<li><p><strong>Data Export</strong>: Validate export functionality</p></li>
+<li><p><strong>Model Management</strong>: Test model versioning and updates</p></li>
+</ul>
+</section>
+</section>
+<section id="conclusion">
+<h1>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h1>
 <p><strong>Status</strong>: ✅ <strong>READY FOR COMPREHENSIVE TESTING</strong></p>
-<p>The core MagTrace functionality is working correctly:
-- All essential workflows operational
-- API integration functioning
-- Database operations stable
-- UI components loading properly
-- ML training pipeline active</p>
-<p><strong>Next Steps</strong>:
-1. Extended testing with larger datasets
-2. Performance benchmarking
-3. User acceptance testing
-4. Production deployment preparation</p>
+<p>The core MagTrace functionality is working correctly:</p>
+<ul class="simple">
+<li><p>All essential workflows operational</p></li>
+<li><p>API integration functioning</p></li>
+<li><p>Database operations stable</p></li>
+<li><p>UI components loading properly</p></li>
+<li><p>ML training pipeline active</p></li>
+</ul>
+<p><strong>Next Steps</strong>:</p>
+<ol class="arabic simple">
+<li><p>Extended testing with larger datasets</p></li>
+<li><p>Performance benchmarking</p></li>
+<li><p>User acceptance testing</p></li>
+<li><p>Production deployment preparation</p></li>
+</ol>
 <p><strong>Test Environment</strong>: Local development server on localhost:8000
-<strong>Test Data</strong>: Sample magnetic field CSV files from <cite>example/</cite> directory
+<strong>Test Data</strong>: Sample magnetic field CSV files from <code class="docutils literal notranslate"><span class="pre">example/</span></code> directory
 <strong>Test Duration</strong>: Automated workflow test &lt; 2 minutes</p>
 </section>
 
@@ -293,7 +453,8 @@ FormData: {</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api_reference.html" class="btn btn-neutral float-left" title="]" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-left" title="MagTrace API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

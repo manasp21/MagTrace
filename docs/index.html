@@ -82,18 +82,21 @@
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#production-deployment-considerations">Production Deployment Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#integration-examples">Integration Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#testing-and-validation">Testing and Validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">MagTrace API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#core-api-endpoints">Core API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#data-models">Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#error-handling">Error Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#performance-considerations">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#security-notes">Security Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#integration-examples">Integration Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">MagTrace Testing Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#test-summary">Test Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#detailed-test-results">Detailed Test Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#performance-metrics">Performance Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#api-endpoint-validation">API Endpoint Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#known-working-features">Known Working Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#recommendations-for-production">Recommendations for Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#conclusion">Conclusion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#installation-issues">Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#data-upload-issues">Data Upload Issues</a></li>
@@ -341,18 +344,79 @@ GET  /admin/                      # Django admin panel
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#production-deployment-considerations">Production Deployment Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#integration-examples">Integration Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_endpoints.html#testing-and-validation">Testing and Validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">MagTrace API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#base-url">Base URL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#core-api-endpoints">Core API Endpoints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#projects-management">Projects Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#dataset-management">Dataset Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#annotation-system">Annotation System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#training-system">Training System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#data-models">Data Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#project-model">Project Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#dataset-model">Dataset Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#annotation-model">Annotation Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#error-handling">Error Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#error-response-format">Error Response Format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#performance-considerations">Performance Considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#data-decimation">Data Decimation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#security-notes">Security Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#integration-examples">Integration Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#javascript-frontend-integration">JavaScript Frontend Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#python-client-integration">Python Client Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">MagTrace Testing Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#test-summary">Test Summary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#passed-tests">✅ Passed Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#observations">⚠️ Observations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#detailed-test-results">Detailed Test Results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#project-management">1. Project Management ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#data-upload-processing">2. Data Upload &amp; Processing ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#annotation-system">3. Annotation System ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#ml-training-pipeline">4. ML Training Pipeline ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#system-integration">5. System Integration ✅</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#performance-metrics">Performance Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#response-times">Response Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#data-handling">Data Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#api-endpoint-validation">API Endpoint Validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#working-endpoints">Working Endpoints ✅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#required-data-formats">Required Data Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#known-working-features">Known Working Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#data-processing">Data Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#interactive-labeling">Interactive Labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#machine-learning">Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#user-interface">User Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#recommendations-for-production">Recommendations for Production</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#performance-optimization">1. Performance Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#security-enhancements">2. Security Enhancements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#error-handling">3. Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_results.html#feature-completeness">4. Feature Completeness</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html#conclusion">Conclusion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#installation-issues">Installation Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html#data-upload-issues">Data Upload Issues</a></li>
