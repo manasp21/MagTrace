@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Endpoints Reference &mdash; MagTrace 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MagTrace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#quick-installation-recommended">Quick Installation (Recommended)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#manual-installation">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#dependency-details">Dependency Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#data-format-requirements">Data Format Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#need-help">Need Help?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-1-create-your-first-project">Step 1: Create Your First Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-2-upload-real-magnetic-field-data">Step 2: Upload Real Magnetic Field Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-3-label-magnetic-field-anomalies">Step 3: Label Magnetic Field Anomalies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-4-configure-ml-model-for-magnetic-data">Step 4: Configure ML Model for Magnetic Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-5-train-on-magnetic-field-features">Step 5: Train on Magnetic Field Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-6-review-magnetic-field-analysis-results">Step 6: Review Magnetic Field Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#congratulations">Congratulations! 🎉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#real-world-applications">Real-World Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#next-steps-with-your-own-data">Next Steps with Your Own Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#learn-more">Learn More</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MagTrace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Endpoints Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api_endpoints.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-endpoints-reference">
+<h1>API Endpoints Reference<a class="headerlink" href="#api-endpoints-reference" title="Link to this heading"></a></h1>
+<p><strong>CRITICAL DOCUMENTATION WARNING</strong></p>
+<p>This document provides the <strong>actual</strong> API endpoints based on current implementation. Previous documentation contained significant inaccuracies.</p>
+<p><strong>Last Verified:</strong> June 17, 2025
+<strong>Implementation Source:</strong> <cite>magtrace_api/urls.py</cite> and <cite>magtrace_api/views.py</cite></p>
+</section>
+<section id="base-configuration">
+<h1>Base Configuration<a class="headerlink" href="#base-configuration" title="Link to this heading"></a></h1>
+<p><strong>Base URL:</strong> <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/api/</span></code></p>
+<p><strong>Authentication:</strong> Django session-based (development mode)
+- <strong>CRITICAL SECURITY GAP:</strong> No authentication system implemented
+- <strong>Production Risk:</strong> All endpoints publicly accessible
+- <strong>CSRF Protection:</strong> Enabled for state-changing operations only</p>
+<p><strong>Content Type:</strong> <code class="docutils literal notranslate"><span class="pre">application/json</span></code> for all POST/PUT requests
+<strong>File Uploads:</strong> <code class="docutils literal notranslate"><span class="pre">multipart/form-data</span></code> for CSV uploads</p>
+</section>
+<section id="actual-api-endpoints">
+<h1>Actual API Endpoints<a class="headerlink" href="#actual-api-endpoints" title="Link to this heading"></a></h1>
+<p><strong>IMPLEMENTATION REALITY:</strong> The system has both legacy and enhanced endpoints due to development evolution.</p>
+<section id="core-resource-endpoints">
+<h2>Core Resource Endpoints<a class="headerlink" href="#core-resource-endpoints" title="Link to this heading"></a></h2>
+<p><strong>1. Projects Management</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/projects/                    # List all projects
+POST   /api/projects/                    # Create new project
+GET    /api/projects/{id}/               # Get project details
+PUT    /api/projects/{id}/               # Update project
+DELETE /api/projects/{id}/               # Delete project
+GET    /api/projects/{id}/export/        # Export project (UNVERIFIED)
+POST   /api/projects/import_project/     # Import project (UNVERIFIED)
+</pre></div>
+</div>
+<p><strong>2. Dataset Management</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/datasets/                    # List datasets
+POST   /api/datasets/                    # Create dataset record
+POST   /api/datasets/upload/             # Upload CSV file (ACTUAL UPLOAD ENDPOINT)
+GET    /api/datasets/{id}/               # Get dataset info
+PUT    /api/datasets/{id}/               # Update dataset
+DELETE /api/datasets/{id}/               # Delete dataset
+GET    /api/datasets/{id}/data/          # Get processed magnetometer data
+GET    /api/datasets/{id}/statistics/    # Get data statistics
+</pre></div>
+</div>
+<p><strong>CRITICAL LIMITATION:</strong> No data decimation parameters documented in current API reference.</p>
+<p><strong>3. Magnetometer Readings (Legacy)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/readings/                    # List readings
+GET    /api/readings/{id}/               # Get specific reading
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code> - Filter readings by dataset</p>
+<p><strong>IMPLEMENTATION NOTE:</strong> Read-only viewset, data populated via CSV upload.</p>
+<p><strong>4. Annotations System</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/annotations/                 # List annotations
+POST   /api/annotations/                 # Create annotation
+GET    /api/annotations/{id}/            # Get annotation
+PUT    /api/annotations/{id}/            # Update annotation
+DELETE /api/annotations/{id}/            # Delete annotation
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code> - Filter annotations by dataset</p>
+<p><strong>5. Label Categories</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/label-categories/            # List label categories
+POST   /api/label-categories/            # Create category
+GET    /api/label-categories/{id}/       # Get category
+PUT    /api/label-categories/{id}/       # Update category
+DELETE /api/label-categories/{id}/       # Delete category
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">project_id</span></code> - Filter categories by project</p>
+</section>
+<section id="machine-learning-endpoints">
+<h2>Machine Learning Endpoints<a class="headerlink" href="#machine-learning-endpoints" title="Link to this heading"></a></h2>
+<p><strong>6. User-Defined Models</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/user-models/                 # List models
+POST   /api/user-models/                 # Create model configuration
+GET    /api/user-models/{id}/            # Get model details
+PUT    /api/user-models/{id}/            # Update model
+DELETE /api/user-models/{id}/            # Delete model
+
+# Advanced model management
+GET    /api/user-models/script_template/ # Get Python script template
+POST   /api/user-models/validate_script/ # Validate Python script
+POST   /api/user-models/{id}/rename/     # Rename model
+POST   /api/user-models/{id}/clone/      # Clone model
+POST   /api/user-models/{id}/create_version/ # Create model version
+GET    /api/user-models/{id}/versions/   # Get all model versions
+POST   /api/user-models/generate_intelligent_name/ # Generate model name
+PATCH  /api/user-models/{id}/update_metadata/ # Update metadata
+GET    /api/user-models/categories/      # Get all categories
+GET    /api/user-models/tags/           # Get all tags
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">project_id</span></code> - Filter by project
+- <code class="docutils literal notranslate"><span class="pre">summary</span></code> - Return summary view (true/false)
+- <code class="docutils literal notranslate"><span class="pre">tags</span></code> - Filter by comma-separated tags
+- <code class="docutils literal notranslate"><span class="pre">category</span></code> - Filter by category name</p>
+<p><strong>7. Training Sessions</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/training-sessions/           # List training sessions
+POST   /api/training-sessions/           # Create training session
+GET    /api/training-sessions/{id}/      # Get session details
+PUT    /api/training-sessions/{id}/      # Update session
+DELETE /api/training-sessions/{id}/      # Delete session
+
+# Training operations (ACTUAL WORKING ENDPOINTS)
+POST   /api/training-sessions/start_training/    # Start ML training
+POST   /api/training-sessions/{id}/stop_training/ # Stop training
+GET    /api/training-sessions/{id}/status/       # Get training status
+GET    /api/training-sessions/active_sessions/   # List active sessions
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">model_id</span></code> - Filter sessions by model</p>
+<p><strong>CRITICAL DISCREPANCY:</strong> Previous documentation incorrectly showed <code class="docutils literal notranslate"><span class="pre">/api/training/start/</span></code> - <strong>this endpoint does not exist</strong>.</p>
+<p><strong>8. Predictions</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/predictions/                 # List predictions
+POST   /api/predictions/                 # Create prediction
+GET    /api/predictions/{id}/            # Get prediction
+PUT    /api/predictions/{id}/            # Update prediction
+DELETE /api/predictions/{id}/            # Delete prediction
+POST   /api/predictions/{id}/review/     # Review prediction
+</pre></div>
+</div>
+<p><strong>Query Parameters:</strong>
+- <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code> - Filter by dataset
+- <code class="docutils literal notranslate"><span class="pre">model_id</span></code> - Filter by model</p>
+</section>
+<section id="legacy-endpoints-deprecated">
+<h2>Legacy Endpoints (Deprecated)<a class="headerlink" href="#legacy-endpoints-deprecated" title="Link to this heading"></a></h2>
+<p><strong>WARNING:</strong> These endpoints exist for backwards compatibility but may not be actively maintained.</p>
+<p><strong>9. Legacy ML Models</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/models/                      # List legacy models
+POST   /api/models/                      # Create legacy model
+GET    /api/models/{id}/                 # Get legacy model
+POST   /api/models/{id}/set_active/      # Set as active model
+POST   /api/models/train/                # Legacy training endpoint
+POST   /api/models/{id}/generate_suggestions/ # Generate suggestions
+</pre></div>
+</div>
+<p><strong>10. Legacy Labels</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/labels/                      # List legacy labels
+POST   /api/labels/                      # Create legacy label
+POST   /api/labels/bulk_create/          # Bulk create labels
+</pre></div>
+</div>
+<p><strong>11. Inference Results</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/inference/                   # List inference results
+POST   /api/inference/                   # Create inference
+POST   /api/inference/run_inference/     # Run inference
+</pre></div>
+</div>
+<p><strong>12. Active Learning Suggestions</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>GET    /api/suggestions/                 # List suggestions
+POST   /api/suggestions/                 # Create suggestion
+POST   /api/suggestions/{id}/accept/     # Accept suggestion
+POST   /api/suggestions/{id}/reject/     # Reject suggestion
+</pre></div>
+</div>
+</section>
+</section>
+<section id="request-response-examples">
+<h1>Request/Response Examples<a class="headerlink" href="#request-response-examples" title="Link to this heading"></a></h1>
+<p><strong>Start Training (Actual Working Endpoint)</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/training-sessions/start_training/</span>
+<span class="err">Content-Type: application/json</span>
+<span class="err">X-CSRFToken: [csrf_token]</span>
+
+<span class="err">{</span>
+<span class="err">  &quot;model_id&quot;: 1,</span>
+<span class="err">  &quot;dataset_id&quot;: 2,</span>
+<span class="err">  &quot;training_config&quot;: {</span>
+<span class="err">    &quot;epochs&quot;: 5,</span>
+<span class="err">    &quot;learning_rate&quot;: 0.001</span>
+<span class="err">  }</span>
+<span class="err">}</span>
+</pre></div>
+</div>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;dataset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-17T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;total_epochs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;current_epoch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Upload Dataset (Actual Working Endpoint)</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">POST /api/datasets/upload/</span>
+<span class="err">Content-Type: multipart/form-data</span>
+<span class="err">X-CSRFToken: [csrf_token]</span>
+
+<span class="err">file: [CSV file]</span>
+<span class="err">project: 1</span>
+<span class="err">name: &quot;Magnetometer Survey Data&quot;</span>
+</pre></div>
+</div>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Magnetometer Survey Data&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;project&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/media/datasets/survey_data.csv&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;total_records&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1543</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;processed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;uploaded_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-17T10:00:00Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Get Training Status (Real-time)</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="err">GET /api/training-sessions/15/status/</span>
+</pre></div>
+</div>
+<p><strong>Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;running&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.65</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;current_epoch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;total_epochs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;current_step&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature extraction&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;start_time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-17T10:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;estimated_completion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-06-17T10:05:00Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="critical-implementation-gaps">
+<h1>Critical Implementation Gaps<a class="headerlink" href="#critical-implementation-gaps" title="Link to this heading"></a></h1>
+<p><strong>1. Missing Endpoints</strong></p>
+<p>The following endpoints are <strong>MISSING</strong> despite being mentioned in other documentation:</p>
+<ul class="simple">
+<li><p>❌ <code class="docutils literal notranslate"><span class="pre">/api/training/start/</span></code> - <strong>Does not exist</strong> (documentation error)</p></li>
+<li><p>❌ <code class="docutils literal notranslate"><span class="pre">/api/datasets/{id}/predict/</span></code> - <strong>Not implemented</strong></p></li>
+<li><p>❌ <code class="docutils literal notranslate"><span class="pre">/api/models/{id}/export/</span></code> - <strong>Not implemented</strong></p></li>
+<li><p>❌ <code class="docutils literal notranslate"><span class="pre">/api/health/</span></code> - <strong>Wrong path</strong> (actual: <code class="docutils literal notranslate"><span class="pre">/health/</span></code>)</p></li>
+</ul>
+<p><strong>2. Undocumented Query Parameters</strong></p>
+<p>Many endpoints accept query parameters not documented in previous API reference:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">decimation_factor</span></code> for dataset data retrieval</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary</span></code> for model list view</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tags</span></code> filtering for models</p></li>
+<li><p>Complex filtering options throughout</p></li>
+</ul>
+<p><strong>3. Response Format Inconsistencies</strong></p>
+<ul class="simple">
+<li><p>Some endpoints return detailed objects, others return summaries</p></li>
+<li><p>Error response formats vary between endpoints</p></li>
+<li><p>Pagination not implemented despite large data potential</p></li>
+</ul>
+<p><strong>4. Authentication/Authorization Gaps</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CRITICAL SECURITY ISSUE:
+- No authentication required for any endpoint
+- No user isolation (all users see all data)
+- No rate limiting
+- No input validation beyond basic type checking
+</pre></div>
+</div>
+</section>
+<section id="error-handling">
+<h1>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h1>
+<p><strong>Standard HTTP Status Codes:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">200</span> <span class="pre">OK</span></code> - Successful GET/PUT</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">201</span> <span class="pre">Created</span></code> - Successful POST</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span> <span class="pre">Bad</span> <span class="pre">Request</span></code> - Invalid input data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">404</span> <span class="pre">Not</span> <span class="pre">Found</span></code> - Resource not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span> <span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code> - Server error</p></li>
+</ul>
+<p><strong>Error Response Format:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Detailed error message&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;details&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Additional context when available&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Common Error Scenarios:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>400 Bad Request:
+- Missing required fields (model_id, dataset_id)
+- Invalid CSV format
+- Non-numeric magnetic field values
+
+404 Not Found:
+- Invalid project/dataset/model ID
+- Deleted resources
+
+500 Internal Server Error:
+- Training system failures
+- Database connection issues
+- File system permission errors
+</pre></div>
+</div>
+</section>
+<section id="performance-characteristics">
+<h1>Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Link to this heading"></a></h1>
+<p><strong>Data Processing Limits:</strong></p>
+<ul class="simple">
+<li><p><strong>CSV Upload:</strong> ~100MB maximum file size</p></li>
+<li><p><strong>Data Points:</strong> Performance degrades beyond 50,000 points</p></li>
+<li><p><strong>Training:</strong> Memory usage scales linearly with dataset size</p></li>
+<li><p><strong>Concurrent Sessions:</strong> Single training session recommended</p></li>
+</ul>
+<p><strong>Response Times (Development Server):</strong></p>
+<ul class="simple">
+<li><p><strong>Simple GET requests:</strong> &lt; 100ms</p></li>
+<li><p><strong>Dataset upload (1MB):</strong> 2-5 seconds</p></li>
+<li><p><strong>Training session start:</strong> 1-3 seconds</p></li>
+<li><p><strong>Training completion:</strong> 30-300 seconds (dataset dependent)</p></li>
+</ul>
+<p><strong>Resource Usage:</strong></p>
+<ul class="simple">
+<li><p><strong>Memory:</strong> 100MB base + 2MB per 1000 data points</p></li>
+<li><p><strong>Disk:</strong> Raw CSV + processed data + model files</p></li>
+<li><p><strong>CPU:</strong> Single-threaded training process</p></li>
+</ul>
+</section>
+<section id="production-deployment-considerations">
+<h1>Production Deployment Considerations<a class="headerlink" href="#production-deployment-considerations" title="Link to this heading"></a></h1>
+<p><strong>CRITICAL WARNINGS for Production Use:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Authentication Required</strong>
+- Implement user authentication system
+- Add API key or token-based authentication
+- Enable proper CSRF protection</p></li>
+<li><p><strong>Database Migration</strong>
+- Replace SQLite with PostgreSQL
+- Implement connection pooling
+- Add database backup strategy</p></li>
+<li><p><strong>File Storage</strong>
+- Move from local filesystem to cloud storage (S3/MinIO)
+- Implement file access controls
+- Add virus scanning for uploads</p></li>
+<li><p><strong>API Rate Limiting</strong>
+- Implement request throttling
+- Add concurrent session limits
+- Monitor and log API usage</p></li>
+<li><p><strong>Background Processing</strong>
+- Move training to Celery task queue
+- Implement training session recovery
+- Add progress persistence</p></li>
+</ol>
+<p><strong>Scalability Limits:</strong></p>
+<ul class="simple">
+<li><p><strong>Single-user system</strong> - No multi-tenancy support</p></li>
+<li><p><strong>Synchronous processing</strong> - Training blocks server threads</p></li>
+<li><p><strong>No caching</strong> - Database queries not optimized</p></li>
+<li><p><strong>No CDN</strong> - Static file delivery not optimized</p></li>
+</ul>
+</section>
+<section id="integration-examples">
+<h1>Integration Examples<a class="headerlink" href="#integration-examples" title="Link to this heading"></a></h1>
+<p><strong>JavaScript Frontend Integration</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Start training session</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">startTraining</span><span class="p">(</span><span class="nx">modelId</span><span class="p">,</span><span class="w"> </span><span class="nx">datasetId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/training-sessions/start_training/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="s1">&#39;X-CSRFToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">()</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">model_id</span><span class="o">:</span><span class="w"> </span><span class="nx">modelId</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">dataset_id</span><span class="o">:</span><span class="w"> </span><span class="nx">datasetId</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">training_config</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">epochs</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`Training failed: </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusText</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Monitor training progress</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">monitorTraining</span><span class="p">(</span><span class="nx">sessionId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`/api/training-sessions/</span><span class="si">${</span><span class="nx">sessionId</span><span class="si">}</span><span class="sb">/status/`</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Training progress: </span><span class="si">${</span><span class="nx">status</span><span class="p">.</span><span class="nx">progress</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100</span><span class="si">}</span><span class="sb">%`</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">status</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Python Client Integration</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">MagTraceClient</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/api&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">upload_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">csv_file_path</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">}</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;project&#39;</span><span class="p">:</span> <span class="n">project_id</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/datasets/upload/&quot;</span><span class="p">,</span>
+                <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span>
+            <span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">start_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;model_id&#39;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+            <span class="s1">&#39;dataset_id&#39;</span><span class="p">:</span> <span class="n">dataset_id</span><span class="p">,</span>
+            <span class="s1">&#39;training_config&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/training-sessions/start_training/&quot;</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">data</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">wait_for_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">poll_interval</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/training-sessions/</span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s2">/status/&quot;</span>
+            <span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training: </span><span class="si">{</span><span class="n">status</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">status</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;completed&#39;</span><span class="p">,</span> <span class="s1">&#39;failed&#39;</span><span class="p">,</span> <span class="s1">&#39;cancelled&#39;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">status</span>
+
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">poll_interval</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="testing-and-validation">
+<h1>Testing and Validation<a class="headerlink" href="#testing-and-validation" title="Link to this heading"></a></h1>
+<p><strong>Endpoint Testing:</strong></p>
+<p>Use the provided test script to verify API functionality:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>test_workflow.py
+</pre></div>
+</div>
+<p><strong>Expected Results:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>✅ Server health check passed
+✅ Project created successfully: ID 17
+✅ Dataset uploaded successfully: ID 15
+✅ Data retrieval successful: 46 data points
+✅ Annotation created successfully: ID 7
+✅ Model created successfully: ID 8
+✅ Training started successfully: Session 5
+</pre></div>
+</div>
+<p><strong>Manual API Testing:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test health endpoint</span>
+curl<span class="w"> </span>http://localhost:8000/health/
+
+<span class="c1"># List projects</span>
+curl<span class="w"> </span>http://localhost:8000/api/projects/
+
+<span class="c1"># Get API root</span>
+curl<span class="w"> </span>http://localhost:8000/api/
+</pre></div>
+</div>
+<p><strong>API Documentation Accuracy Status</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>✅ Endpoints verified against actual implementation
+✅ Request/response examples tested
+⚠️  Performance characteristics estimated (need load testing)
+❌ Security documentation incomplete (no auth system)
+❌ Production deployment untested
+</pre></div>
+</div>
+<p>—</p>
+<p><strong>This documentation represents the actual implemented API as of June 17, 2025. Previous API documentation contained significant inaccuracies and should not be used.</strong></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

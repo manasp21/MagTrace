@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting Guide &mdash; MagTrace 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MagTrace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#quick-installation-recommended">Quick Installation (Recommended)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#manual-installation">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#dependency-details">Dependency Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#data-format-requirements">Data Format Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#need-help">Need Help?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-1-create-your-first-project">Step 1: Create Your First Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-2-upload-real-magnetic-field-data">Step 2: Upload Real Magnetic Field Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-3-label-magnetic-field-anomalies">Step 3: Label Magnetic Field Anomalies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-4-configure-ml-model-for-magnetic-data">Step 4: Configure ML Model for Magnetic Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-5-train-on-magnetic-field-features">Step 5: Train on Magnetic Field Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-6-review-magnetic-field-analysis-results">Step 6: Review Magnetic Field Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#congratulations">Congratulations! 🎉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#real-world-applications">Real-World Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#next-steps-with-your-own-data">Next Steps with Your Own Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#learn-more">Learn More</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MagTrace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting-guide">
+<h1>Troubleshooting Guide<a class="headerlink" href="#troubleshooting-guide" title="Link to this heading"></a></h1>
+<p>Common issues and solutions for MagTrace magnetic field analysis platform.</p>
+</section>
+<section id="installation-issues">
+<h1>Installation Issues<a class="headerlink" href="#installation-issues" title="Link to this heading"></a></h1>
+<p><strong>Virtual Environment Symlink Errors (Jekyll/Git)</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">error:</span> <span class="pre">open(&quot;backend/venv/bin/python&quot;):</span> <span class="pre">Invalid</span> <span class="pre">argument</span></code></p>
+<p><strong>Cause:</strong> Python virtual environment was tracked in Git, causing symlink issues with Jekyll builds.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove virtual environment from Git tracking</span>
+git<span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>--cached<span class="w"> </span>backend/venv/
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;backend/venv/&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore
+
+<span class="c1"># Recreate virtual environment</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+rm<span class="w"> </span>-rf<span class="w"> </span>venv
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+</pre></div>
+</div>
+<p><strong>TensorFlow Installation Failures</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">Could</span> <span class="pre">not</span> <span class="pre">install</span> <span class="pre">packages</span> <span class="pre">due</span> <span class="pre">to</span> <span class="pre">an</span> <span class="pre">OSError</span></code></p>
+<p><strong>Cause:</strong> TensorFlow has complex system dependencies that often fail on various platforms.</p>
+<p><strong>Solution (Recommended):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use lightweight requirements without TensorFlow</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+</pre></div>
+</div>
+<p><strong>Note:</strong> MagTrace works perfectly with scikit-learn only. TensorFlow is optional and not required for core functionality.</p>
+<p><strong>Python Version Compatibility</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code> or <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> on startup</p>
+<p><strong>Cause:</strong> MagTrace requires Python 3.8 or higher.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check Python version</span>
+python3<span class="w"> </span>--version
+
+<span class="c1"># Ubuntu/Debian - install newer Python</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3.9<span class="w"> </span>python3.9-venv
+
+<span class="c1"># macOS with Homebrew</span>
+brew<span class="w"> </span>install<span class="w"> </span>python@3.9
+
+<span class="c1"># Windows - download from python.org</span>
+</pre></div>
+</div>
+<p><strong>Port 8000 Already in Use</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">That</span> <span class="pre">port</span> <span class="pre">is</span> <span class="pre">already</span> <span class="pre">in</span> <span class="pre">use.</span></code></p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find and kill process using port 8000</span>
+lsof<span class="w"> </span>-ti:8000<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9
+
+<span class="c1"># Or use different port</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8001</span>
+</pre></div>
+</div>
+</section>
+<section id="data-upload-issues">
+<h1>Data Upload Issues<a class="headerlink" href="#data-upload-issues" title="Link to this heading"></a></h1>
+<p><strong>CSV Format Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">Invalid</span> <span class="pre">dataset</span> <span class="pre">format</span></code> or <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">data</span> <span class="pre">points</span> <span class="pre">found</span></code></p>
+<p><strong>Cause:</strong> CSV file doesn’t contain required magnetic field columns.</p>
+<p><strong>Required Columns:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp_pc    # Measurement timestamp (required)
+b_x            # Magnetic field X component (required)
+b_y            # Magnetic field Y component (required)
+b_z            # Magnetic field Z component (required)
+</pre></div>
+</div>
+<p><strong>Optional Columns:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>lat, lon, altitude    # GPS coordinates
+sensor_id            # Sensor identifier
+thetax, thetay, thetaz    # Orientation angles
+</pre></div>
+</div>
+<p><strong>Valid Example:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,sensor_id
+24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,S963350075783
+24:40.1,6830.673,9892.699,14027.742,26.5123251,80.2238068,2018,S963350075783
+</pre></div>
+</div>
+<p><strong>Large File Upload Failures</strong></p>
+<p><strong>Problem:</strong> Upload fails or times out with large CSV files</p>
+<p><strong>Current Limitation:</strong> Django default upload limit is ~100MB</p>
+<p><strong>Workarounds:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Split large files</strong> into smaller chunks (&lt; 50MB each)</p></li>
+<li><p><strong>Data decimation</strong> - reduce sampling rate before upload</p></li>
+<li><p><strong>Server configuration</strong> (requires system admin access):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># In Django settings.py</span>
+<span class="n">FILE_UPLOAD_MAX_MEMORY_SIZE</span> <span class="o">=</span> <span class="mi">104857600</span>  <span class="c1"># 100MB</span>
+<span class="n">DATA_UPLOAD_MAX_MEMORY_SIZE</span> <span class="o">=</span> <span class="mi">104857600</span>  <span class="c1"># 100MB</span>
+</pre></div>
+</div>
+<p><strong>Non-Numeric Magnetic Field Values</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">TypeError:</span> <span class="pre">cannot</span> <span class="pre">convert</span> <span class="pre">string</span> <span class="pre">to</span> <span class="pre">float</span></code></p>
+<p><strong>Cause:</strong> CSV contains non-numeric values in B_x, B_y, B_z columns.</p>
+<p><strong>Solution:</strong> Clean data before upload:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Load and clean CSV</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;magnetometer_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert magnetic field columns to numeric, replacing errors with NaN</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;b_x&#39;</span><span class="p">,</span> <span class="s1">&#39;b_y&#39;</span><span class="p">,</span> <span class="s1">&#39;b_z&#39;</span><span class="p">]:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+
+<span class="c1"># Remove rows with NaN magnetic field values</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b_x&#39;</span><span class="p">,</span> <span class="s1">&#39;b_y&#39;</span><span class="p">,</span> <span class="s1">&#39;b_z&#39;</span><span class="p">])</span>
+
+<span class="c1"># Save cleaned data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;cleaned_magnetometer_data.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="visualization-issues">
+<h1>Visualization Issues<a class="headerlink" href="#visualization-issues" title="Link to this heading"></a></h1>
+<p><strong>Chart Not Loading or Displaying</strong></p>
+<p><strong>Problem:</strong> Blank visualization area or JavaScript errors</p>
+<p><strong>Diagnostics:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Open browser developer console</strong> (F12)</p></li>
+<li><p><strong>Check for JavaScript errors</strong> in Console tab</p></li>
+<li><p><strong>Verify data loading</strong> in Network tab</p></li>
+</ol>
+<p><strong>Common Causes:</strong></p>
+<ul class="simple">
+<li><p><strong>Empty dataset</strong> - No magnetic field data after processing</p></li>
+<li><p><strong>Invalid timestamps</strong> - Non-numeric or malformed timestamp_pc values</p></li>
+<li><p><strong>Browser compatibility</strong> - Use modern browser (Chrome, Firefox, Safari, Edge)</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check if data loaded properly (in browser console)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">currentDataset</span><span class="p">);</span>
+
+<span class="c1">// Common error: Invalid timestamp format</span>
+<span class="c1">// Ensure timestamp_pc is numeric (seconds or milliseconds)</span>
+</pre></div>
+</div>
+<p><strong>Slow Chart Performance</strong></p>
+<p><strong>Problem:</strong> Laggy or unresponsive visualization with large datasets</p>
+<p><strong>Cause:</strong> Browser rendering too many data points</p>
+<p><strong>Solution:</strong> MagTrace automatically decimates datasets &gt; 5000 points, but you can manually reduce data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pre-process large datasets before upload</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;large_magnetometer_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Keep every Nth row (decimation)</span>
+<span class="n">decimation_factor</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">df_decimated</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="n">decimation_factor</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># Save decimated version</span>
+<span class="n">df_decimated</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;decimated_data.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="training-issues">
+<h1>Training Issues<a class="headerlink" href="#training-issues" title="Link to this heading"></a></h1>
+<p><strong>Training Fails to Start</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">Training</span> <span class="pre">session</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">start</span></code> or immediate failure</p>
+<p><strong>Required Prerequisites:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>At least 2-3 annotations</strong> with different label categories</p></li>
+<li><p><strong>Valid model configuration</strong> saved</p></li>
+<li><p><strong>Sufficient labeled data</strong> (minimum 10 data points per category)</p></li>
+</ol>
+<p><strong>Diagnostic Steps:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if annotations exist</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>shell
+&gt;&gt;&gt;<span class="w"> </span>from<span class="w"> </span>magtrace_api.models<span class="w"> </span>import<span class="w"> </span>Annotation
+&gt;&gt;&gt;<span class="w"> </span>print<span class="o">(</span>f<span class="s2">&quot;Total annotations: {Annotation.objects.count()}&quot;</span><span class="o">)</span>
+&gt;&gt;&gt;<span class="w"> </span><span class="k">for</span><span class="w"> </span>ann<span class="w"> </span><span class="k">in</span><span class="w"> </span>Annotation.objects.all<span class="o">()</span>:
+...<span class="w">     </span>print<span class="o">(</span>f<span class="s2">&quot;ID: {ann.id}, Label: {ann.label_category.name if ann.label_category else &#39;None&#39;}&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p><strong>Scikit-learn Import Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'sklearn'</span></code></p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>scikit-learn<span class="o">==</span><span class="m">1</span>.3.2
+</pre></div>
+</div>
+<p><strong>Training Session Hangs</strong></p>
+<p><strong>Problem:</strong> Training progress stuck at 0% or specific percentage</p>
+<p><strong>Debugging:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Check server logs</strong> for error messages</p></li>
+<li><p><strong>Verify background training process</strong>:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if training process is running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>python
+
+<span class="c1"># Django development server logs</span>
+tail<span class="w"> </span>-f<span class="w"> </span>backend/debug.log<span class="w">  </span><span class="c1"># if logging configured</span>
+</pre></div>
+</div>
+<p><strong>Memory Issues During Training</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">MemoryError</span></code> or system becomes unresponsive</p>
+<p><strong>Cause:</strong> Large datasets require significant memory for feature extraction</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Reduce dataset size</strong> through decimation</p></li>
+<li><p><strong>Increase system memory</strong> (recommend 8GB+ for large datasets)</p></li>
+<li><p><strong>Split training</strong> into smaller batches</p></li>
+</ol>
+</section>
+<section id="database-issues">
+<h1>Database Issues<a class="headerlink" href="#database-issues" title="Link to this heading"></a></h1>
+<p><strong>Migration Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">django.db.utils.OperationalError</span></code> during migrations</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reset database (WARNING: loses all data)</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+rm<span class="w"> </span>db.sqlite3
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+
+<span class="c1"># Or backup and restore</span>
+cp<span class="w"> </span>db.sqlite3<span class="w"> </span>db.sqlite3.backup
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</pre></div>
+</div>
+<p><strong>Database Locked Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">database</span> <span class="pre">is</span> <span class="pre">locked</span></code> errors</p>
+<p><strong>Cause:</strong> Multiple Django processes or interrupted operations</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kill all Django processes</span>
+pkill<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;manage.py runserver&quot;</span>
+
+<span class="c1"># Restart server</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver
+</pre></div>
+</div>
+<p><strong>Corrupted Database</strong></p>
+<p><strong>Problem:</strong> Inconsistent data or foreign key errors</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check database integrity</span>
+sqlite3<span class="w"> </span>backend/db.sqlite3<span class="w"> </span><span class="s2">&quot;PRAGMA integrity_check;&quot;</span>
+
+<span class="c1"># If corrupted, restore from backup or reset</span>
+rm<span class="w"> </span>backend/db.sqlite3
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</pre></div>
+</div>
+</section>
+<section id="network-and-api-issues">
+<h1>Network and API Issues<a class="headerlink" href="#network-and-api-issues" title="Link to this heading"></a></h1>
+<p><strong>CSRF Token Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">403</span> <span class="pre">Forbidden:</span> <span class="pre">CSRF</span> <span class="pre">verification</span> <span class="pre">failed</span></code></p>
+<p><strong>Cause:</strong> Missing or invalid CSRF tokens for POST requests</p>
+<p><strong>Solution (Frontend):</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get CSRF token from cookie</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;csrftoken=&#39;</span><span class="p">))</span>
+<span class="w">        </span><span class="o">?</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="c1">// Include in fetch requests</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/datasets/upload/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">&#39;X-CSRFToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">()</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nx">formData</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p><strong>API Endpoint 404 Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">404</span> <span class="pre">Not</span> <span class="pre">Found</span></code> for API endpoints</p>
+<p><strong>Verification:</strong> Check available endpoints:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/api/
+
+<span class="c1"># Should return API root with available endpoints</span>
+</pre></div>
+</div>
+<p><strong>Connection Refused Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">Connection</span> <span class="pre">refused</span></code> when accessing <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></p>
+<p><strong>Diagnostics:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if server is running</span>
+netstat<span class="w"> </span>-tulpn<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8000
+
+<span class="c1"># Check Django server status</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;manage.py runserver&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="browser-and-frontend-issues">
+<h1>Browser and Frontend Issues<a class="headerlink" href="#browser-and-frontend-issues" title="Link to this heading"></a></h1>
+<p><strong>Modern Browser Required</strong></p>
+<p><strong>Problem:</strong> Interface doesn’t display correctly or JavaScript errors</p>
+<p><strong>Solution:</strong> Use supported browsers:</p>
+<ul class="simple">
+<li><p>Chrome 80+</p></li>
+<li><p>Firefox 75+</p></li>
+<li><p>Safari 13+</p></li>
+<li><p>Edge 80+</p></li>
+</ul>
+<p><strong>JavaScript Console Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">ReferenceError</span></code> or <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> in browser console</p>
+<p><strong>Common Issues:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// D3.js not loaded</span>
+<span class="c1">// Check if D3 library loads: console.log(d3);</span>
+
+<span class="c1">// MagTrace class not initialized</span>
+<span class="c1">// Check: console.log(window.app);</span>
+</pre></div>
+</div>
+<p><strong>Local File Access Issues</strong></p>
+<p><strong>Problem:</strong> Cannot access local CSV files in browser file picker</p>
+<p><strong>Solution:</strong> Files must be on accessible file system path, not network drives or restricted directories.</p>
+</section>
+<section id="performance-issues">
+<h1>Performance Issues<a class="headerlink" href="#performance-issues" title="Link to this heading"></a></h1>
+<p><strong>Slow Application Response</strong></p>
+<p><strong>Problem:</strong> Long delays for data loading or UI interactions</p>
+<p><strong>Optimization Checklist:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Dataset size</strong> - Use &lt; 10,000 points for optimal performance</p></li>
+<li><p><strong>Browser resources</strong> - Close unnecessary tabs</p></li>
+<li><p><strong>System memory</strong> - Ensure 4GB+ available RAM</p></li>
+<li><p><strong>Database optimization</strong> - Regular SQLite VACUUM</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimize SQLite database</span>
+sqlite3<span class="w"> </span>backend/db.sqlite3<span class="w"> </span><span class="s2">&quot;VACUUM;&quot;</span>
+</pre></div>
+</div>
+<p><strong>High Memory Usage</strong></p>
+<p><strong>Problem:</strong> System becomes slow or unresponsive</p>
+<p><strong>Memory optimization:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Close unused projects</strong> in interface</p></li>
+<li><p><strong>Limit concurrent training sessions</strong> to 1</p></li>
+<li><p><strong>Clear browser cache</strong> regularly</p></li>
+<li><p><strong>Restart Django server</strong> periodically</p></li>
+</ol>
+</section>
+<section id="development-issues">
+<h1>Development Issues<a class="headerlink" href="#development-issues" title="Link to this heading"></a></h1>
+<p><strong>Static Files Not Loading</strong></p>
+<p><strong>Problem:</strong> CSS/JavaScript files return 404 in development</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>manage.py<span class="w"> </span>collectstatic<span class="w"> </span>--noinput
+</pre></div>
+</div>
+<p><strong>Template Does Not Exist Errors</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">TemplateDoesNotExist:</span> <span class="pre">magtrace.html</span></code></p>
+<p><strong>Cause:</strong> Template renaming not properly updated</p>
+<p><strong>Solution:</strong> Verify template path in views:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># In backend/frontend_views.py</span>
+<span class="k">def</span> <span class="nf">main_app</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;magtrace.html&#39;</span><span class="p">)</span>  <span class="c1"># Correct template name</span>
+</pre></div>
+</div>
+<p><strong>Import Errors in Development</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> for local modules</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure you&#39;re in the correct directory</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+
+<span class="c1"># Activate virtual environment</span>
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+
+<span class="c1"># Verify Python path</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import sys; print(sys.path)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="production-deployment-issues">
+<h1>Production Deployment Issues<a class="headerlink" href="#production-deployment-issues" title="Link to this heading"></a></h1>
+<p><strong>Environment Variables</strong></p>
+<p><strong>Problem:</strong> Settings not loading in production environment</p>
+<p><strong>Setup for production:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create .env file in backend/</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>backend/.env<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">DEBUG=False</span>
+<span class="s">SECRET_KEY=your-production-secret-key</span>
+<span class="s">ALLOWED_HOSTS=your-domain.com,localhost</span>
+<span class="s">DATABASE_URL=postgresql://user:pass@localhost/dbname</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p><strong>Static File Serving</strong></p>
+<p><strong>Problem:</strong> CSS/JS files not loading in production</p>
+<p><strong>Solution:</strong> Configure web server (nginx/Apache) or use WhiteNoise:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># In settings.py</span>
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;whitenoise.middleware.WhiteNoiseMiddleware&#39;</span><span class="p">,</span>
+    <span class="c1"># ... other middleware</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Database Configuration</strong></p>
+<p><strong>Problem:</strong> SQLite not suitable for production</p>
+<p><strong>Solution:</strong> Migrate to PostgreSQL:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install PostgreSQL adapter</span>
+pip<span class="w"> </span>install<span class="w"> </span>psycopg2-binary
+
+<span class="c1"># Update DATABASE setting in settings.py</span>
+</pre></div>
+</div>
+</section>
+<section id="system-resource-issues">
+<h1>System Resource Issues<a class="headerlink" href="#system-resource-issues" title="Link to this heading"></a></h1>
+<p><strong>Disk Space</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">space</span> <span class="pre">left</span> <span class="pre">on</span> <span class="pre">device</span></code></p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check disk usage</span>
+df<span class="w"> </span>-h
+
+<span class="c1"># Clean uploaded datasets</span>
+rm<span class="w"> </span>backend/media/datasets/*.csv
+
+<span class="c1"># Clear Django logs if configured</span>
+rm<span class="w"> </span>backend/*.log
+</pre></div>
+</div>
+<p><strong>File Permissions</strong></p>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">PermissionError</span></code> on file operations</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fix permissions for media directory</span>
+chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>backend/media/
+
+<span class="c1"># Ensure virtual environment permissions</span>
+chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span>backend/venv/
+</pre></div>
+</div>
+</section>
+<section id="getting-help">
+<h1>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h1>
+<p><strong>Diagnostic Information to Collect:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Python version:</strong> <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">--version</span></code></p></li>
+<li><p><strong>Operating system:</strong> <code class="docutils literal notranslate"><span class="pre">uname</span> <span class="pre">-a</span></code> (Linux/macOS) or <code class="docutils literal notranslate"><span class="pre">systeminfo</span></code> (Windows)</p></li>
+<li><p><strong>Browser and version</strong></p></li>
+<li><p><strong>Error messages</strong> from browser console and server logs</p></li>
+<li><p><strong>Dataset size and format</strong> if data-related issue</p></li>
+<li><p><strong>Steps to reproduce</strong> the problem</p></li>
+</ol>
+<p><strong>Debugging Mode:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable Django debug mode (development only)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DEBUG</span><span class="o">=</span>True
+<span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver
+
+<span class="c1"># Check detailed error pages in browser</span>
+</pre></div>
+</div>
+<p><strong>Testing Your Installation:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run comprehensive workflow test</span>
+python3<span class="w"> </span>test_workflow.py
+
+<span class="c1"># Expected successful output shows all ✅ checkmarks</span>
+</pre></div>
+</div>
+<p><strong>Known Limitations:</strong></p>
+<ul class="simple">
+<li><p><strong>Single-user system</strong> - No multi-user authentication</p></li>
+<li><p><strong>SQLite limitations</strong> - Not suitable for concurrent access</p></li>
+<li><p><strong>File upload limits</strong> - ~100MB maximum</p></li>
+<li><p><strong>No automated backups</strong> - Manual database backup required</p></li>
+<li><p><strong>Development server only</strong> - Requires production web server setup</p></li>
+</ul>
+<p>If problems persist, check the installation guide and ensure all prerequisites are met. The system has been tested primarily on Ubuntu 20.04+ and macOS 12+.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

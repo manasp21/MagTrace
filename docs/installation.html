@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>} &mdash; MagTrace 1.0 documentation</title>
+  <title>Installation Guide &mdash; MagTrace 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="}" href="testing_results.html" /> 
+    <link rel="next" title="Quick Start Tutorial" href="quick_start_tutorial.html" />
+    <link rel="prev" title="MagTrace: Magnetic Field Analysis Platform" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,8 +42,37 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
 <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#quick-installation-recommended">Quick Installation (Recommended)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dependency-details">Dependency Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#data-format-requirements">Data Format Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#development-installation">Development Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#need-help">Need Help?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-1-create-your-first-project">Step 1: Create Your First Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-2-upload-real-magnetic-field-data">Step 2: Upload Real Magnetic Field Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-3-label-magnetic-field-anomalies">Step 3: Label Magnetic Field Anomalies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-4-configure-ml-model-for-magnetic-data">Step 4: Configure ML Model for Magnetic Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-5-train-on-magnetic-field-features">Step 5: Train on Magnetic Field Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-6-review-magnetic-field-analysis-results">Step 6: Review Magnetic Field Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#congratulations">Congratulations! 🎉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#real-world-applications">Real-World Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#next-steps-with-your-own-data">Next Steps with Your Own Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#learn-more">Learn More</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
@@ -55,7 +85,6 @@
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">}</a></li>
 </ul>
 
         </div>
@@ -72,7 +101,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">}</li>
+      <li class="breadcrumb-item active">Installation Guide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,215 +111,290 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p># Installation Guide</p>
-<p>## System Requirements</p>
+  <section id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
+<p>Get MagTrace running for magnetic field data analysis in minutes.</p>
+</section>
+<section id="system-requirements">
+<h1>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h1>
+<p><strong>Minimum Requirements:</strong>
+- Python 3.8 or higher
+- 4GB RAM (8GB recommended for large magnetometer datasets)
+- 1GB disk space
+- Modern web browser (Chrome, Firefox, Safari, Edge)</p>
+<p><strong>Operating Systems:</strong>
+- Windows 10/11, macOS 10.14+, Linux (Ubuntu 18.04+)</p>
+<p><strong>Verified Platforms:</strong>
+Installation tested on multiple platforms with magnetic field data processing.</p>
+</section>
+<section id="quick-installation-recommended">
+<h1>Quick Installation (Recommended)<a class="headerlink" href="#quick-installation-recommended" title="Link to this heading"></a></h1>
+<p><strong>1. Clone Repository</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/manasp21/MagTrace.git
+<span class="nb">cd</span><span class="w"> </span>MagTrace
+</pre></div>
+</div>
+<p><strong>2. Run Application</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>run.py
+</pre></div>
+</div>
+<p>The launcher automatically:</p>
+<p>✅ Creates Python virtual environment
+✅ Installs required dependencies
+✅ Sets up SQLite database with magnetic field data models
+✅ Starts Django development server</p>
+<p><strong>3. Access Application</strong></p>
 <ul class="simple">
-<li><p><strong>Python</strong>: 3.8 or higher</p></li>
-<li><p><strong>Operating System</strong>: Windows, macOS, or Linux</p></li>
-<li><p><strong>RAM</strong>: 4GB minimum, 8GB recommended</p></li>
-<li><p><strong>Storage</strong>: 1GB free space</p></li>
-<li><p><strong>Browser</strong>: Chrome, Firefox, Safari, or Edge</p></li>
+<li><p><strong>Main Interface:</strong> <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a></p></li>
+<li><p><strong>Health Check:</strong> <a class="reference external" href="http://localhost:8000/health/">http://localhost:8000/health/</a></p></li>
+<li><p><strong>REST API:</strong> <a class="reference external" href="http://localhost:8000/api/">http://localhost:8000/api/</a></p></li>
+<li><p><strong>Admin Panel:</strong> <a class="reference external" href="http://localhost:8000/admin/">http://localhost:8000/admin/</a></p></li>
 </ul>
-<p>## Quick Installation</p>
-<p>### 1. Clone Repository
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">&lt;repository-url&gt;</span>
-<span class="pre">cd</span> <span class="pre">MagTrace</span>
-<span class="pre">`</span></code></p>
-<p>### 2. Create Virtual Environment
-<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>bash
-cd backend
-python3 -m venv venv</p>
-<p># Activate virtual environment
-# On Windows:
-venvScriptsactivate
-# On macOS/Linux:
-source venv/bin/activate
-<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
-<p>### 3. Install Dependencies
-<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a>bash
-# Try full installation first
-pip install -r requirements.txt</p>
-<p># If TensorFlow installation fails, use lite version
-pip install -r requirements-lite.txt
-<a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a></p>
-<p>### 4. Setup Database
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">magtrace_api</span>
-<span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span>
-<span class="pre">`</span></code></p>
-<p>### 5. Start Application
-<a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id19"><span class="problematic" id="id20">`</span></a>bash
-# Quick start (recommended)
-cd ..
-python run.py</p>
-<p># OR manual start
-cd backend
-python manage.py runserver
-<a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
-<p>### 6. Access Application
-Open your browser to: <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a></p>
-<p>## Detailed Installation</p>
-<p>### Dependencies Explained</p>
-<p><strong>Core Requirements (requirements-lite.txt):</strong>
-- Django 4.2+ - Web framework
-- djangorestframework - API framework
-- django-cors-headers - CORS support
-- pandas - Data processing
-- numpy - Numerical computing
-- scikit-learn - Machine learning</p>
-<p><strong>Optional Requirements (requirements.txt):</strong>
-- tensorflow 2.15+ - Advanced ML models
-- matplotlib - Additional plotting
-- jupyter - Notebook support</p>
-<p>### Virtual Environment Setup</p>
-<p><strong>Why use virtual environment?</strong>
-- Isolates project dependencies
-- Prevents conflicts with system Python
-- Ensures reproducible installations</p>
-<p><strong>Creating environment:</strong>
-<a href="#id25"><span class="problematic" id="id26">``</span></a><a href="#id27"><span class="problematic" id="id28">`</span></a>bash
-# Using venv (recommended)
-python3 -m venv venv</p>
-<p># Using conda (alternative)
-conda create -n magtrace python=3.9
-conda activate magtrace
-<a href="#id29"><span class="problematic" id="id30">``</span></a><a href="#id31"><span class="problematic" id="id32">`</span></a></p>
-<p>### Database Configuration</p>
-<p><strong>Default Setup (SQLite):</strong>
-- No additional configuration needed
-- Database file: <cite>backend/db.sqlite3</cite>
-- Automatically created on first run</p>
-<p><strong>Custom Database (Optional):</strong>
-Edit <cite>backend/django_magtrace/settings.py</cite>:
-<a href="#id33"><span class="problematic" id="id34">``</span></a><a href="#id35"><span class="problematic" id="id36">`</span></a>python
-DATABASES = {</p>
-<blockquote>
-<div><dl class="simple">
-<dt>‘default’: {</dt><dd><p>‘ENGINE’: ‘django.db.backends.postgresql’,
-‘NAME’: ‘magtrace’,
-‘USER’: ‘your_user’,
-‘PASSWORD’: ‘your_password’,
-‘HOST’: ‘localhost’,
-‘PORT’: ‘5432’,</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<section id="id37">
-<h1>}<a class="headerlink" href="#id37" title="Link to this heading"></a></h1>
-<p>## Troubleshooting Installation</p>
-<p>### Common Issues</p>
-<p><strong>TensorFlow Installation Fails:</strong>
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">#</span> <span class="pre">Use</span> <span class="pre">lite</span> <span class="pre">requirements</span> <span class="pre">instead</span>
-<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements-lite.txt</span>
-<span class="pre">#</span> <span class="pre">Application</span> <span class="pre">will</span> <span class="pre">use</span> <span class="pre">scikit-learn</span> <span class="pre">models</span>
-<span class="pre">`</span></code></p>
-<p><strong>Permission Errors:</strong>
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">#</span> <span class="pre">On</span> <span class="pre">Windows,</span> <span class="pre">run</span> <span class="pre">as</span> <span class="pre">administrator</span>
-<span class="pre">#</span> <span class="pre">On</span> <span class="pre">macOS/Linux,</span> <span class="pre">check</span> <span class="pre">file</span> <span class="pre">permissions</span>
-<span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">run.py</span>
-<span class="pre">`</span></code></p>
-<p><strong>Port Already in Use:</strong>
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">#</span> <span class="pre">Kill</span> <span class="pre">existing</span> <span class="pre">processes</span>
-<span class="pre">lsof</span> <span class="pre">-ti:8000</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">kill</span> <span class="pre">-9</span>
-<span class="pre">#</span> <span class="pre">Or</span> <span class="pre">use</span> <span class="pre">different</span> <span class="pre">port</span>
-<span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">8001</span>
-<span class="pre">`</span></code></p>
-<p><strong>Database Migration Errors:</strong>
-<code class="docutils literal notranslate"><span class="pre">`bash</span>
-<span class="pre">#</span> <span class="pre">Reset</span> <span class="pre">database</span>
-<span class="pre">rm</span> <span class="pre">backend/db.sqlite3</span>
-<span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span> <span class="pre">magtrace_api</span>
-<span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span>
-<span class="pre">`</span></code></p>
-<p>### Performance Optimization</p>
-<p><strong>For Large Datasets:</strong>
-- Increase available RAM
-- Close other applications
-- Use SSD storage for better I/O</p>
-<p><strong>Browser Optimization:</strong>
-- Use Chrome or Firefox for best performance
-- Close unnecessary browser tabs
-- Enable hardware acceleration</p>
-<p>## Development Setup</p>
-<p>### Additional Tools
-<a href="#id38"><span class="problematic" id="id39">``</span></a><a href="#id40"><span class="problematic" id="id41">`</span></a>bash
-# Install development dependencies
-pip install -r requirements-dev.txt</p>
-<p># Code formatting
-pip install black isort</p>
-<p># Testing
-pip install pytest pytest-django
-<a href="#id42"><span class="problematic" id="id43">``</span></a><a href="#id44"><span class="problematic" id="id45">`</span></a></p>
-<p>### IDE Configuration
-<strong>VS Code Extensions:</strong>
-- Python
-- Django
-- JavaScript ES6</p>
-<p><strong>PyCharm:</strong>
-- Enable Django support
-- Configure Python interpreter to virtual environment</p>
-<p>## Docker Installation (Alternative)</p>
-<p>### Using Docker Compose
-<a href="#id46"><span class="problematic" id="id47">``</span></a><a href="#id48"><span class="problematic" id="id49">`</span></a>bash
-# Build and start containers
-docker-compose up –build</p>
-<p># Access application
-<a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a>
-<a href="#id50"><span class="problematic" id="id51">``</span></a><a href="#id52"><span class="problematic" id="id53">`</span></a></p>
-<p>### Dockerfile
-<a href="#id54"><span class="problematic" id="id55">``</span></a><a href="#id56"><span class="problematic" id="id57">`</span></a>dockerfile
-FROM python:3.9-slim</p>
-<p>WORKDIR /app
-COPY requirements-lite.txt .
-RUN pip install -r requirements-lite.txt</p>
-<p>COPY . .
-EXPOSE 8000</p>
-<p>CMD [“python”, “backend/manage.py”, “runserver”, “0.0.0.0:8000”]
-<a href="#id58"><span class="problematic" id="id59">``</span></a><a href="#id60"><span class="problematic" id="id61">`</span></a></p>
-<p>## Verification</p>
-<p>### Test Installation
-<a href="#id62"><span class="problematic" id="id63">``</span></a><a href="#id64"><span class="problematic" id="id65">`</span></a>bash
-# Run basic tests
-python test_functionality.py</p>
-<p># Check API endpoints
-curl <a class="reference external" href="http://localhost:8000/health/">http://localhost:8000/health/</a></p>
-<p># Verify static files
-curl <a class="reference external" href="http://localhost:8000/static/js/magtrace-pro.js">http://localhost:8000/static/js/magtrace-pro.js</a>
-<a href="#id66"><span class="problematic" id="id67">``</span></a><a href="#id68"><span class="problematic" id="id69">`</span></a></p>
-<p>### Expected Output
-- ✅ Django server starts without errors
-- ✅ Application loads at <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a>
-- ✅ API responds at <a class="reference external" href="http://localhost:8000/api/">http://localhost:8000/api/</a>
-- ✅ File upload and visualization work</p>
-<p>## Next Steps</p>
+</section>
+<section id="manual-installation">
+<h1>Manual Installation<a class="headerlink" href="#manual-installation" title="Link to this heading"></a></h1>
+<p>For manual control over installation:</p>
+<p><strong>1. Create Virtual Environment</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+
+<span class="c1"># Activate environment</span>
+<span class="c1"># Linux/macOS:</span>
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+<span class="c1"># Windows:</span>
+venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+<p><strong>2. Install Dependencies</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Full installation (includes TensorFlow)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Lightweight installation (scikit-learn only)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+</pre></div>
+</div>
+<p><strong>Note:</strong> TensorFlow installation often fails on some systems. MagTrace works perfectly with scikit-learn only using <code class="docutils literal notranslate"><span class="pre">requirements-lite.txt</span></code>.</p>
+<p><strong>3. Database Setup</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</pre></div>
+</div>
+<p>This creates SQLite database with tables for:
+- Projects and datasets
+- Magnetometer readings (B_x, B_y, B_z)
+- Annotations and label categories
+- ML models and training sessions</p>
+<p><strong>4. Start Server</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>manage.py<span class="w"> </span>runserver
+</pre></div>
+</div>
+</section>
+<section id="verifying-installation">
+<h1>Verifying Installation<a class="headerlink" href="#verifying-installation" title="Link to this heading"></a></h1>
+<p><strong>1. Health Check</strong></p>
+<p>Visit <a class="reference external" href="http://localhost:8000/health/">http://localhost:8000/health/</a> - should display:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>MagTrace Backend is running
+</pre></div>
+</div>
+<p><strong>2. Test with Sample Data</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run comprehensive workflow test</span>
+python3<span class="w"> </span>test_workflow.py
+</pre></div>
+</div>
+<p>Expected successful output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>🚀 Starting MagTrace Workflow Test
+✅ Server health check passed
+✅ Project created successfully: ID X
+✅ Dataset uploaded successfully: ID X
+✅ Data retrieval successful: 46 data points
+✅ Annotation created successfully: ID X
+✅ Model created successfully: ID X
+✅ Training started successfully: Session X
+</pre></div>
+</div>
+<p><strong>3. Try Sample Magnetometer Data</strong></p>
+<p>The included sample data contains real magnetic field measurements:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample data location</span>
+example/data_1.csv
+</pre></div>
+</div>
+<p>Sample content:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay,thetaz,sensor_id
+24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,0,0,0,S963350075783_20250605_112438
+</pre></div>
+</div>
 <ol class="arabic simple">
-<li><p><strong>Create First Project</strong> - Follow Quick Start guide</p></li>
-<li><p><strong>Upload Sample Data</strong> - Use files from <cite>example/</cite> directory</p></li>
-<li><p><strong>Test Labeling</strong> - Practice with interactive selection</p></li>
-<li><p><strong>Train Model</strong> - Complete the full workflow</p></li>
+<li><p>Open <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a></p></li>
+<li><p>Create a new project</p></li>
+<li><p>Upload <code class="docutils literal notranslate"><span class="pre">example/data_1.csv</span></code></p></li>
+<li><p>View interactive magnetic field visualization</p></li>
 </ol>
-<p>## Support</p>
+</section>
+<section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<p><strong>Port 8000 Already in Use</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find and stop process using port 8000</span>
+lsof<span class="w"> </span>-ti:8000<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9
+
+<span class="c1"># Or use different port</span>
+python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">8001</span>
+</pre></div>
+</div>
+<p><strong>Python Version Issues</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check Python version</span>
+python3<span class="w"> </span>--version
+
+<span class="c1"># Should be 3.8 or higher</span>
+<span class="c1"># Ubuntu/Debian - install newer Python:</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3.9
+</pre></div>
+</div>
+<p><strong>TensorFlow Installation Fails</strong></p>
+<p>This is normal and expected on many systems:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use lightweight requirements instead</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+</pre></div>
+</div>
+<p>MagTrace works perfectly with scikit-learn for magnetic field analysis.</p>
+<p><strong>Virtual Environment Issues</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove and recreate virtual environment</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>backend/venv
+<span class="nb">cd</span><span class="w"> </span>backend
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+</pre></div>
+</div>
+<p><strong>Database Migration Errors</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reset database</span>
+rm<span class="w"> </span>backend/db.sqlite3
+<span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>manage.py<span class="w"> </span>migrate
+</pre></div>
+</div>
+<p><strong>Permission Errors (Linux/macOS)</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make launcher executable</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>run.py
+</pre></div>
+</div>
+<p><strong>CSV Upload Issues</strong></p>
+<ul class="simple">
+<li><p>Verify CSV has required columns: <code class="docutils literal notranslate"><span class="pre">timestamp_pc</span></code>, <code class="docutils literal notranslate"><span class="pre">b_x</span></code>, <code class="docutils literal notranslate"><span class="pre">b_y</span></code>, <code class="docutils literal notranslate"><span class="pre">b_z</span></code></p></li>
+<li><p>Check file size (&lt;100MB for web upload)</p></li>
+<li><p>Ensure numeric values for magnetic field components</p></li>
+</ul>
+</section>
+<section id="dependency-details">
+<h1>Dependency Details<a class="headerlink" href="#dependency-details" title="Link to this heading"></a></h1>
+<p><strong>Core Dependencies (requirements-lite.txt):</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+pandas==2.1.4
+numpy==1.24.4
+scikit-learn==1.3.2
+</pre></div>
+</div>
+<p><strong>Optional Dependencies (requirements.txt):</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Same as above plus:
+tensorflow==2.15.0
+matplotlib==3.8.2
+</pre></div>
+</div>
+<p><strong>Why Lightweight Installation Works:</strong>
+MagTrace uses scikit-learn Random Forest for magnetic field analysis, which is fast, reliable, and works without TensorFlow.</p>
+</section>
+<section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p><strong>Default Settings:</strong>
+- <strong>Database:</strong> SQLite (<code class="docutils literal notranslate"><span class="pre">backend/db.sqlite3</span></code>)
+- <strong>Media Storage:</strong> <code class="docutils literal notranslate"><span class="pre">backend/media/datasets/</span></code>
+- <strong>Static Files:</strong> <code class="docutils literal notranslate"><span class="pre">backend/static/</span></code>
+- <strong>Port:</strong> 8000</p>
+<p><strong>Environment Variables (Optional):</strong></p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">.env</span></code> file in <code class="docutils literal notranslate"><span class="pre">backend/</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DEBUG</span><span class="o">=</span>True
+<span class="nv">SECRET_KEY</span><span class="o">=</span>your-secret-key
+<span class="nv">DATABASE_URL</span><span class="o">=</span>sqlite:///db.sqlite3
+</pre></div>
+</div>
+</section>
+<section id="data-format-requirements">
+<h1>Data Format Requirements<a class="headerlink" href="#data-format-requirements" title="Link to this heading"></a></h1>
+<p><strong>Required CSV Columns:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp_pc    # Measurement timestamp
+b_x            # Magnetic field X component
+b_y            # Magnetic field Y component
+b_z            # Magnetic field Z component
+</pre></div>
+</div>
+<p><strong>Optional CSV Columns:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>lat            # Latitude (GPS)
+lon            # Longitude (GPS)
+altitude       # Altitude
+sensor_id      # Sensor identifier
+</pre></div>
+</div>
+<p><strong>Example Valid CSV:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,sensor_id
+24:40.0,7746.664,9395.448,14682.022,26.5123251,80.2238068,2018,S963350075783
+24:40.1,6830.673,9892.699,14027.742,26.5123251,80.2238068,2018,S963350075783
+</pre></div>
+</div>
+</section>
+<section id="development-installation">
+<h1>Development Installation<a class="headerlink" href="#development-installation" title="Link to this heading"></a></h1>
+<p>For developers contributing to MagTrace:</p>
+<p><strong>1. Fork Repository</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fork on GitHub, then:</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_USERNAME/MagTrace.git
+<span class="nb">cd</span><span class="w"> </span>MagTrace
+</pre></div>
+</div>
+<p><strong>2. Development Dependencies</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>backend
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-lite.txt
+
+<span class="c1"># Additional development tools</span>
+pip<span class="w"> </span>install<span class="w"> </span>black<span class="w"> </span>isort<span class="w"> </span>pytest
+</pre></div>
+</div>
+<p><strong>3. Run Tests</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test complete workflow</span>
+python3<span class="w"> </span>test_workflow.py
+
+<span class="c1"># Django unit tests</span>
+<span class="nb">cd</span><span class="w"> </span>backend
+python<span class="w"> </span>manage.py<span class="w"> </span><span class="nb">test</span>
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h1>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h1>
+<p>Once installed successfully:</p>
+<ol class="arabic simple">
+<li><p><strong>Quick Start:</strong> Try <a class="reference internal" href="quick_start_tutorial.html"><span class="doc">Quick Start Tutorial</span></a> with sample magnetometer data</p></li>
+<li><p><strong>Upload Your Data:</strong> Import your own magnetic field CSV files</p></li>
+<li><p><strong>Explore API:</strong> Check out <a class="reference internal" href="api_reference.html"><span class="doc">]</span></a> for integration</p></li>
+<li><p><strong>View Results:</strong> See <a class="reference internal" href="testing_results.html"><span class="doc">}</span></a> for validation details</p></li>
+</ol>
+</section>
+<section id="need-help">
+<h1>Need Help?<a class="headerlink" href="#need-help" title="Link to this heading"></a></h1>
+<p><strong>Documentation:</strong> <a class="reference external" href="https://manasp21.github.io/MagTrace/docs/index.html">https://manasp21.github.io/MagTrace/docs/index.html</a></p>
 <p><strong>Common Solutions:</strong>
-- Check Python version: <cite>python –version</cite>
-- Verify pip installation: <cite>pip list</cite>
-- Review Django logs in terminal
-- Check browser console for JavaScript errors</p>
-<p><strong>Getting Help:</strong>
-- Review troubleshooting section in README.md
-- Check GitHub issues
-- Ensure all requirements are installed correctly</p>
+- Check Python version with <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">--version</span></code>
+- Verify port availability with <code class="docutils literal notranslate"><span class="pre">lsof</span> <span class="pre">-i:8000</span></code>
+- Test installation with <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">test_workflow.py</span></code>
+- Use lightweight requirements if TensorFlow fails</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="testing_results.html" class="btn btn-neutral float-left" title="}" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="MagTrace: Magnetic Field Analysis Platform" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quick_start_tutorial.html" class="btn btn-neutral float-right" title="Quick Start Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

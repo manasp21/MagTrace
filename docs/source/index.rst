@@ -175,8 +175,11 @@ Getting Started
    :maxdepth: 2
    :caption: Technical Reference
    
+   api_endpoints
    api_reference
    testing_results
+   troubleshooting
+   production_deployment
 
 System Requirements
 ==================

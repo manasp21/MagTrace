@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Production Deployment Guide &mdash; MagTrace 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MagTrace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#quick-installation-recommended">Quick Installation (Recommended)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#manual-installation">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#dependency-details">Dependency Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#data-format-requirements">Data Format Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#need-help">Need Help?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-1-create-your-first-project">Step 1: Create Your First Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-2-upload-real-magnetic-field-data">Step 2: Upload Real Magnetic Field Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-3-label-magnetic-field-anomalies">Step 3: Label Magnetic Field Anomalies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-4-configure-ml-model-for-magnetic-data">Step 4: Configure ML Model for Magnetic Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-5-train-on-magnetic-field-features">Step 5: Train on Magnetic Field Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#step-6-review-magnetic-field-analysis-results">Step 6: Review Magnetic Field Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#congratulations">Congratulations! 🎉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#real-world-applications">Real-World Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#next-steps-with-your-own-data">Next Steps with Your Own Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start_tutorial.html#learn-more">Learn More</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MagTrace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Production Deployment Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/production_deployment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="production-deployment-guide">
+<h1>Production Deployment Guide<a class="headerlink" href="#production-deployment-guide" title="Link to this heading"></a></h1>
+<p><strong>CRITICAL WARNING: This system is NOT production-ready in its current state.</strong></p>
+<p><strong>Risk Assessment: HIGH</strong> - Multiple critical security and scalability gaps identified.</p>
+</section>
+<section id="current-development-status">
+<h1>Current Development Status<a class="headerlink" href="#current-development-status" title="Link to this heading"></a></h1>
+<p><strong>Development Stage:</strong> Proof of concept with working core functionality
+<strong>Production Readiness:</strong> Approximately 30% complete
+<strong>Security Status:</strong> Fundamentally insecure for multi-user production use
+<strong>Estimated Production Preparation:</strong> 3-6 months additional development</p>
+</section>
+<section id="critical-security-vulnerabilities">
+<h1>Critical Security Vulnerabilities<a class="headerlink" href="#critical-security-vulnerabilities" title="Link to this heading"></a></h1>
+<p><strong>1. No Authentication System</strong></p>
+<p><strong>Risk Level:</strong> CRITICAL
+<strong>Impact:</strong> Complete data exposure</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Current State:
+- No user registration or login system
+- All API endpoints publicly accessible
+- No user isolation or data access controls
+- No role-based permissions
+
+Required Implementation:
+- Django user authentication system
+- API token or JWT authentication
+- Role-based access control (admin, user, read-only)
+- Multi-tenant data isolation
+</pre></div>
+</div>
+<p><strong>2. Input Validation Vulnerabilities</strong></p>
+<p><strong>Risk Level:</strong> HIGH
+<strong>Impact:</strong> Data corruption, system compromise</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Current Gaps:
+- Limited CSV format validation
+- No SQL injection protection beyond Django ORM
+- No file type validation beyond extension checking
+- No data sanitization for user inputs
+
+Required Hardening:
+- Comprehensive input validation for all endpoints
+- File content validation (not just extension)
+- CSV parser security hardening
+- XSS protection for any user-generated content
+</pre></div>
+</div>
+<p><strong>3. File Upload Security</strong></p>
+<p><strong>Risk Level:</strong> HIGH
+<strong>Impact:</strong> Server compromise, data exfiltration</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Current Issues:
+- No virus scanning
+- No file size limits enforcement
+- Local filesystem storage (not isolated)
+- No access controls on uploaded files
+
+Required Security:
+- Antivirus scanning for all uploads
+- Strict file type and size validation
+- Isolated file storage (S3/MinIO with access controls)
+- Content-based file validation
+</pre></div>
+</div>
+<p><strong>4. Data Protection</strong></p>
+<p><strong>Risk Level:</strong> MEDIUM
+<strong>Impact:</strong> Data loss, privacy violations</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Missing Protections:
+- No data encryption at rest
+- No backup and recovery system
+- No audit logging
+- No data retention policies
+</pre></div>
+</div>
+</section>
+<section id="infrastructure-requirements">
+<h1>Infrastructure Requirements<a class="headerlink" href="#infrastructure-requirements" title="Link to this heading"></a></h1>
+<p><strong>Minimum Production Infrastructure</strong></p>
+<p><strong>Application Server:</strong>
+- <strong>CPU:</strong> 4 cores minimum, 8+ recommended
+- <strong>Memory:</strong> 16GB minimum, 32GB+ for large datasets
+- <strong>Storage:</strong> SSD with 100GB+ available space
+- <strong>OS:</strong> Ubuntu 20.04 LTS or CentOS 8+</p>
+<p><strong>Database Server:</strong>
+- <strong>PostgreSQL 13+</strong> with connection pooling
+- <strong>CPU:</strong> 2-4 cores dedicated
+- <strong>Memory:</strong> 8GB minimum, 16GB+ recommended
+- <strong>Storage:</strong> SSD with automated backup</p>
+<p><strong>Web Server:</strong>
+- <strong>Nginx</strong> or <strong>Apache</strong> with SSL termination
+- <strong>Reverse proxy</strong> configuration for Django
+- <strong>Static file serving</strong> optimization
+- <strong>Rate limiting</strong> and <strong>DDoS protection</strong></p>
+<p><strong>Background Processing:</strong>
+- <strong>Redis</strong> server for Celery task queue
+- <strong>Celery workers</strong> for ML training tasks
+- <strong>Monitoring</strong> for background job health</p>
+</section>
+<section id="required-production-components">
+<h1>Required Production Components<a class="headerlink" href="#required-production-components" title="Link to this heading"></a></h1>
+<p><strong>1. Authentication and Authorization</strong></p>
+<p><strong>Implementation Requirements:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required Django packages</span>
+<span class="n">django</span><span class="o">-</span><span class="n">allauth</span><span class="o">==</span><span class="mf">0.54.0</span>
+<span class="n">djangorestframework</span><span class="o">-</span><span class="n">simplejwt</span><span class="o">==</span><span class="mf">5.2.2</span>
+<span class="n">django</span><span class="o">-</span><span class="n">guardian</span><span class="o">==</span><span class="mf">2.4.0</span>  <span class="c1"># Object-level permissions</span>
+
+<span class="c1"># Required database changes</span>
+<span class="o">-</span> <span class="n">User</span> <span class="n">profile</span> <span class="n">model</span> <span class="k">with</span> <span class="n">role</span> <span class="n">assignments</span>
+<span class="o">-</span> <span class="n">Project</span><span class="o">-</span><span class="n">level</span> <span class="n">permissions</span> <span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">,</span> <span class="n">viewer</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Dataset</span> <span class="n">access</span> <span class="n">controls</span>
+<span class="o">-</span> <span class="n">API</span> <span class="n">rate</span> <span class="n">limiting</span> <span class="n">per</span> <span class="n">user</span>
+</pre></div>
+</div>
+<p><strong>Estimated Development Time:</strong> 4-6 weeks</p>
+<p><strong>2. Database Migration to PostgreSQL</strong></p>
+<p><strong>Configuration Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.postgresql&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;magtrace_production&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;magtrace_user&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_PASSWORD&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;db.internal.domain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;5432&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;CONN_MAX_AGE&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="s1">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;sslmode&#39;</span><span class="p">:</span> <span class="s1">&#39;require&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Migration Checklist:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- [ ] PostgreSQL server setup with SSL
+- [ ] Database user creation with minimal privileges
+- [ ] Connection pooling configuration (pgbouncer)
+- [ ] Automated backup system
+- [ ] Database monitoring and alerting
+- [ ] Data migration testing from SQLite
+</pre></div>
+</div>
+<p><strong>3. File Storage Security</strong></p>
+<p><strong>S3-Compatible Storage Implementation:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required packages</span>
+<span class="n">django</span><span class="o">-</span><span class="n">storages</span><span class="o">==</span><span class="mf">1.13.2</span>
+<span class="n">boto3</span><span class="o">==</span><span class="mf">1.26.137</span>
+
+<span class="c1"># settings.py</span>
+<span class="n">DEFAULT_FILE_STORAGE</span> <span class="o">=</span> <span class="s1">&#39;storages.backends.s3boto3.S3Boto3Storage&#39;</span>
+<span class="n">AWS_STORAGE_BUCKET_NAME</span> <span class="o">=</span> <span class="s1">&#39;magtrace-datasets-prod&#39;</span>
+<span class="n">AWS_S3_REGION_NAME</span> <span class="o">=</span> <span class="s1">&#39;us-east-1&#39;</span>
+<span class="n">AWS_S3_FILE_OVERWRITE</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">AWS_S3_SECURE_URLS</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># File upload validation</span>
+<span class="n">FILE_UPLOAD_HANDLERS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;magtrace_api.security.SecureFileUploadHandler&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Security Features to Implement:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- [ ] Virus scanning integration (ClamAV)
+- [ ] File type validation (python-magic)
+- [ ] Content-based CSV validation
+- [ ] Upload size limits per user role
+- [ ] File access logging and auditing
+</pre></div>
+</div>
+<p><strong>4. Background Processing with Celery</strong></p>
+<p><strong>Implementation Requirements:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required packages</span>
+<span class="n">celery</span><span class="o">==</span><span class="mf">5.2.7</span>
+<span class="n">redis</span><span class="o">==</span><span class="mf">4.5.4</span>
+<span class="n">flower</span><span class="o">==</span><span class="mf">1.2.0</span>  <span class="c1"># Monitoring</span>
+
+<span class="c1"># celery.py configuration</span>
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">(</span><span class="s1">&#39;magtrace&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config_from_object</span><span class="p">(</span><span class="s1">&#39;django.conf:settings&#39;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;CELERY&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">autodiscover_tasks</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Training Service Migration:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Current Issue: Training blocks Django threads
+
+Required Changes:
+- [ ] Convert training to async Celery tasks
+- [ ] Implement training session recovery
+- [ ] Add training queue management
+- [ ] Progress tracking via Redis
+- [ ] Failed training cleanup and retry logic
+</pre></div>
+</div>
+<p><strong>Estimated Development Time:</strong> 3-4 weeks</p>
+</section>
+<section id="security-hardening-checklist">
+<h1>Security Hardening Checklist<a class="headerlink" href="#security-hardening-checklist" title="Link to this heading"></a></h1>
+<p><strong>Application Security</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- [ ] Implement user authentication (Django auth + JWT)
+- [ ] Add role-based access control
+- [ ] Enable HTTPS with strong SSL configuration
+- [ ] Configure security headers (HSTS, CSP, etc.)
+- [ ] Add API rate limiting (django-ratelimit)
+- [ ] Implement request/response logging
+- [ ] Add input validation middleware
+- [ ] Configure CSRF protection for all state changes
+</pre></div>
+</div>
+<p><strong>Server Security</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- [ ] Firewall configuration (allow only necessary ports)
+- [ ] SSH key-only access (disable password auth)
+- [ ] Regular security updates automation
+- [ ] Intrusion detection system (fail2ban)
+- [ ] Log monitoring and alerting
+- [ ] Backup encryption and testing
+- [ ] Database connection encryption
+- [ ] File system permissions hardening
+</pre></div>
+</div>
+<p><strong>Application Monitoring</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- [ ] Application performance monitoring (APM)
+- [ ] Error tracking (Sentry)
+- [ ] Database performance monitoring
+- [ ] Background job monitoring (Flower)
+- [ ] System resource monitoring (CPU, memory, disk)
+- [ ] Log aggregation and analysis
+- [ ] Automated health checks
+- [ ] Alert escalation procedures
+</pre></div>
+</div>
+</section>
+<section id="production-configuration">
+<h1>Production Configuration<a class="headerlink" href="#production-configuration" title="Link to this heading"></a></h1>
+<p><strong>Environment Variables</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required production environment</span>
+<span class="nv">DEBUG</span><span class="o">=</span>False
+<span class="nv">SECRET_KEY</span><span class="o">=</span>your-very-long-random-secret-key
+<span class="nv">ALLOWED_HOSTS</span><span class="o">=</span>your-domain.com,api.your-domain.com
+
+<span class="c1"># Database</span>
+<span class="nv">DATABASE_URL</span><span class="o">=</span>postgresql://user:pass@host:5432/dbname
+
+<span class="c1"># Security</span>
+<span class="nv">SECURE_SSL_REDIRECT</span><span class="o">=</span>True
+<span class="nv">SECURE_HSTS_SECONDS</span><span class="o">=</span><span class="m">31536000</span>
+<span class="nv">SECURE_HSTS_INCLUDE_SUBDOMAINS</span><span class="o">=</span>True
+<span class="nv">SECURE_HSTS_PRELOAD</span><span class="o">=</span>True
+
+<span class="c1"># File Storage</span>
+<span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>your-access-key
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>your-secret-key
+<span class="nv">AWS_STORAGE_BUCKET_NAME</span><span class="o">=</span>your-bucket
+
+<span class="c1"># Background Processing</span>
+<span class="nv">CELERY_BROKER_URL</span><span class="o">=</span>redis://redis-host:6379/0
+<span class="nv">CELERY_RESULT_BACKEND</span><span class="o">=</span>redis://redis-host:6379/0
+</pre></div>
+</div>
+<p><strong>Nginx Configuration Example</strong></p>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">http2</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">your-domain.com</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/path/to/cert.pem</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/path/to/key.pem</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">HIGH:!aNULL:!MD5</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1"># Rate limiting</span>
+<span class="w">    </span><span class="kn">limit_req_zone</span><span class="w"> </span><span class="nv">$binary_remote_addr</span><span class="w"> </span><span class="s">zone=api:10m</span><span class="w"> </span><span class="s">rate=10r/s</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/api/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">limit_req</span><span class="w"> </span><span class="s">zone=api</span><span class="w"> </span><span class="s">burst=20</span><span class="w"> </span><span class="s">nodelay</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:8000</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/static/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">alias</span><span class="w"> </span><span class="s">/var/www/magtrace/static/</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">expires</span><span class="w"> </span><span class="s">1y</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Cache-Control</span><span class="w"> </span><span class="s">&quot;public,</span><span class="w"> </span><span class="s">immutable&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Docker Deployment (Recommended)</strong></p>
+<div class="highlight-dockerfile notranslate"><div class="highlight"><pre><span></span><span class="c"># Dockerfile</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.10-slim</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="k">COPY</span><span class="w"> </span>backend/<span class="w"> </span>.
+
+<span class="c"># Security: Run as non-root user</span>
+<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>--create-home<span class="w"> </span>--shell<span class="w"> </span>/bin/bash<span class="w"> </span>magtrace
+<span class="k">USER</span><span class="w"> </span><span class="s">magtrace</span>
+
+<span class="k">EXPOSE</span><span class="w"> </span><span class="s">8000</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;gunicorn&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--bind&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0.0.0.0:8000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;django_magtrace.wsgi:application&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># docker-compose.yml</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8000:8000&quot;</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG=False</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATABASE_URL=postgresql://postgres:password@db:5432/magtrace</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:13</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">magtrace</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres_data:/var/lib/postgresql/data</span>
+
+<span class="w">  </span><span class="nt">redis</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis:7-alpine</span>
+
+<span class="w">  </span><span class="nt">celery</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">celery -A django_magtrace worker -l info</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATABASE_URL=postgresql://postgres:password@db:5432/magtrace</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CELERY_BROKER_URL=redis://redis:6379/0</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+</pre></div>
+</div>
+</section>
+<section id="performance-optimization">
+<h1>Performance Optimization<a class="headerlink" href="#performance-optimization" title="Link to this heading"></a></h1>
+<p><strong>Database Optimization</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required database indexes</span>
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunSQL</span><span class="p">(</span>
+            <span class="s2">&quot;CREATE INDEX CONCURRENTLY idx_readings_dataset_timestamp ON magtrace_api_magnetometerreading(dataset_id, timestamp_pc);&quot;</span>
+        <span class="p">),</span>
+        <span class="n">migrations</span><span class="o">.</span><span class="n">RunSQL</span><span class="p">(</span>
+            <span class="s2">&quot;CREATE INDEX CONCURRENTLY idx_annotations_dataset ON magtrace_api_annotation(dataset_id);&quot;</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Caching Strategy</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<span class="n">CACHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;BACKEND&#39;</span><span class="p">:</span> <span class="s1">&#39;django_redis.cache.RedisCache&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;LOCATION&#39;</span><span class="p">:</span> <span class="s1">&#39;redis://127.0.0.1:6379/1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;CLIENT_CLASS&#39;</span><span class="p">:</span> <span class="s1">&#39;django_redis.client.DefaultClient&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Cache frequently accessed data</span>
+<span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span>
+
+<span class="k">def</span> <span class="nf">get_dataset_statistics</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">):</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;dataset_stats_</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stats</span><span class="p">:</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">calculate_statistics</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">)</span>
+        <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)</span>  <span class="c1"># 1 hour</span>
+    <span class="k">return</span> <span class="n">stats</span>
+</pre></div>
+</div>
+<p><strong>Frontend Optimization</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Required Improvements:
+- [ ] Implement data pagination for large datasets
+- [ ] Add client-side caching for API responses
+- [ ] Optimize D3.js rendering for large visualizations
+- [ ] Implement lazy loading for annotation lists
+- [ ] Add compression for API responses
+- [ ] CDN configuration for static assets
+</pre></div>
+</div>
+</section>
+<section id="monitoring-and-logging">
+<h1>Monitoring and Logging<a class="headerlink" href="#monitoring-and-logging" title="Link to this heading"></a></h1>
+<p><strong>Application Monitoring Setup</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required packages</span>
+<span class="n">sentry</span><span class="o">-</span><span class="n">sdk</span><span class="p">[</span><span class="n">django</span><span class="p">]</span><span class="o">==</span><span class="mf">1.23.1</span>
+<span class="n">django</span><span class="o">-</span><span class="n">prometheus</span><span class="o">==</span><span class="mf">2.3.1</span>
+
+<span class="c1"># settings.py</span>
+<span class="kn">import</span> <span class="nn">sentry_sdk</span>
+<span class="kn">from</span> <span class="nn">sentry_sdk.integrations.django</span> <span class="kn">import</span> <span class="n">DjangoIntegration</span>
+
+<span class="n">sentry_sdk</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+    <span class="n">dsn</span><span class="o">=</span><span class="s2">&quot;your-sentry-dsn&quot;</span><span class="p">,</span>
+    <span class="n">integrations</span><span class="o">=</span><span class="p">[</span><span class="n">DjangoIntegration</span><span class="p">()],</span>
+    <span class="n">traces_sample_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">send_default_pii</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Logging Configuration</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># settings.py</span>
+<span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{levelname}</span><span class="s1"> </span><span class="si">{asctime}</span><span class="s1"> </span><span class="si">{module}</span><span class="s1"> </span><span class="si">{process:d}</span><span class="s1"> </span><span class="si">{thread:d}</span><span class="s1"> </span><span class="si">{message}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;{&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.handlers.RotatingFileHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;/var/log/magtrace/django.log&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;maxBytes&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">15</span><span class="p">,</span>  <span class="c1"># 15MB</span>
+            <span class="s1">&#39;backupCount&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;verbose&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;security&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.handlers.RotatingFileHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;/var/log/magtrace/security.log&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;maxBytes&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">15</span><span class="p">,</span>
+            <span class="s1">&#39;backupCount&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;verbose&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;loggers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;django&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;INFO&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;magtrace_api&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;django.security&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;security&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="backup-and-disaster-recovery">
+<h1>Backup and Disaster Recovery<a class="headerlink" href="#backup-and-disaster-recovery" title="Link to this heading"></a></h1>
+<p><strong>Database Backup Strategy</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># automated-backup.sh</span>
+
+<span class="nv">DB_HOST</span><span class="o">=</span><span class="s2">&quot;your-db-host&quot;</span>
+<span class="nv">DB_NAME</span><span class="o">=</span><span class="s2">&quot;magtrace_production&quot;</span>
+<span class="nv">DB_USER</span><span class="o">=</span><span class="s2">&quot;backup_user&quot;</span>
+<span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">&quot;/var/backups/magtrace&quot;</span>
+
+<span class="c1"># Create encrypted backup</span>
+pg_dump<span class="w"> </span>-h<span class="w"> </span><span class="nv">$DB_HOST</span><span class="w"> </span>-U<span class="w"> </span><span class="nv">$DB_USER</span><span class="w"> </span><span class="nv">$DB_NAME</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+gzip<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+gpg<span class="w"> </span>--symmetric<span class="w"> </span>--cipher-algo<span class="w"> </span>AES256<span class="w"> </span>&gt;<span class="w"> </span><span class="se">\</span>
+<span class="s2">&quot;</span><span class="nv">$BACKUP_DIR</span><span class="s2">/magtrace_</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d_%H%M%S<span class="k">)</span><span class="s2">.sql.gz.gpg&quot;</span>
+
+<span class="c1"># Retention: Keep 7 daily, 4 weekly, 6 monthly</span>
+find<span class="w"> </span><span class="nv">$BACKUP_DIR</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.gpg&quot;</span><span class="w"> </span>-mtime<span class="w"> </span>+7<span class="w"> </span>-delete
+</pre></div>
+</div>
+<p><strong>File Storage Backup</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>S3 Bucket Configuration:
+- [ ] Cross-region replication enabled
+- [ ] Versioning enabled
+- [ ] Lifecycle policies for old versions
+- [ ] Access logging enabled
+- [ ] Encryption at rest (S3-SSE or KMS)
+</pre></div>
+</div>
+</section>
+<section id="testing-strategy">
+<h1>Testing Strategy<a class="headerlink" href="#testing-strategy" title="Link to this heading"></a></h1>
+<p><strong>Security Testing Requirements</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Pre-Production Security Tests:
+- [ ] Penetration testing by security professionals
+- [ ] SQL injection testing on all endpoints
+- [ ] XSS vulnerability testing
+- [ ] File upload security testing
+- [ ] Authentication bypass testing
+- [ ] Rate limiting effectiveness testing
+- [ ] SSL/TLS configuration testing
+</pre></div>
+</div>
+<p><strong>Load Testing</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example load test with locust</span>
+<span class="kn">from</span> <span class="nn">locust</span> <span class="kn">import</span> <span class="n">HttpUser</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">between</span>
+
+<span class="k">class</span> <span class="nc">MagTraceUser</span><span class="p">(</span><span class="n">HttpUser</span><span class="p">):</span>
+    <span class="n">wait_time</span> <span class="o">=</span> <span class="n">between</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Login if authentication implemented</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@task</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">list_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/projects/&quot;</span><span class="p">)</span>
+
+    <span class="nd">@task</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">upload_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;test_data.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/api/datasets/upload/&quot;</span><span class="p">,</span>
+                           <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">},</span>
+                           <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+
+    <span class="nd">@task</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start_training</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/api/training-sessions/start_training/&quot;</span><span class="p">,</span>
+                       <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p><strong>Performance Benchmarks</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Minimum Performance Requirements:
+- [ ] API response time &lt; 200ms for simple requests
+- [ ] Dataset upload (10MB) completes &lt; 30 seconds
+- [ ] Training initiation &lt; 5 seconds
+- [ ] Concurrent user support: 50+ users
+- [ ] Daily dataset uploads: 100+ files
+- [ ] Uptime requirement: 99.5%
+</pre></div>
+</div>
+</section>
+<section id="cost-estimation">
+<h1>Cost Estimation<a class="headerlink" href="#cost-estimation" title="Link to this heading"></a></h1>
+<p><strong>Infrastructure Costs (Monthly)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Production Environment (AWS):
+- Application Server (t3.xlarge): $150/month
+- Database Server (db.t3.large): $120/month
+- Redis Cache (cache.t3.micro): $15/month
+- Load Balancer: $20/month
+- S3 Storage (1TB): $25/month
+- SSL Certificate: $10/month
+- Monitoring (CloudWatch): $30/month
+
+Total Infrastructure: ~$370/month
+
+Development/Security:
+- Security audit: $5,000-15,000 (one-time)
+- Additional development: $50,000-100,000
+- Ongoing maintenance: $5,000-10,000/month
+</pre></div>
+</div>
+</section>
+<section id="development-timeline">
+<h1>Development Timeline<a class="headerlink" href="#development-timeline" title="Link to this heading"></a></h1>
+<p><strong>Phase 1: Security and Authentication (6-8 weeks)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Week 1-2: User authentication system
+Week 3-4: Role-based access control
+Week 5-6: API security hardening
+Week 7-8: Security testing and fixes
+</pre></div>
+</div>
+<p><strong>Phase 2: Infrastructure and Scalability (4-6 weeks)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Week 1-2: Database migration to PostgreSQL
+Week 3-4: Background processing with Celery
+Week 5-6: File storage security and S3 migration
+</pre></div>
+</div>
+<p><strong>Phase 3: Production Deployment (2-4 weeks)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Week 1-2: Production environment setup
+Week 3-4: Load testing and performance optimization
+</pre></div>
+</div>
+<p><strong>Phase 4: Monitoring and Operations (2-3 weeks)</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Week 1-2: Monitoring and logging implementation
+Week 3: Backup and disaster recovery testing
+</pre></div>
+</div>
+<p><strong>Total Estimated Timeline: 14-21 weeks (3.5-5 months)</strong></p>
+</section>
+<section id="risk-assessment-summary">
+<h1>Risk Assessment Summary<a class="headerlink" href="#risk-assessment-summary" title="Link to this heading"></a></h1>
+<p><strong>HIGH RISK - Do Not Deploy in Current State</strong></p>
+<p><strong>Critical Blockers:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>🚨 No authentication - Complete data exposure risk
+🚨 No input validation - System compromise risk
+🚨 SQLite database - Data corruption risk at scale
+🚨 No backup system - Data loss risk
+🚨 No monitoring - Undetected failures
+</pre></div>
+</div>
+<p><strong>Medium Risk - Requires Attention:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>⚠️  Single-threaded training - Performance bottleneck
+⚠️  Local file storage - Scalability limitations
+⚠️  No rate limiting - DDoS vulnerability
+⚠️  Development server - Production instability
+</pre></div>
+</div>
+<p><strong>Low Risk - Acceptable for Internal Use:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ℹ️  Limited error handling - User experience impact
+ℹ️  No CDN - Static file performance
+ℹ️  Basic logging - Limited troubleshooting capability
+</pre></div>
+</div>
+<p><strong>Recommendation: Complete security and infrastructure overhaul required before any production deployment.</strong></p>
+<p>—</p>
+<p><strong>This deployment guide provides a realistic assessment of production requirements. The current system requires significant additional development before production use.</strong></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

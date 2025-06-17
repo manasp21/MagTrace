@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Tutorial &mdash; MagTrace 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="]" href="api_reference.html" />
+    <link rel="prev" title="Installation Guide" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MagTrace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#quick-installation-recommended">Quick Installation (Recommended)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#manual-installation">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#dependency-details">Dependency Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#data-format-requirements">Data Format Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#next-steps">Next Steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#need-help">Need Help?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#tutorial-overview">Tutorial Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-1-create-your-first-project">Step 1: Create Your First Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-2-upload-real-magnetic-field-data">Step 2: Upload Real Magnetic Field Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-3-label-magnetic-field-anomalies">Step 3: Label Magnetic Field Anomalies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-4-configure-ml-model-for-magnetic-data">Step 4: Configure ML Model for Magnetic Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-5-train-on-magnetic-field-features">Step 5: Train on Magnetic Field Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#step-6-review-magnetic-field-analysis-results">Step 6: Review Magnetic Field Analysis Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#congratulations">Congratulations! 🎉</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#real-world-applications">Real-World Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#next-steps-with-your-own-data">Next Steps with Your Own Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#learn-more">Learn More</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Technical Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id10">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id23">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id28">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id33">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id38">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id43">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id48">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id53">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id90">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#id95">}</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing_results.html">}</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MagTrace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quick_start_tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-tutorial">
+<h1>Quick Start Tutorial<a class="headerlink" href="#quick-start-tutorial" title="Link to this heading"></a></h1>
+<p>Complete your first magnetic field analysis in 10 minutes using real magnetometer data.</p>
+</section>
+<section id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h1>
+<p>✅ MagTrace installed and running (see <a class="reference internal" href="installation.html"><span class="doc">Installation Guide</span></a>)
+✅ Application accessible at <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a>
+✅ Sample data available: <code class="docutils literal notranslate"><span class="pre">example/data_1.csv</span></code></p>
+</section>
+<section id="tutorial-overview">
+<h1>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Link to this heading"></a></h1>
+<p>This tutorial uses real magnetic field data from sensor <code class="docutils literal notranslate"><span class="pre">S963350075783</span></code> to demonstrate:</p>
+<ol class="arabic simple">
+<li><p><strong>Project Creation</strong> - Organize your magnetic field analysis</p></li>
+<li><p><strong>Data Upload</strong> - Import CSV magnetometer readings</p></li>
+<li><p><strong>Data Visualization</strong> - Interactive B_x, B_y, B_z charts</p></li>
+<li><p><strong>Anomaly Labeling</strong> - Mark regions with brush selection</p></li>
+<li><p><strong>Model Training</strong> - Scikit-learn classification on magnetic field features</p></li>
+<li><p><strong>Results Review</strong> - Model performance and predictions</p></li>
+</ol>
+<p><strong>Sample Data Details:</strong>
+- <strong>File:</strong> <code class="docutils literal notranslate"><span class="pre">example/data_1.csv</span></code> (included with MagTrace)
+- <strong>Format:</strong> <code class="docutils literal notranslate"><span class="pre">timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,sensor_id</span></code>
+- <strong>Content:</strong> Real magnetometer readings with GPS coordinates
+- <strong>Size:</strong> 46 data points for quick demonstration</p>
+</section>
+<section id="step-1-create-your-first-project">
+<h1>Step 1: Create Your First Project<a class="headerlink" href="#step-1-create-your-first-project" title="Link to this heading"></a></h1>
+<p><strong>1.1. Open MagTrace Interface</strong></p>
+<p>Navigate to <a class="reference external" href="http://localhost:8000/app/">http://localhost:8000/app/</a> in your browser.</p>
+<p>You should see the clean MagTrace interface with:
+- Header with project controls
+- Left sidebar with Data/Labels/Models tabs
+- Main content area for visualization</p>
+<p><strong>1.2. Create New Project</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“New Project”</strong> button in the header</p></li>
+<li><p>Fill in project details:
+- <strong>Name:</strong> “Magnetometer Analysis Demo”
+- <strong>Description:</strong> “Learning MagTrace with real magnetic field data”</p></li>
+<li><p>Click <strong>“Create Project”</strong></p></li>
+</ol>
+<p>✅ <strong>Success Indicator:</strong> “Project created successfully” notification appears and project is selected in dropdown.</p>
+</section>
+<section id="step-2-upload-real-magnetic-field-data">
+<h1>Step 2: Upload Real Magnetic Field Data<a class="headerlink" href="#step-2-upload-real-magnetic-field-data" title="Link to this heading"></a></h1>
+<p><strong>2.1. Navigate to Data Tab</strong></p>
+<ol class="arabic simple">
+<li><p>In the left sidebar, click the <strong>“Data”</strong> tab</p></li>
+<li><p>You’ll see the data upload section</p></li>
+</ol>
+<p><strong>2.2. Upload Sample Magnetometer Data</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“Upload CSV File”</strong> button</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">example/data_1.csv</span></code> from your MagTrace directory</p></li>
+<li><p>Wait for upload processing</p></li>
+</ol>
+<p>✅ <strong>Success Indicator:</strong> “Dataset uploaded successfully” and dataset appears in your data list.</p>
+<p><strong>2.3. Load Dataset for Analysis</strong></p>
+<ol class="arabic simple">
+<li><p>Click the <strong>“Load”</strong> button next to your uploaded dataset</p></li>
+<li><p>Watch the interactive magnetic field visualization appear</p></li>
+</ol>
+<p><strong>What You’re Seeing:</strong>
+- <strong>X-axis:</strong> Time sequence of magnetometer measurements
+- <strong>Y-axis:</strong> Magnetic field magnitude (calculated from B_x, B_y, B_z components)
+- <strong>Interactive Chart:</strong> D3.js powered visualization with zoom and pan capabilities</p>
+<p><strong>Real Data Values:</strong>
+The chart displays actual magnetic field strength values from sensor S963350075783, showing natural variations in the Earth’s magnetic field.</p>
+</section>
+<section id="step-3-label-magnetic-field-anomalies">
+<h1>Step 3: Label Magnetic Field Anomalies<a class="headerlink" href="#step-3-label-magnetic-field-anomalies" title="Link to this heading"></a></h1>
+<p><strong>3.1. Enable Selection Mode</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“Select Mode”</strong> button above the chart</p></li>
+<li><p>Notice cursor changes to crosshair</p></li>
+<li><p>Quick labeling toolbar appears below chart</p></li>
+</ol>
+<p><strong>3.2. Select Your First Region</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Drag to select</strong> a region on the magnetic field chart that shows variation from baseline</p></li>
+<li><p>You see a blue selection rectangle</p></li>
+<li><p>Selection info shows: “Selected: X points (start-end indices)”</p></li>
+</ol>
+<p><strong>3.3. Label the Magnetic Field Pattern</strong></p>
+<p>Choose an appropriate label for the selected magnetic field pattern:</p>
+<ul class="simple">
+<li><p><strong>Normal (3)</strong> - Baseline magnetic field readings</p></li>
+<li><p><strong>Anomaly (4)</strong> - Unusual magnetic field variations</p></li>
+<li><p><strong>Fan Noise (1)</strong> - Electromagnetic interference patterns</p></li>
+<li><p><strong>Motor (2)</strong> - Motor-related magnetic signatures</p></li>
+<li><p><strong>Electrical (5)</strong> - Electrical interference</p></li>
+</ul>
+<p><strong>Quick Labeling:</strong> Press keyboard keys 1-5 to instantly label selected regions.</p>
+<p>✅ <strong>Success Indicator:</strong> “Annotation created successfully” and colored overlay appears on selection.</p>
+<p><strong>3.4. Label Multiple Magnetic Field Regions</strong></p>
+<p>Create 3-4 annotations with different characteristics:</p>
+<ol class="arabic simple">
+<li><p>Select <strong>baseline region</strong> → Label as “Normal (3)”</p></li>
+<li><p>Select <strong>highest peaks</strong> → Label as “Anomaly (4)”</p></li>
+<li><p>Select <strong>different pattern</strong> → Label appropriately</p></li>
+</ol>
+<p><strong>Best Practice:</strong> Label regions with clearly different magnetic field characteristics for effective model training.</p>
+</section>
+<section id="step-4-configure-ml-model-for-magnetic-data">
+<h1>Step 4: Configure ML Model for Magnetic Data<a class="headerlink" href="#step-4-configure-ml-model-for-magnetic-data" title="Link to this heading"></a></h1>
+<p><strong>4.1. Switch to Models Tab</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“Models”</strong> tab in left sidebar</p></li>
+<li><p>Click <strong>“Create New Model”</strong></p></li>
+</ol>
+<p><strong>4.2. Configure Magnetic Field Classifier</strong></p>
+<p>The Model Config panel opens. Configure for magnetic field analysis:</p>
+<ul class="simple">
+<li><p><strong>Model Name:</strong> “Magnetic Anomaly Detector”</p></li>
+<li><p><strong>Description:</strong> “Classifies magnetic field patterns using B_x, B_y, B_z features”</p></li>
+<li><p><strong>Model Type:</strong> “Classification” (for anomaly detection)</p></li>
+<li><p><strong>Epochs:</strong> 5 (quick training for demo)</p></li>
+<li><p><strong>Learning Rate:</strong> 0.001 (default)</p></li>
+</ul>
+<p><strong>4.3. Save Model Configuration</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“Save Configuration”</strong></p></li>
+<li><p>✅ “Model configuration saved” confirmation</p></li>
+</ol>
+</section>
+<section id="step-5-train-on-magnetic-field-features">
+<h1>Step 5: Train on Magnetic Field Features<a class="headerlink" href="#step-5-train-on-magnetic-field-features" title="Link to this heading"></a></h1>
+<p><strong>5.1. Start ML Training</strong></p>
+<ol class="arabic simple">
+<li><p>Click <strong>“Training”</strong> tab in main content area</p></li>
+<li><p>Click <strong>“Start Training”</strong></p></li>
+</ol>
+<p><strong>5.2. Monitor Training Progress</strong></p>
+<p>Real-time training progress for magnetic field classification:</p>
+<ul class="simple">
+<li><p><strong>Status:</strong> “pending” → “running” → “completed”</p></li>
+<li><p><strong>Progress Bar:</strong> Shows completion percentage</p></li>
+<li><p><strong>Epoch Counter:</strong> Current training epoch</p></li>
+<li><p><strong>Live Updates:</strong> Every 2 seconds</p></li>
+</ul>
+<p><strong>What’s Happening:</strong>
+MagTrace extracts statistical features from magnetic field data (B_x, B_y, B_z):
+- Mean, standard deviation, min, max of each component
+- Segment length and magnetic field magnitude
+- Trains Random Forest classifier on these features</p>
+<p><strong>Training Time:</strong> Typically completes in 30-60 seconds for sample data.</p>
+<p>✅ <strong>Success Indicator:</strong> “Training completed successfully” with accuracy metrics.</p>
+</section>
+<section id="step-6-review-magnetic-field-analysis-results">
+<h1>Step 6: Review Magnetic Field Analysis Results<a class="headerlink" href="#step-6-review-magnetic-field-analysis-results" title="Link to this heading"></a></h1>
+<p><strong>6.1. Check Model Performance</strong></p>
+<p>After training completion:</p>
+<ul class="simple">
+<li><p><strong>Accuracy:</strong> Model performance on magnetic field classification</p></li>
+<li><p><strong>Training Samples:</strong> Number of labeled magnetic field regions used</p></li>
+<li><p><strong>Model Status:</strong> “Completed” with timestamp</p></li>
+</ul>
+<p><strong>6.2. View Your Magnetic Field Annotations</strong></p>
+<ol class="arabic simple">
+<li><p>Switch to <strong>“Labels”</strong> tab in sidebar</p></li>
+<li><p>See all created annotations:
+- Category names with colors
+- Magnetic field data ranges (indices)
+- Confidence scores</p></li>
+</ol>
+<p><strong>6.3. Verify Visualization</strong></p>
+<ol class="arabic simple">
+<li><p>Return to <strong>“Visualization”</strong> panel</p></li>
+<li><p>Labeled regions visible as colored overlays on magnetic field chart</p></li>
+<li><p>Different magnetic field patterns have different colors</p></li>
+</ol>
+</section>
+<section id="congratulations">
+<h1>Congratulations! 🎉<a class="headerlink" href="#congratulations" title="Link to this heading"></a></h1>
+<p>You’ve successfully completed magnetic field analysis workflow:</p>
+<p>✅ <strong>Created</strong> a project for magnetometer data organization
+✅ <strong>Uploaded</strong> real magnetic field measurements (B_x, B_y, B_z)
+✅ <strong>Visualized</strong> magnetometer data with interactive charts
+✅ <strong>Labeled</strong> magnetic field patterns and anomalies
+✅ <strong>Trained</strong> ML model on magnetic field features
+✅ <strong>Monitored</strong> real-time training progress
+✅ <strong>Reviewed</strong> classification results and performance</p>
+</section>
+<section id="real-world-applications">
+<h1>Real-World Applications<a class="headerlink" href="#real-world-applications" title="Link to this heading"></a></h1>
+<p>This workflow applies to various magnetic field analysis scenarios:</p>
+<dl class="simple">
+<dt><strong>🚁 Drone Magnetometer Surveys</strong></dt><dd><p>Analyze magnetic field data from UAV surveys to detect buried objects or geological features</p>
+</dd>
+<dt><strong>🏭 Industrial Equipment Monitoring</strong></dt><dd><p>Monitor magnetic signatures of machinery for predictive maintenance</p>
+</dd>
+<dt><strong>🔬 Geological Field Surveys</strong></dt><dd><p>Process magnetometer data to identify mineral deposits or archaeological sites</p>
+</dd>
+<dt><strong>⚡ Infrastructure Inspection</strong></dt><dd><p>Detect anomalies in electrical systems through magnetic field analysis</p>
+</dd>
+</dl>
+</section>
+<section id="next-steps-with-your-own-data">
+<h1>Next Steps with Your Own Data<a class="headerlink" href="#next-steps-with-your-own-data" title="Link to this heading"></a></h1>
+<p><strong>Upload Your Magnetometer Data:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Prepare CSV file</strong> with required columns:
+<code class="docutils literal notranslate"><span class="pre">timestamp_pc,b_x,b_y,b_z</span></code> (minimum)
+Plus optional: <code class="docutils literal notranslate"><span class="pre">lat,lon,altitude,sensor_id</span></code></p></li>
+<li><p><strong>Follow same workflow:</strong>
+- Create project → Upload data → Visualize → Label → Train</p></li>
+<li><p><strong>Optimize for your data:</strong>
+- Label patterns specific to your application
+- Adjust model parameters for your magnetic field ranges
+- Use more training epochs for complex patterns</p></li>
+</ol>
+<p><strong>Advanced Features:</strong></p>
+<ul class="simple">
+<li><p><strong>Multiple datasets</strong> in one project</p></li>
+<li><p><strong>Different model types</strong> for various analyses</p></li>
+<li><p><strong>API integration</strong> for automated processing</p></li>
+<li><p><strong>Batch processing</strong> for large magnetometer surveys</p></li>
+</ul>
+</section>
+<section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<dl class="simple">
+<dt><strong>Chart Not Loading:</strong></dt><dd><ul class="simple">
+<li><p>Verify CSV has <code class="docutils literal notranslate"><span class="pre">timestamp_pc,b_x,b_y,b_z</span></code> columns</p></li>
+<li><p>Check browser console for JavaScript errors</p></li>
+<li><p>Ensure numeric values for magnetic field components</p></li>
+</ul>
+</dd>
+<dt><strong>Upload Fails:</strong></dt><dd><ul class="simple">
+<li><p>Check file size (&lt;100MB)</p></li>
+<li><p>Verify CSV format matches sample data</p></li>
+<li><p>Ensure file contains valid magnetometer readings</p></li>
+</ul>
+</dd>
+<dt><strong>Training Doesn’t Start:</strong></dt><dd><ul class="simple">
+<li><p>Create at least 2-3 labeled annotations first</p></li>
+<li><p>Check that annotations have different categories</p></li>
+<li><p>Verify model configuration is saved</p></li>
+</ul>
+</dd>
+<dt><strong>“No Data Points” Error:</strong></dt><dd><ul class="simple">
+<li><p>Confirm CSV file format matches requirements</p></li>
+<li><p>Check for missing or invalid B_x, B_y, B_z values</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="learn-more">
+<h1>Learn More<a class="headerlink" href="#learn-more" title="Link to this heading"></a></h1>
+<p><strong>Technical Details:</strong> <a class="reference internal" href="api_reference.html"><span class="doc">]</span></a> - Complete API documentation
+<strong>Testing Results:</strong> <a class="reference internal" href="testing_results.html"><span class="doc">}</span></a> - System validation and performance
+<strong>Installation Help:</strong> <a class="reference internal" href="installation.html"><span class="doc">Installation Guide</span></a> - Setup and troubleshooting</p>
+<p><strong>Automated Testing:</strong>
+Run <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">test_workflow.py</span></code> to verify your installation follows this exact workflow programmatically.</p>
+<div style="text-align: center; margin: 40px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+  <h3>Ready for advanced magnetic field analysis?</h3>
+  <p style="margin: 15px 0;">
+    <a href="api_reference.html" style="background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Explore API Reference →</a>
+  </p>
+</div></section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="]" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Manas Pandey.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
