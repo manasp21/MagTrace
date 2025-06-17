@@ -6,7 +6,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-MagTrace Pro is a streamlined machine learning platform designed for magnetic field data analysis. It provides a clean, professional workflow for loading data, creating labels, and training models for anomaly detection and pattern recognition.
+MagTrace is a streamlined machine learning platform designed for magnetic field data analysis. It provides a clean, professional workflow for loading data, creating labels, and training models for anomaly detection and pattern recognition.
 
 ## Current Status: Implementation Complete, Testing Needed ⚠️
 **Last Updated**: 2025-06-16
@@ -184,7 +184,7 @@ CSV files must contain: `timestamp_pc,b_x,b_y,b_z,lat,lon,altitude,thetax,thetay
 
 ## Current State Summary
 
-**MagTrace Pro** implementation is **complete but requires testing**:
+**MagTrace** implementation is **complete but requires testing**:
 
 - ✅ **Clean UI** - Professional interface without emojis or clutter  
 - ✅ **Simplified ML Training** - scikit-learn based system implemented

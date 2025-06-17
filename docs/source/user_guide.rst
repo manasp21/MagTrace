@@ -1,9 +1,9 @@
-# MagTrace Pro User Guide
+# MagTrace User Guide
 
 ## Getting Started
 
-### What is MagTrace Pro?
-MagTrace Pro is a professional magnetic field data analysis platform that simplifies the process of:
+### What is MagTrace?
+MagTrace is a professional magnetic field data analysis platform that simplifies the process of:
 - Loading magnetic field sensor data
 - Visually identifying patterns and anomalies
 - Creating labeled training data

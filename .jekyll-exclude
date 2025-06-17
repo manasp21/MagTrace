@@ -1,0 +1,14 @@
+# Additional Jekyll exclusions
+backend/
+*.pyc
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.tox/
+.coverage
+.nyc_output/
+*.log
+.DS_Store
+Thumbs.db

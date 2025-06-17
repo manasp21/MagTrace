@@ -1,11 +1,11 @@
-MagTrace Pro Documentation
+MagTrace Documentation
 ==========================
 
 **Magnetic Field Data Analysis Platform**
 
 *Developed by Manas Pandey with the assistance of Claude*
 
-MagTrace Pro is a streamlined machine learning platform designed for magnetic field data analysis. It provides a clean, professional workflow for loading data, creating labels, and training models for anomaly detection and pattern recognition.
+MagTrace is a streamlined machine learning platform designed for magnetic field data analysis. It provides a clean, professional workflow for loading data, creating labels, and training models for anomaly detection and pattern recognition.
 
 .. toctree::
    :maxdepth: 2

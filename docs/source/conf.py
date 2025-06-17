@@ -17,7 +17,7 @@ django.setup()
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'MagTrace Pro'
+project = 'MagTrace'
 copyright = '2025, Manas Pandey'
 author = 'Manas Pandey'
 release = '1.0'

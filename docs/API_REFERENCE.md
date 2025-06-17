@@ -1,10 +1,10 @@
-# MagTrace Pro API Reference
+# MagTrace API Reference
 
 **Author: Manas Pandey**  
 *Developed with the assistance of Claude*
 
 ## Overview
-Complete API documentation for MagTrace Pro magnetic field data analysis platform.
+Complete API documentation for MagTrace magnetic field data analysis platform.
 
 ## Base URL
 ```

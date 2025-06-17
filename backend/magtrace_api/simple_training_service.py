@@ -1,5 +1,5 @@
 """
-Simplified, working training service for MagTrace Pro
+Simplified, working training service for MagTrace
 """
 
 import numpy as np

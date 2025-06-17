@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MagTrace Pro Workflow Testing Script
+MagTrace Workflow Testing Script
 
 Author: Manas Pandey
 Developed with the assistance of Claude
@@ -323,7 +323,7 @@ def monitor_training(session_id, session, timeout=30):
 
 def run_complete_workflow_test():
     """Run complete workflow test"""
-    print("🚀 Starting MagTrace Pro Workflow Test")
+    print("🚀 Starting MagTrace Workflow Test")
     print("=" * 50)
     
     # Test 1: Health check

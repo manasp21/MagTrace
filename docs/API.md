@@ -1,4 +1,4 @@
-# MagTrace Pro API Documentation
+# MagTrace API Documentation
 
 ## Base URL
 All API endpoints are relative to: `http://localhost:8000/api/`

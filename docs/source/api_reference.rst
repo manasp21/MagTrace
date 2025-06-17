@@ -1,7 +1,7 @@
-# MagTrace Pro API Reference
+# MagTrace API Reference
 
 ## Overview
-Complete API documentation for MagTrace Pro magnetic field data analysis platform.
+Complete API documentation for MagTrace magnetic field data analysis platform.
 
 ## Base URL
 ```
