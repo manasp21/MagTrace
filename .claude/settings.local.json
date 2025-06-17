@@ -30,7 +30,9 @@
       "Bash(. venv/bin/activate)",
       "Bash(make:*)",
       "Bash(mv:*)",
-      "Bash(python run:*)"
+      "Bash(python run:*)",
+      "WebFetch(domain:manasp21.github.io)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }

@@ -90,4 +90,4 @@ MagTrace is a streamlined machine learning platform designed for magnetic field 
 
 ---
 
-*Generated documentation available at: [https://manasp21.github.io/MagTrace/docs/](https://manasp21.github.io/MagTrace/docs/)*
+*Generated documentation available at: [https://manasp21.github.io/MagTrace/docs/index.html](https://manasp21.github.io/MagTrace/docs/index.html)*

@@ -1,249 +1,296 @@
-# Installation Guide
+Installation Guide
+==================
 
-## System Requirements
+MagTrace is designed to be easy to install and run on any system with Python 3.8+.
 
-- **Python**: 3.8 or higher
-- **Operating System**: Windows, macOS, or Linux
-- **RAM**: 4GB minimum, 8GB recommended
-- **Storage**: 1GB free space
-- **Browser**: Chrome, Firefox, Safari, or Edge
+System Requirements
+===================
 
-## Quick Installation
+**Minimum Requirements:**
+- Python 3.8 or higher
+- 4GB RAM (8GB recommended for large datasets)
+- 1GB disk space
+- Modern web browser (Chrome, Firefox, Safari, Edge)
 
-### 1. Clone Repository
-```bash
-git clone <repository-url>
-cd MagTrace
-```
+**Operating Systems:**
+- Windows 10/11
+- macOS 10.14+
+- Linux (Ubuntu 18.04+, CentOS 7+, or equivalent)
 
-### 2. Create Virtual Environment
-```bash
-cd backend
-python3 -m venv venv
+Quick Installation (Recommended)
+================================
 
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-```
+**1. Clone the Repository**
 
-### 3. Install Dependencies
-```bash
-# Try full installation first
-pip install -r requirements.txt
+.. code-block:: bash
 
-# If TensorFlow installation fails, use lite version
-pip install -r requirements-lite.txt
-```
+   git clone https://github.com/manasp21/MagTrace.git
+   cd MagTrace
 
-### 4. Setup Database
-```bash
-python manage.py makemigrations magtrace_api
-python manage.py migrate
-```
+**2. Run the Application**
 
-### 5. Start Application
-```bash
-# Quick start (recommended)
-cd ..
-python run.py
+.. code-block:: bash
 
-# OR manual start
-cd backend
-python manage.py runserver
-```
+   python3 run.py
 
-### 6. Access Application
-Open your browser to: http://localhost:8000/app/
+That's it! The run script will automatically:
 
-## Detailed Installation
+✅ Create a Python virtual environment
+✅ Install all required dependencies  
+✅ Set up the database
+✅ Start the application server
 
-### Dependencies Explained
+**3. Open in Browser**
 
-**Core Requirements (requirements-lite.txt):**
-- Django 4.2+ - Web framework
-- djangorestframework - API framework
-- django-cors-headers - CORS support
-- pandas - Data processing
-- numpy - Numerical computing
-- scikit-learn - Machine learning
+Navigate to http://localhost:8000/app/ and you're ready to go!
 
-**Optional Requirements (requirements.txt):**
-- tensorflow 2.15+ - Advanced ML models
-- matplotlib - Additional plotting
-- jupyter - Notebook support
+Manual Installation
+===================
 
-### Virtual Environment Setup
+If you prefer manual control over the installation process:
 
-**Why use virtual environment?**
-- Isolates project dependencies
-- Prevents conflicts with system Python
-- Ensures reproducible installations
+**1. Create Virtual Environment**
 
-**Creating environment:**
-```bash
-# Using venv (recommended)
-python3 -m venv venv
+.. code-block:: bash
 
-# Using conda (alternative)
-conda create -n magtrace python=3.9
-conda activate magtrace
-```
+   cd backend
+   python3 -m venv venv
+   
+   # On Linux/macOS:
+   source venv/bin/activate
+   
+   # On Windows:
+   venv\Scripts\activate
 
-### Database Configuration
+**2. Install Dependencies**
 
-**Default Setup (SQLite):**
-- No additional configuration needed
-- Database file: `backend/db.sqlite3`
-- Automatically created on first run
+.. code-block:: bash
 
-**Custom Database (Optional):**
-Edit `backend/django_magtrace/settings.py`:
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magtrace',
-        'USER': 'your_user',
-        'PASSWORD': 'your_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
+   pip install -r requirements.txt
 
-## Troubleshooting Installation
+**Note:** If TensorFlow installation fails (common on some systems), use the lightweight version:
 
-### Common Issues
+.. code-block:: bash
 
-**TensorFlow Installation Fails:**
-```bash
-# Use lite requirements instead
-pip install -r requirements-lite.txt
-# Application will use scikit-learn models
-```
+   pip install -r requirements-lite.txt
 
-**Permission Errors:**
-```bash
-# On Windows, run as administrator
-# On macOS/Linux, check file permissions
-chmod +x run.py
-```
+**3. Database Setup**
 
-**Port Already in Use:**
-```bash
-# Kill existing processes
-lsof -ti:8000 | xargs kill -9
-# Or use different port
-python manage.py runserver 8001
-```
+.. code-block:: bash
 
-**Database Migration Errors:**
-```bash
-# Reset database
-rm backend/db.sqlite3
-python manage.py makemigrations magtrace_api
-python manage.py migrate
-```
+   python manage.py migrate
+   python manage.py createsuperuser  # Optional
 
-### Performance Optimization
+**4. Start Server**
 
-**For Large Datasets:**
-- Increase available RAM
-- Close other applications
-- Use SSD storage for better I/O
+.. code-block:: bash
 
-**Browser Optimization:**
-- Use Chrome or Firefox for best performance
-- Close unnecessary browser tabs
-- Enable hardware acceleration
+   python manage.py runserver
 
-## Development Setup
+The application will be available at http://localhost:8000/app/
 
-### Additional Tools
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
+Docker Installation (Advanced)
+==============================
 
-# Code formatting
-pip install black isort
+For containerized deployment:
 
-# Testing
-pip install pytest pytest-django
-```
+.. code-block:: bash
 
-### IDE Configuration
-**VS Code Extensions:**
-- Python
-- Django
-- JavaScript ES6
+   # Clone repository
+   git clone https://github.com/manasp21/MagTrace.git
+   cd MagTrace
+   
+   # Build Docker image
+   docker build -t magtrace .
+   
+   # Run container
+   docker run -p 8000:8000 magtrace
 
-**PyCharm:**
-- Enable Django support
-- Configure Python interpreter to virtual environment
+Development Installation
+========================
 
-## Docker Installation (Alternative)
+For developers who want to contribute:
 
-### Using Docker Compose
-```bash
-# Build and start containers
-docker-compose up --build
+**1. Fork and Clone**
 
-# Access application
-http://localhost:8000/app/
-```
+.. code-block:: bash
 
-### Dockerfile
-```dockerfile
-FROM python:3.9-slim
+   git clone https://github.com/YOUR_USERNAME/MagTrace.git
+   cd MagTrace
 
-WORKDIR /app
-COPY requirements-lite.txt .
-RUN pip install -r requirements-lite.txt
+**2. Install Development Dependencies**
 
-COPY . .
-EXPOSE 8000
+.. code-block:: bash
 
-CMD ["python", "backend/manage.py", "runserver", "0.0.0.0:8000"]
-```
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate  # or venv\Scripts\activate on Windows
+   pip install -r requirements.txt
+   pip install -r requirements-dev.txt  # Additional dev tools
 
-## Verification
+**3. Set Up Pre-commit Hooks**
 
-### Test Installation
-```bash
-# Run basic tests
-python test_functionality.py
+.. code-block:: bash
 
-# Check API endpoints
-curl http://localhost:8000/health/
+   pre-commit install
 
-# Verify static files
-curl http://localhost:8000/static/js/magtrace-pro.js
-```
+**4. Run Tests**
 
-### Expected Output
-- ✅ Django server starts without errors
-- ✅ Application loads at http://localhost:8000/app/
-- ✅ API responds at http://localhost:8000/api/
-- ✅ File upload and visualization work
+.. code-block:: bash
 
-## Next Steps
+   python3 test_workflow.py
+   python manage.py test
 
-1. **Create First Project** - Follow Quick Start guide
-2. **Upload Sample Data** - Use files from `example/` directory
-3. **Test Labeling** - Practice with interactive selection
-4. **Train Model** - Complete the full workflow
+Verifying Installation
+=====================
 
-## Support
+**Quick Health Check**
 
-**Common Solutions:**
-- Check Python version: `python --version`
-- Verify pip installation: `pip list`
-- Review Django logs in terminal
-- Check browser console for JavaScript errors
+Visit http://localhost:8000/health/ - you should see:
 
-**Getting Help:**
-- Review troubleshooting section in README.md
-- Check GitHub issues
-- Ensure all requirements are installed correctly
+.. code-block:: json
+
+   {
+     "status": "healthy",
+     "timestamp": "2025-06-17T..."
+   }
+
+**Complete Workflow Test**
+
+Run the automated test suite:
+
+.. code-block:: bash
+
+   python3 test_workflow.py
+
+You should see output like:
+
+.. code-block:: text
+
+   🚀 Starting MagTrace Workflow Test
+   ✅ Server health check passed
+   ✅ Project created successfully
+   ✅ Dataset uploaded successfully
+   ✅ Data retrieval successful: 46 data points
+   ✅ Annotation created successfully
+   ✅ Training started successfully
+   🎉 All workflow tests completed successfully!
+
+Troubleshooting
+===============
+
+**Common Issues:**
+
+**Port 8000 Already in Use**
+
+.. code-block:: bash
+
+   # Find and kill process using port 8000
+   lsof -ti:8000 | xargs kill -9
+   
+   # Or use a different port
+   python manage.py runserver 8001
+
+**Python Version Issues**
+
+.. code-block:: bash
+
+   # Check Python version
+   python3 --version
+   
+   # If < 3.8, install newer Python
+   # Ubuntu/Debian:
+   sudo apt update && sudo apt install python3.9
+   
+   # macOS:
+   brew install python@3.9
+
+**TensorFlow Installation Fails**
+
+This is normal! MagTrace works perfectly with scikit-learn only:
+
+.. code-block:: bash
+
+   pip install -r requirements-lite.txt
+
+**Virtual Environment Issues**
+
+.. code-block:: bash
+
+   # Remove and recreate virtual environment
+   rm -rf backend/venv
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+
+**Database Issues**
+
+.. code-block:: bash
+
+   # Reset database
+   rm backend/db.sqlite3
+   python backend/manage.py migrate
+
+**Permission Errors (Linux/macOS)**
+
+.. code-block:: bash
+
+   # Make run script executable
+   chmod +x run.py
+
+Configuration Options
+====================
+
+**Environment Variables**
+
+Create a ``.env`` file in the backend directory:
+
+.. code-block:: bash
+
+   # Development settings
+   DEBUG=True
+   SECRET_KEY=your-secret-key-here
+   
+   # Database (optional - defaults to SQLite)
+   DATABASE_URL=sqlite:///db.sqlite3
+   
+   # Performance
+   DATA_DECIMATION_THRESHOLD=5000
+
+**Advanced Settings**
+
+Edit ``backend/magtrace_api/settings.py`` for advanced configuration:
+
+- Database backend (PostgreSQL, MySQL)
+- Caching settings (Redis, Memcached)  
+- Security settings for production
+- CORS and API settings
+
+Production Deployment
+====================
+
+For production environments, see the deployment guide which covers:
+
+- Web server configuration (Nginx, Apache)
+- WSGI deployment (Gunicorn, uWSGI)
+- Database configuration (PostgreSQL)
+- SSL/TLS setup
+- Performance optimization
+- Monitoring and logging
+
+Next Steps
+==========
+
+Once installed, continue with:
+
+1. :doc:`quick_start_tutorial` - Complete your first analysis in 10 minutes
+2. :doc:`user_guide` - Comprehensive usage guide with examples
+3. Sample datasets - Download sample magnetic field data to try
+
+Need Help?
+==========
+
+- 📖 **Documentation:** https://manasp21.github.io/MagTrace/docs/
+- 🐛 **Report Issues:** https://github.com/manasp21/MagTrace/issues
+- 💬 **Discussions:** https://github.com/manasp21/MagTrace/discussions

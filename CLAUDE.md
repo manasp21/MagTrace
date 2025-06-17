@@ -8,9 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 MagTrace is a streamlined machine learning platform designed for magnetic field data analysis. It provides a clean, professional workflow for loading data, creating labels, and training models for anomaly detection and pattern recognition.
 
-## Current Status: Implementation Complete, Testing Needed ⚠️
-**Last Updated**: 2025-06-16
-**Status**: All components implemented and simplified, but end-to-end testing still required
+## Current Status: Renaming Complete, Jekyll Fixed ✅
+**Last Updated**: 2025-06-17
+**Status**: All components functional, renaming from "MagTrace Pro" to "MagTrace" complete, GitHub Pages issues resolved
 
 ## Core Features (All Working)
 - **Simple Workflow**: Load data → Select ranges → Label → Train → Predict
@@ -198,6 +198,70 @@ The platform addresses user feedback through implementation:
 - **Simplified ML training** system that should work reliably ⚠️
 - **Intuitive annotation system** for magnetic field data analysis ⚠️
 
-**Status**: Implementation complete, testing required before production use.
+**Status**: Implementation complete, comprehensive renaming finished, GitHub Pages configuration resolved.
 
-**Next Critical Step**: Test the complete workflow to verify everything works as intended.
+## Recent Session Work (June 17, 2025) ✅
+
+### Documentation Generation Complete
+- ✅ **Sphinx Documentation**: Complete API and user documentation generated
+- ✅ **GitHub Pages Setup**: Jekyll configuration and landing page created
+- ✅ **Testing Results**: Comprehensive workflow testing completed and documented
+- ✅ **API Documentation**: Full autodoc generation with pydocs
+
+### Systematic Renaming Complete
+- ✅ **Physical Files**: `magtrace_pro.html` → `magtrace.html`, `magtrace-pro.js` → `magtrace.js`
+- ✅ **Template References**: Updated `frontend_views.py` to use new template name
+- ✅ **JavaScript Class**: `MagTracePro` → `MagTrace` class name updated
+- ✅ **Content Updates**: All 65+ files updated from "MagTrace Pro" to "MagTrace"
+- ✅ **Database Content**: All documentation, comments, and docstrings updated
+- ✅ **Sphinx Configuration**: Project name and author properly set
+
+### GitHub Pages Issues Resolved
+- ✅ **Jekyll Build Error**: Fixed symlink issues with Python virtual environment
+- ✅ **Git Tracking**: Removed `backend/venv/` from version control completely
+- ✅ **Configuration Files**: Added `.gitignore`, `_config.yml`, `index.md`, `.jekyll-exclude`
+- ✅ **Exclusions**: Proper Jekyll configuration to exclude backend Python files
+
+### Workflow Verification
+- ✅ **End-to-End Testing**: Complete workflow tested and documented
+- ✅ **Core Functionality**: All major features verified working
+- ✅ **API Endpoints**: All endpoints tested and responding correctly
+- ✅ **Data Processing**: Upload, annotation, and training systems functional
+
+## Key Lessons Learned & Blunders 📝
+
+### Major Mistakes Made
+1. **Virtual Environment in Git**: The biggest blunder was having `backend/venv/` tracked in Git
+   - **Problem**: Python virtual environments contain symlinks that break Jekyll builds
+   - **Symptom**: `error: open("backend/venv/bin/python"): Invalid argument`
+   - **Resolution**: Completely removed from Git, added to `.gitignore`
+
+2. **Missing Jekyll Configuration**: Initially no `_config.yml` for GitHub Pages
+   - **Problem**: Jekyll tried to process entire repository including Python backend
+   - **Symptom**: Jekyll build failures with pathutil symlink errors
+   - **Resolution**: Created comprehensive Jekyll configuration excluding backend
+
+3. **Incomplete Renaming**: Initially missed JavaScript class name consistency
+   - **Problem**: Had `MagTracePro` class but `magtrace.js` filename
+   - **Symptom**: Naming inconsistency throughout codebase
+   - **Resolution**: Systematic renaming of all references
+
+### Technical Challenges Overcome
+1. **File Renaming at Scale**: Successfully renamed 65+ files and updated all references
+2. **Template Dependencies**: Updated Django template references without breaking functionality
+3. **Documentation Regeneration**: Rebuilt all Sphinx documentation with correct naming
+4. **Git Cleanup**: Safely removed problematic files from version control
+
+### Process Improvements Identified
+1. **Always check `.gitignore`**: Virtual environments should never be tracked
+2. **Jekyll configuration first**: Set up GitHub Pages config before pushing docs
+3. **Systematic verification**: Test functionality after major renaming operations
+4. **Documentation consistency**: Ensure all generated docs reflect current naming
+
+## Development Environment Notes
+- **Virtual Environment**: Must be recreated after cleanup (not tracked in Git)
+- **Dependencies**: All requirements preserved in `requirements.txt`
+- **Database**: SQLite file remains functional after renaming
+- **Static Files**: All JavaScript and CSS references updated correctly
+
+**Next Critical Step**: The system is now ready for production deployment preparation and comprehensive user testing.
