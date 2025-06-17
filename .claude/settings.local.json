@@ -32,7 +32,9 @@
       "Bash(mv:*)",
       "Bash(python run:*)",
       "WebFetch(domain:manasp21.github.io)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git rm:*)",
+      "Bash(git check-ignore:*)"
     ],
     "deny": []
   }
